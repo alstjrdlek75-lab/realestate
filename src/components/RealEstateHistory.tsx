@@ -16,15 +16,78 @@ import {
   ShieldCheck,
   Percent,
   Home,
-  Tag
+  Tag,
+  Calculator,
+  X,
+  ArrowRight,
+  DollarSign
 } from 'lucide-react';
 
 interface RealEstateHistoryProps {
   onStartDiagnostic?: () => void;
 }
 
+type CalcMode = 'DSR' | 'LTV' | 'GAP';
+
 export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
   const [activeTab, setActiveTab] = useState<'REASONS' | 'TIMELINE' | 'DRIVERS' | 'LESSONS' | 'GLOSSARY'>('REASONS');
+  
+  // Interactive Calculator Modal State
+  const [isCalcOpen, setIsCalcOpen] = useState<boolean>(false);
+  const [calcMode, setCalcMode] = useState<CalcMode>('DSR');
+
+  // DSR Calc Inputs
+  const [annualIncome, setAnnualIncome] = useState<number>(8000); // 8,000만원
+  const [interestRate, setInterestRate] = useState<number>(4.0); // 4.0%
+  const [loanPeriodYears, setLoanPeriodYears] = useState<number>(40); // 40년
+  const [otherMonthlyDebt, setOtherMonthlyDebt] = useState<number>(0); // 기타 대출 월 상환액 (만원)
+  const [applyStressDsr, setApplyStressDsr] = useState<boolean>(true); // 스트레스 DSR 가산
+
+  // LTV Calc Inputs
+  const [housePrice, setHousePrice] = useState<number>(100000); // 10억 (100,000만원)
+  const [ltvRate, setLtvRate] = useState<number>(70); // 70%
+
+  // Gap Calc Inputs
+  const [gapBuyPrice, setGapBuyPrice] = useState<number>(100000); // 10억
+  const [gapJeonsePrice, setGapJeonsePrice] = useState<number>(65000); // 6.5억
+
+  // Calculations
+  // 1. DSR Calculation
+  const maxYearlyPaymentDsr40 = Math.round(annualIncome * 0.4); // 연간 DSR 40% 한도 (만원)
+  const availableYearlyPayment = Math.max(0, maxYearlyPaymentDsr40 - (otherMonthlyDebt * 12)); // 기타대출 차감 후 가용 연 상환액
+  const availableMonthlyPayment = Math.round(availableYearlyPayment / 12);
+
+  // PMT formula to calculate principal
+  const effectiveRate = applyStressDsr ? interestRate + 1.2 : interestRate; // 스트레스 DSR 2단계 (+1.2%p)
+  const monthlyRate = effectiveRate / 100 / 12;
+  const numPayments = loanPeriodYears * 12;
+  
+  const maxLoanDsrPrincipal = monthlyRate > 0 && numPayments > 0
+    ? Math.round(availableMonthlyPayment * ((1 - Math.pow(1 + monthlyRate, -numPayments)) / monthlyRate))
+    : 0;
+
+  const normalRate = interestRate / 100 / 12;
+  const normalLoanPrincipal = normalRate > 0 && numPayments > 0
+    ? Math.round(availableMonthlyPayment * ((1 - Math.pow(1 + normalRate, -numPayments)) / normalRate))
+    : 0;
+
+  const stressReductionAmount = Math.max(0, normalLoanPrincipal - maxLoanDsrPrincipal);
+
+  // 2. LTV Calculation
+  const maxLoanLtv = Math.round(housePrice * (ltvRate / 100));
+  const minRequiredCashLtv = Math.max(0, housePrice - maxLoanLtv);
+  const estAcquisitionTax = Math.round(housePrice * 0.033); // 취득세 약 3.3%
+
+  // 3. Gap Calculation
+  const gapJeonseRatio = gapBuyPrice > 0 ? ((gapJeonsePrice / gapBuyPrice) * 100).toFixed(1) : '0';
+  const pureGapCash = Math.max(0, gapBuyPrice - gapJeonsePrice);
+  const gapAcquisitionTax = Math.round(gapBuyPrice * 0.033);
+  const totalGapNeedCash = pureGapCash + gapAcquisitionTax;
+
+  const handleOpenCalculator = (mode: CalcMode) => {
+    setCalcMode(mode);
+    setIsCalcOpen(true);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
@@ -43,7 +106,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
 
           <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
             1970년대 강남 개발부터 1기 신도시(분당·일산), 2000년대 버블세븐과 판교, 그리고 2026년 초양극화 시대까지 — <br className="hidden sm:inline" />
-            50년의 역사와 <strong>DSR·LTV·갭투자 등 핵심 용어의 본질</strong>을 알면 부동산 성공 방정식이 보입니다.
+            50년의 역사와 <strong>DSR·LTV·갭투자 등 핵심 용어 및 실시간 대출 계산기</strong>를 통해 성공적인 매수 계획을 세워보세요.
           </p>
         </div>
       </div>
@@ -440,33 +503,67 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
       )}
 
       {/* ========================================================================= */}
-      {/* TAB 5: 필수 부동산 & 대출 핵심 용어 사전 (Glossary) */}
+      {/* TAB 5: 필수 부동산 & 대출 핵심 용어 사전 + 실시간 계산기 */}
       {/* ========================================================================= */}
       {activeTab === 'GLOSSARY' && (
         <div className="space-y-6 animate-fadeIn">
-          <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm">
-            <div className="border-b border-slate-100 pb-4 mb-6">
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
-                <BookOpen className="w-6 h-6 text-[#03c75a]" />
-                <span>알아두면 돈이 되는 필수 부동산 & 대출 용어 사전</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                어렵고 헷갈리는 DSR, LTV, 갭투자, 초품아, RR 등의 개념을 알기 쉽게 총정리해 드립니다.
-              </p>
+          <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm space-y-6">
+            
+            {/* Header & Direct Calculator Launch Banner */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
+                  <BookOpen className="w-6 h-6 text-[#03c75a]" />
+                  <span>알아두면 돈이 되는 필수 부동산 & 대출 용어 사전</span>
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                  용어 카드의 <strong>[🧮 직접 계산해보기]</strong> 버튼을 누르면 내 소득과 주택 가격에 맞춘 대출 한도를 즉시 계산할 수 있습니다.
+                </p>
+              </div>
+
+              {/* Direct Quick Calc Buttons */}
+              <div className="flex items-center gap-2 self-start md:self-auto">
+                <button
+                  onClick={() => handleOpenCalculator('DSR')}
+                  className="px-3.5 py-2 rounded-xl bg-[#e8f8ee] hover:bg-[#03c75a] text-[#029f45] hover:text-white text-xs font-black border border-[#03c75a]/30 transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Calculator className="w-3.5 h-3.5" />
+                  <span>DSR 대출 한도 계산기</span>
+                </button>
+
+                <button
+                  onClick={() => handleOpenCalculator('LTV')}
+                  className="px-3.5 py-2 rounded-xl bg-[#edf4ff] hover:bg-[#0066ff] text-[#0066ff] hover:text-white text-xs font-black border border-[#0066ff]/30 transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Calculator className="w-3.5 h-3.5" />
+                  <span>LTV 계산기</span>
+                </button>
+              </div>
             </div>
 
-            {/* Category 1: 대출 및 금융 규제 용어 */}
-            <div className="space-y-4 mb-8">
-              <div className="flex items-center gap-2 text-sm font-black text-[#0066ff]">
-                <Scale className="w-4 h-4" />
-                <span>1. 대출 & 금융 규제 용어 (얼마까지 빌릴 수 있는가?)</span>
+            {/* Category 1: 대출 및 금융 규제 용어 (Clickable with Calculator) */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm font-black text-[#0066ff]">
+                  <Scale className="w-4 h-4" />
+                  <span>1. 대출 & 금융 규제 용어 (클릭하여 실시간 계산하기)</span>
+                </div>
+                <span className="text-[11px] text-[#0066ff] font-bold">
+                  👇 카드를 클릭하면 계산기가 열립니다
+                </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* DSR */}
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                {/* DSR Card (Clickable) */}
+                <div 
+                  onClick={() => handleOpenCalculator('DSR')}
+                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-[#03c75a] hover:shadow-md transition-all cursor-pointer group space-y-3"
+                >
                   <div className="flex items-center justify-between">
-                    <span className="font-black text-slate-900 text-base">DSR (총부채원리금상환비율)</span>
+                    <span className="font-black text-slate-900 text-base group-hover:text-[#029f45] transition-colors flex items-center gap-1.5">
+                      <span>DSR (총부채원리금상환비율)</span>
+                      <Calculator className="w-4 h-4 text-slate-400 group-hover:text-[#03c75a]" />
+                    </span>
                     <span className="text-[10px] font-black text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
                       가장 엄격한 규제
                     </span>
@@ -474,15 +571,22 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
                     내 <strong>1년 연봉 중 모든 빚의 '원금+이자'를 갚는 데 쓸 수 있는 최대 한도 비율(보통 40%)</strong>입니다. 주택담보대출뿐만 아니라 신용대출, 마이너스통장, 자동차 할부까지 전부 합산하여 계산합니다.
                   </p>
-                  <div className="p-2.5 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
-                    💡 <strong>예시</strong>: 연봉 6,000만 원이면 1년에 원리금 상환액이 2,400만 원(월 200만 원)을 넘을 수 없습니다.
+                  <div className="p-2.5 bg-white group-hover:bg-[#e8f8ee] rounded-xl border border-slate-200 group-hover:border-[#03c75a]/30 text-xs text-slate-800 font-bold flex items-center justify-between">
+                    <span>💡 연봉 8천만 ➡️ 최대 대출액 약 5.4억~6.2억</span>
+                    <span className="text-[#029f45] font-black text-[11px]">계산기 열기 ↗</span>
                   </div>
                 </div>
 
-                {/* LTV */}
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                {/* LTV Card (Clickable) */}
+                <div 
+                  onClick={() => handleOpenCalculator('LTV')}
+                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-[#0066ff] hover:shadow-md transition-all cursor-pointer group space-y-3"
+                >
                   <div className="flex items-center justify-between">
-                    <span className="font-black text-slate-900 text-base">LTV (주택담보인정비율)</span>
+                    <span className="font-black text-slate-900 text-base group-hover:text-[#0066ff] transition-colors flex items-center gap-1.5">
+                      <span>LTV (주택담보인정비율)</span>
+                      <Calculator className="w-4 h-4 text-slate-400 group-hover:text-[#0066ff]" />
+                    </span>
                     <span className="text-[10px] font-black text-[#0066ff] bg-[#edf4ff] px-2 py-0.5 rounded border border-[#0066ff]/20">
                       담보 가치 기준
                     </span>
@@ -490,29 +594,40 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
                     <strong>집값 대비 최대로 빌릴 수 있는 대출 금액의 비율</strong>입니다. 예를 들어 10억 원짜리 아파트의 LTV가 70%라면 최대 7억 원까지 대출이 가능합니다. (단, DSR 소득 한도를 초과할 수는 없습니다.)
                   </p>
-                  <div className="p-2.5 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
-                    💡 <strong>공식</strong>: 대출 가능 한도 = 집값(KB시세) × LTV 비율
+                  <div className="p-2.5 bg-white group-hover:bg-[#edf4ff] rounded-xl border border-slate-200 group-hover:border-[#0066ff]/30 text-xs text-slate-800 font-bold flex items-center justify-between">
+                    <span>💡 10억 주택 LTV 70% ➡️ 최대 7억 대출</span>
+                    <span className="text-[#0066ff] font-black text-[11px]">계산기 열기 ↗</span>
                   </div>
                 </div>
 
-                {/* 스트레스 DSR */}
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                {/* 스트레스 DSR Card (Clickable) */}
+                <div 
+                  onClick={() => handleOpenCalculator('DSR')}
+                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-purple-500 hover:shadow-md transition-all cursor-pointer group space-y-3"
+                >
                   <div className="flex items-center justify-between">
-                    <span className="font-black text-slate-900 text-base">스트레스 DSR (Stress DSR)</span>
+                    <span className="font-black text-slate-900 text-base group-hover:text-purple-700 transition-colors flex items-center gap-1.5">
+                      <span>스트레스 DSR (Stress DSR)</span>
+                      <Calculator className="w-4 h-4 text-slate-400 group-hover:text-purple-600" />
+                    </span>
                     <span className="text-[10px] font-black text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
                       최신 대출 규제
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    향후 금리가 오를 위험에 대비하여, <strong>대출 한도를 계산할 때 실제 금리에 '가산 금리(스트레스 금리)'를 얹어서 한도를 줄이는 제도</strong>입니다. 결과적으로 대출받을 수 있는 총액이 수천만 원 줄어듭니다.
+                    향후 금리가 오를 위험에 대비하여, <strong>대출 한도를 계산할 때 실제 금리에 '가산 금리(+1.2%p)'를 얹어서 한도를 줄이는 제도</strong>입니다. 결과적으로 대출 총액이 수천만 원 축소됩니다.
                   </p>
-                  <div className="p-2.5 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
-                    💡 <strong>영향</strong>: 기존 DSR 40%보다 실질 대출 한도가 5~10% 더 축소됩니다.
+                  <div className="p-2.5 bg-white group-hover:bg-purple-50 rounded-xl border border-slate-200 group-hover:border-purple-200 text-xs text-slate-800 font-bold flex items-center justify-between">
+                    <span>⚡ 스트레스 금리 적용 시 대출 한도 5~10% 축소</span>
+                    <span className="text-purple-700 font-black text-[11px]">한도 축소 계산 ↗</span>
                   </div>
                 </div>
 
-                {/* DTI */}
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                {/* DTI Card */}
+                <div 
+                  onClick={() => handleOpenCalculator('DSR')}
+                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 transition-all cursor-pointer group space-y-3"
+                >
                   <div className="flex items-center justify-between">
                     <span className="font-black text-slate-900 text-base">DTI (총부채상환비율)</span>
                     <span className="text-[10px] font-black text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
@@ -522,31 +637,46 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
                     주택담보대출 원리금 + '기타 대출의 이자만' 연소득과 비교하던 과거의 지표입니다. 현재는 기타 대출의 원금까지 전부 합산하는 더 강력한 DSR로 대체되어 적용됩니다.
                   </p>
+                  <div className="p-2.5 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
+                    💡 현재 수도권 주택 매수 시에는 DTI보다 DSR 40%가 결정적인 기준이 됩니다.
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Category 2: 투자 및 매수 전략 용어 */}
-            <div className="space-y-4 mb-8">
+            {/* Category 2: 매수 & 투자 실전 용어 (Clickable with Gap Calc) */}
+            <div className="space-y-4 pt-4 border-t border-slate-100">
               <div className="flex items-center gap-2 text-sm font-black text-[#029f45]">
                 <Coins className="w-4 h-4" />
-                <span>2. 매수 & 투자 실전 용어 (어떻게 사는가?)</span>
+                <span>2. 매수 & 투자 실전 용어</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* 갭투자 */}
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                  <span className="font-black text-slate-900 text-base block">갭투자 (Gap Investment)</span>
+                {/* 갭투자 Card */}
+                <div 
+                  onClick={() => handleOpenCalculator('GAP')}
+                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-[#03c75a] hover:shadow-md transition-all cursor-pointer group space-y-2"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-black text-slate-900 text-base group-hover:text-[#029f45] transition-colors">
+                      갭투자 (Gap Investment)
+                    </span>
+                    <Calculator className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#03c75a]" />
+                  </div>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
                     매매가와 전세가의 차액(Gap)만큼만 순수 현금을 넣고, 세입자의 전세보증금을 안고 소유권을 확보하는 매수 방식입니다.
                   </p>
-                  <div className="p-2 bg-white rounded-lg border border-slate-200 text-[11px] text-[#029f45] font-bold">
-                    예: 매매 10억 - 전세 6억 = 실투자금 4억
+                  <div className="p-2 bg-white group-hover:bg-[#e8f8ee] rounded-lg border border-slate-200 group-hover:border-[#03c75a]/30 text-[11px] text-[#029f45] font-bold flex items-center justify-between">
+                    <span>예: 매매 10억 - 전세 6.5억 = 갭 3.5억</span>
+                    <span>계산기 ↗</span>
                   </div>
                 </div>
 
                 {/* 전세가율 */}
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <div 
+                  onClick={() => handleOpenCalculator('GAP')}
+                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 transition-all cursor-pointer group space-y-2"
+                >
                   <span className="font-black text-slate-900 text-base block">전세가율 (Jeonse Ratio)</span>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
                     매매가 대비 전세가의 비율입니다. 전세가율이 65~70%로 높을수록 실거주 수요가 탄탄하여 하락장 방어력이 강하고 갭투자금이 적게 듭니다.
@@ -567,10 +697,10 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
             </div>
 
             {/* Category 3: 아파트 입지 & 시세 은어 */}
-            <div className="space-y-4">
+            <div className="space-y-4 pt-4 border-t border-slate-100">
               <div className="flex items-center gap-2 text-sm font-black text-amber-700">
                 <Home className="w-4 h-4" />
-                <span>3. 아파트 입지 & 시장 은어 (무엇을 봐야 하는가?)</span>
+                <span>3. 아파트 입지 & 시장 은어</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -594,7 +724,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                 <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
                   <span className="font-black text-slate-900 text-sm block">👑 RR (로열동·로열층)</span>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    단지 내에서 조망, 일조권, 소음 차단, 역 접근성이 가장 뛰어난 최고의 동과 중고층 매물로, 시세가 5~10% 더 비싸고 가장 먼저 거래됩니다.
+                    단지 내에서 조망, 일조권, 소음 차단, 역 접근성이 가장 뛰어난 최고의 동과 중고층 매물로, 시세가 5~10% 더 비쌉니다.
                   </p>
                 </div>
 
@@ -602,10 +732,365 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                 <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
                   <span className="font-black text-slate-900 text-sm block">💰 1주택 양도세 비과세</span>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    1주택자가 2년 이상 보유(취득 당시 조정지역은 2년 실거주) 후 매도 시, 양도가액 12억 원까지 양도소득세를 전액 면제받는 혜택입니다.
+                    1주택자가 2년 이상 보유(취득 당시 조정지역은 2년 실거주) 후 매도 시, 양도가액 12억 원까지 양도소득세를 전액 면제받습니다.
                   </p>
                 </div>
               </div>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 🧮 INTERACTIVE REGULATION CALCULATOR MODAL */}
+      {/* ========================================================================= */}
+      {isCalcOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-2xl w-full p-6 sm:p-8 space-y-6 animate-scaleUp my-8">
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-2xl bg-[#e8f8ee] text-[#029f45] flex items-center justify-center font-black">
+                  <Calculator className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg sm:text-xl font-black text-slate-900">
+                    실시간 대출 규제 & 자금 한도 계산기
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    내 소득과 자산에 맞춘 DSR 40%, 스트레스 DSR, LTV, 갭투자금을 즉시 시뮬레이션합니다.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setIsCalcOpen(false)}
+                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Calculator Mode Switcher */}
+            <div className="grid grid-cols-3 gap-2 bg-slate-100 p-1 rounded-2xl text-xs font-bold">
+              <button
+                onClick={() => setCalcMode('DSR')}
+                className={`py-2.5 rounded-xl transition cursor-pointer ${
+                  calcMode === 'DSR' ? 'bg-[#03c75a] text-white shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                1. DSR & 스트레스 DSR
+              </button>
+              <button
+                onClick={() => setCalcMode('LTV')}
+                className={`py-2.5 rounded-xl transition cursor-pointer ${
+                  calcMode === 'LTV' ? 'bg-[#0066ff] text-white shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                2. LTV 담보비율
+              </button>
+              <button
+                onClick={() => setCalcMode('GAP')}
+                className={`py-2.5 rounded-xl transition cursor-pointer ${
+                  calcMode === 'GAP' ? 'bg-amber-600 text-white shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                3. 전세가율 & 갭투자
+              </button>
+            </div>
+
+            {/* ========================================================================= */}
+            {/* CALCULATOR 1: DSR & STRESS DSR */}
+            {/* ========================================================================= */}
+            {calcMode === 'DSR' && (
+              <div className="space-y-5 animate-fadeIn">
+                {/* Inputs */}
+                <div className="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs">
+                  {/* Income Slider */}
+                  <div>
+                    <div className="flex justify-between items-center mb-1.5 font-bold">
+                      <span className="text-slate-700">가구 연소득 (세전 총소득)</span>
+                      <span className="text-base font-black text-[#029f45]">{annualIncome.toLocaleString()}만 원 ({(annualIncome / 10000).toFixed(1)}억)</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={3000}
+                      max={25000}
+                      step={500}
+                      value={annualIncome}
+                      onChange={(e) => setAnnualIncome(Number(e.target.value))}
+                      className="w-full accent-[#03c75a]"
+                    />
+                    <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                      <span>3,000만</span>
+                      <span>8,000만</span>
+                      <span>1.5억</span>
+                      <span>2.5억</span>
+                    </div>
+                  </div>
+
+                  {/* Interest Rate & Loan Period */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">기본 대출 금리 (%)</label>
+                      <input
+                        type="number"
+                        step={0.1}
+                        min={2.0}
+                        max={8.0}
+                        value={interestRate}
+                        onChange={(e) => setInterestRate(Number(e.target.value))}
+                        className="w-full bg-white p-2.5 rounded-xl border border-slate-200 font-bold text-slate-900"
+                      />
+                    </div>
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">대출 상환 만기</label>
+                      <select
+                        value={loanPeriodYears}
+                        onChange={(e) => setLoanPeriodYears(Number(e.target.value))}
+                        className="w-full bg-white p-2.5 rounded-xl border border-slate-200 font-bold text-slate-900"
+                      >
+                        <option value={30}>30년 만기 (원리금균등)</option>
+                        <option value={35}>35년 만기 (원리금균등)</option>
+                        <option value={40}>40년 만기 (원리금균등)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Other Debt & Stress DSR Toggle */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">기존 기타 대출 월 상환액 (만원)</label>
+                      <input
+                        type="number"
+                        min={0}
+                        max={500}
+                        step={10}
+                        value={otherMonthlyDebt}
+                        onChange={(e) => setOtherMonthlyDebt(Number(e.target.value))}
+                        className="w-full bg-white p-2.5 rounded-xl border border-slate-200 font-bold text-slate-900"
+                        placeholder="0"
+                      />
+                      <span className="text-[10px] text-slate-400 mt-0.5 block">신용대출/자동차할부 원리금</span>
+                    </div>
+
+                    <div className="flex flex-col justify-end">
+                      <label className="flex items-center gap-2 p-2.5 bg-white rounded-xl border border-slate-200 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={applyStressDsr}
+                          onChange={(e) => setApplyStressDsr(e.target.checked)}
+                          className="w-4 h-4 accent-[#03c75a]"
+                        />
+                        <span className="text-xs font-bold text-slate-800">
+                          스트레스 DSR 2단계 (+1.2%p 가산)
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Calculation Result Display */}
+                <div className="p-5 rounded-2xl bg-gradient-to-br from-[#e8f8ee] to-emerald-50/50 border border-[#03c75a]/30 space-y-3">
+                  <div className="flex items-center justify-between text-xs text-slate-600 font-medium">
+                    <span>연간 DSR 40% 법적 원리금 상환 한도:</span>
+                    <strong className="text-slate-900 font-black">
+                      연 {maxYearlyPaymentDsr40.toLocaleString()}만 원 (월 {Math.round(maxYearlyPaymentDsr40 / 12).toLocaleString()}만 원)
+                    </strong>
+                  </div>
+
+                  <div className="pt-2 border-t border-[#03c75a]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                      <span className="text-xs font-bold text-slate-600">
+                        {applyStressDsr ? '⚡ 스트레스 DSR 적용 시 최대 대출 가능액:' : '🏦 일반 DSR 기준 최대 대출 가능액:'}
+                      </span>
+                      <div className="text-2xl sm:text-3xl font-black text-[#029f45]">
+                        약 {(maxLoanDsrPrincipal / 10000).toFixed(2)}억 원
+                        <span className="text-sm font-bold text-slate-700 ml-1.5">
+                          ({maxLoanDsrPrincipal.toLocaleString()}만 원)
+                        </span>
+                      </div>
+                    </div>
+
+                    {applyStressDsr && stressReductionAmount > 0 && (
+                      <div className="text-left sm:text-right bg-white p-2.5 rounded-xl border border-rose-200">
+                        <span className="text-[10px] text-rose-600 font-bold block">가산금리로 인한 한도 축소:</span>
+                        <span className="text-xs font-black text-rose-700">
+                          -{(stressReductionAmount / 10000).toFixed(2)}억 원 감소
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* CALCULATOR 2: LTV */}
+            {/* ========================================================================= */}
+            {calcMode === 'LTV' && (
+              <div className="space-y-5 animate-fadeIn">
+                <div className="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs">
+                  {/* House Price Slider */}
+                  <div>
+                    <div className="flex justify-between items-center mb-1.5 font-bold">
+                      <span className="text-slate-700">매수 희망 주택 가격 (KB시세 기준)</span>
+                      <span className="text-base font-black text-[#0066ff]">{(housePrice / 10000).toFixed(1)}억 원 ({housePrice.toLocaleString()}만 원)</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={30000}
+                      max={300000}
+                      step={5000}
+                      value={housePrice}
+                      onChange={(e) => setHousePrice(Number(e.target.value))}
+                      className="w-full accent-[#0066ff]"
+                    />
+                    <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                      <span>3억</span>
+                      <span>10억</span>
+                      <span>20억</span>
+                      <span>30억</span>
+                    </div>
+                  </div>
+
+                  {/* LTV Rate Selector */}
+                  <div className="pt-2">
+                    <label className="font-bold text-slate-700 block mb-1.5">적용 LTV 담보 비율</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { rate: 70, label: '70% (생애최초·무주택 비규제)' },
+                        { rate: 60, label: '60% (1주택 비규제지역)' },
+                        { rate: 50, label: '50% (투기과열·강남3구/용산)' },
+                      ].map((item) => (
+                        <button
+                          key={item.rate}
+                          type="button"
+                          onClick={() => setLtvRate(item.rate)}
+                          className={`p-2.5 rounded-xl border text-xs font-bold transition cursor-pointer text-left ${
+                            ltvRate === item.rate
+                              ? 'bg-[#0066ff] text-white border-[#0066ff] shadow-xs'
+                              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                          }`}
+                        >
+                          <span className="block font-black text-sm">{item.rate}%</span>
+                          <span className="text-[10px] opacity-80">{item.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Result */}
+                <div className="p-5 rounded-2xl bg-gradient-to-br from-[#edf4ff] to-blue-50/50 border border-[#0066ff]/30 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <span className="text-xs font-bold text-slate-600 block">LTV 기준 최대 대출 한도:</span>
+                      <div className="text-2xl sm:text-3xl font-black text-[#0066ff] mt-0.5">
+                        {(maxLoanLtv / 10000).toFixed(2)}억 원
+                      </div>
+                      <span className="text-[11px] text-slate-500 font-medium">({maxLoanLtv.toLocaleString()}만 원)</span>
+                    </div>
+
+                    <div className="pt-3 sm:pt-0 sm:border-l sm:border-blue-200 sm:pl-4">
+                      <span className="text-xs font-bold text-slate-600 block">매수 시 필요한 최소 순현금:</span>
+                      <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-0.5">
+                        약 {(minRequiredCashLtv / 10000).toFixed(2)}억 원
+                      </div>
+                      <span className="text-[11px] text-slate-500 font-medium">+ 취득세 등 부대비용 약 {(estAcquisitionTax / 10000).toFixed(2)}억 원 별도</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* CALCULATOR 3: GAP & JEONSE */}
+            {/* ========================================================================= */}
+            {calcMode === 'GAP' && (
+              <div className="space-y-5 animate-fadeIn">
+                <div className="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs">
+                  {/* House Price */}
+                  <div>
+                    <div className="flex justify-between items-center mb-1 font-bold">
+                      <span className="text-slate-700">매매 가격</span>
+                      <span className="text-sm font-black text-slate-900">{(gapBuyPrice / 10000).toFixed(1)}억 ({gapBuyPrice.toLocaleString()}만 원)</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={30000}
+                      max={250000}
+                      step={2000}
+                      value={gapBuyPrice}
+                      onChange={(e) => {
+                        const val = Number(e.target.value);
+                        setGapBuyPrice(val);
+                        if (gapJeonsePrice > val) setGapJeonsePrice(Math.round(val * 0.65));
+                      }}
+                      className="w-full accent-amber-600"
+                    />
+                  </div>
+
+                  {/* Jeonse Price */}
+                  <div>
+                    <div className="flex justify-between items-center mb-1 font-bold">
+                      <span className="text-slate-700">전세 보증금</span>
+                      <span className="text-sm font-black text-amber-700">{(gapJeonsePrice / 10000).toFixed(1)}억 ({gapJeonsePrice.toLocaleString()}만 원)</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={10000}
+                      max={gapBuyPrice}
+                      step={1000}
+                      value={gapJeonsePrice}
+                      onChange={(e) => setGapJeonsePrice(Number(e.target.value))}
+                      className="w-full accent-amber-600"
+                    />
+                  </div>
+                </div>
+
+                {/* Gap Result */}
+                <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50/50 border border-amber-300 space-y-3">
+                  <div className="flex items-center justify-between text-xs text-slate-700 font-medium">
+                    <span>이 단지의 전세가율:</span>
+                    <strong className="text-amber-800 font-black text-base">
+                      {gapJeonseRatio}%
+                      <span className="text-xs font-normal text-slate-600 ml-1.5">
+                        {Number(gapJeonseRatio) >= 65 ? '(안정적인 실거주 지지선)' : '(매매가 대비 갭이 큰 편)'}
+                      </span>
+                    </strong>
+                  </div>
+
+                  <div className="pt-2 border-t border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                      <span className="text-xs font-bold text-slate-700">필요한 순수 갭투자금 (현금):</span>
+                      <div className="text-2xl sm:text-3xl font-black text-amber-700">
+                        {(pureGapCash / 10000).toFixed(2)}억 원
+                        <span className="text-xs font-bold text-slate-600 ml-1">({pureGapCash.toLocaleString()}만 원)</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-white p-2.5 rounded-xl border border-amber-200 text-xs">
+                      <span className="text-[10px] text-slate-500 block">취득세(약 3.3%) 포함 총 필요 자본:</span>
+                      <span className="font-black text-slate-900">
+                        약 {(totalGapNeedCash / 10000).toFixed(2)}억 원
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Modal Footer Close */}
+            <div className="pt-2 flex justify-end">
+              <button
+                onClick={() => setIsCalcOpen(false)}
+                className="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition cursor-pointer"
+              >
+                닫기
+              </button>
             </div>
 
           </div>
