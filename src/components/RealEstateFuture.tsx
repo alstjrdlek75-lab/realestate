@@ -137,104 +137,6 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
         note: '복합환승 왕숙역 북동측 도보 5분 거리의 84㎡ 중형 위주 최선호 공공분양 단지',
         pinPos: { x: 77, y: 13 }
-      },
-      {
-        blockCode: '왕숙1 B-2 블록',
-        shortCode: 'B-2',
-        supplyType: '공공분양',
-        units: 587,
-        sizes: '전용 74㎡, 84㎡',
-        priceEstimate: '74㎡ 약 4.4억 / 84㎡ 약 5.1억',
-        stationDistance: '신설역 도보 7분 (초품아)',
-        featureBadge: '🎒 초품아 & 근린공원',
-        progressStatus: '2025년 본청약',
-        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '단지 바로 옆 초등학교와 근린공원을 품은 쾌적한 84㎡ 주거 블록',
-        pinPos: { x: 75, y: 17 }
-      },
-      {
-        blockCode: '왕숙1 A-1 블록',
-        shortCode: 'A-1',
-        supplyType: '공공분양',
-        units: 583,
-        sizes: '전용 59㎡',
-        priceEstimate: '59㎡ 약 3.8억~4.0억',
-        stationDistance: '북부 신설역 도보 6분',
-        featureBadge: '💰 실속 소형 59㎡',
-        progressStatus: '본청약 준비 중',
-        progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
-        note: '왕숙1 북단 진접 방면 진입부 위치, 가성비가 가장 뛰어난 실속 59㎡ 단지',
-        pinPos: { x: 72, y: 8 }
-      },
-      {
-        blockCode: '왕숙1 S-8 블록',
-        shortCode: 'S-8',
-        supplyType: '공공분양',
-        units: 680,
-        sizes: '전용 74㎡, 84㎡',
-        priceEstimate: '84㎡ 약 5.1억',
-        stationDistance: '중심상업지구 도보 5분',
-        featureBadge: '🛍️ 중심상권 슬세권',
-        progressStatus: '본청약 예정',
-        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '중심상업지구 북측 맞닿은 입지로 쇼핑·편의시설 이용이 가장 편리한 블록',
-        pinPos: { x: 60, y: 44 }
-      },
-      {
-        blockCode: '왕숙1 S-19 블록',
-        shortCode: 'S-19',
-        supplyType: '공공분양',
-        units: 640,
-        sizes: '전용 74㎡, 84㎡',
-        priceEstimate: '84㎡ 약 5.2억',
-        stationDistance: '동측 완충녹지 도보 2분',
-        featureBadge: '🌿 숲세권 힐링단지',
-        progressStatus: '본청약 예정',
-        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '동측 대규모 녹지축과 중앙공원에 바로 연결되는 쾌적한 숲세권 주거 단지',
-        pinPos: { x: 73, y: 31 }
-      },
-      {
-        blockCode: '왕숙1 A-24 블록',
-        shortCode: 'A-24',
-        supplyType: '신혼희망타운',
-        units: 602,
-        sizes: '전용 55㎡',
-        priceEstimate: '55㎡ 약 3.4억~3.6억',
-        stationDistance: '유치원·초등학교 인접',
-        featureBadge: '👶 신혼희망타운 보육특화',
-        progressStatus: '착공 및 본청약',
-        progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
-        note: '남부 진건 생활권 인접, 단지 내 국공립 어린이집과 초등학교 통학 안전 완비',
-        pinPos: { x: 72, y: 68 }
-      },
-      {
-        blockCode: '왕숙1 A-22 블록',
-        shortCode: 'A-22',
-        supplyType: '공공분양',
-        units: 510,
-        sizes: '전용 59㎡, 74㎡',
-        priceEstimate: '59㎡ 약 3.9억 / 74㎡ 약 4.5억',
-        stationDistance: '왕숙천 수변공원 도보 3분',
-        featureBadge: '🌊 왕숙천 리버뷰',
-        progressStatus: '지구조성 중',
-        progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
-        note: '왕숙천 서측 수변생태공원 조망권과 산책로를 바로 누리는 쾌적 입지',
-        pinPos: { x: 48, y: 73 }
-      },
-      {
-        blockCode: '왕숙2 A-4 블록',
-        shortCode: '왕숙2 A-4',
-        supplyType: '공공분양',
-        units: 520,
-        sizes: '전용 59㎡, 74㎡, 84㎡',
-        priceEstimate: '59㎡ 약 4.1억 / 84㎡ 약 5.5억',
-        stationDistance: '경의중앙선 신설역 도보 5분',
-        featureBadge: '🎨 문화예술 복합축 대장',
-        progressStatus: '본청약 진행 중',
-        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: '왕숙2지구의 시세 리딩 단지로 다산신도시 생활권을 바로 공유하는 최상급 입지',
-        pinPos: { x: 50, y: 88 }
       }
     ]
   },
@@ -256,7 +158,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '토지 보상 100% 완료 후 지장물 철거 및 단지 조성 공사 순항 중. 3호선 송파하남선 기본계획 확정.',
     proTip: '강남(GBD) 및 송파와 가장 가까운 입지로 3기 신도시 중 실수요자 선호도 1위. 3호선 개통 시 수서·양재 20분대 진입.',
     naverNewsQuery: '하남 교산 3기 신도시 3호선 송파하남선',
-    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    officialBlueprintUrl: '/maps/hanam_gyosan_plan.jpg',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B5%90%EC%82%B0%EC%8B%A0%EB%8F%84%EC%8B%9C',
     lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 670, y: 400, gangnamTime: '수서 15분 / 양재 22분', seoulTime: '잠실 15분' },
@@ -273,7 +175,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '2025년 본청약 예정',
         progressStatusColor: 'bg-[#0066ff] text-white',
         note: '1,115세대 랜드마크 대단지로 3호선 초역세권과 상업지구를 모두 갖춘 최고 핵심 블록',
-        pinPos: { x: 50, y: 40 }
+        pinPos: { x: 45, y: 32 }
       },
       {
         blockCode: '교산 B-1 블록',
@@ -287,7 +189,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '지구조성 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
         note: '민간 1군 브랜드가 시공 예정인 84㎡ 중심 하이엔드 공원 조망 단지',
-        pinPos: { x: 60, y: 55 }
+        pinPos: { x: 62, y: 48 }
       }
     ]
   },
@@ -309,7 +211,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '2024년 말 첫 본청약(A4, S5, S6블록) 진행 시작. GTX-A 창릉역 신설 확정 및 공사진행.',
     proTip: 'GTX-A 개통 시 서울역 8분, 삼성역 13분 컷. 상암DMC 직주근접 수요와 일산·은평 거주민의 최고 선호지.',
     naverNewsQuery: '고양 창릉 3기 신도시 GTX 창릉역',
-    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    officialBlueprintUrl: '/maps/goyang_changreung_plan.jpg',
     namuWikiUrl: 'https://namu.wiki/w/%EC%B0%BD%EB%A6%89%EC%8B%A0%EB%8F%84%EC%8B%9C',
     lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 340, y: 190, gangnamTime: '삼성역 13분 (GTX-A)', seoulTime: '서울역 8분' },
@@ -326,7 +228,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '본청약 완료/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
         note: 'GTX-A 창릉역을 걸어서 이용하는 창릉 최고 대장 블록. 삼성역 10분대 직결',
-        pinPos: { x: 52, y: 48 }
+        pinPos: { x: 52, y: 46 }
       }
     ]
   },
@@ -348,7 +250,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '3기 신도시 중 가장 빠른 2024년 상반기 단지 착공 완료. 대장홍대선 민자적격성 통과 및 연내 조기 착공 추진.',
     proTip: '3기 신도시 중 유일하게 대기업(SK그룹) 대규모 입주가 확정되어 자족 기능이 가장 확실한 앵커 단지.',
     naverNewsQuery: '부천 대장 3기 신도시 SK 대장홍대선',
-    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    officialBlueprintUrl: '/maps/bucheon_daejang_plan.jpg',
     namuWikiUrl: 'https://namu.wiki/w/%EB%8C%80%EC%9E%A5%EC%8B%A0%EB%8F%84%EC%8B%9C',
     lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 230, y: 350, gangnamTime: '여의도 20분 / 강남 40분', seoulTime: '홍대입구 20분 (대장홍대선)' },
@@ -365,7 +267,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '2025년 본청약 예정',
         progressStatusColor: 'bg-[#03c75a] text-white',
         note: '홍대입구역 20분 컷 대장홍대선 초역세권으로 마곡/상암 직주근접 최고 입지',
-        pinPos: { x: 45, y: 45 }
+        pinPos: { x: 46, y: 42 }
       }
     ]
   },
@@ -404,7 +306,35 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '본청약 완료 / 2026 입주',
         progressStatusColor: 'bg-[#03c75a] text-white',
         note: '3기 신도시 전체 중 가장 먼저 2024년 9월 본청약 완료. 2026년 12월 첫 입주 개시',
-        pinPos: { x: 48, y: 50 }
+        pinPos: { x: 48, y: 45 }
+      },
+      {
+        blockCode: '계양 A-3 블록',
+        shortCode: 'A-3',
+        supplyType: '신혼희망타운',
+        units: 359,
+        sizes: '전용 55㎡',
+        priceEstimate: '55㎡ 약 3.9억',
+        stationDistance: '유치원·초등학교 인접',
+        featureBadge: '👶 3기 1호 신희타',
+        progressStatus: '본청약 완료 / 2026 입주',
+        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
+        note: '가장 빠른 입주 시기를 자랑하며 1.3% 고정금리 수익공유형 모기지 혜택 적용',
+        pinPos: { x: 58, y: 42 }
+      },
+      {
+        blockCode: '계양 A-1 블록',
+        shortCode: 'A-1',
+        supplyType: '공공분양',
+        units: 612,
+        sizes: '전용 59㎡, 74㎡, 84㎡',
+        priceEstimate: '84㎡ 약 5.9억 예상',
+        stationDistance: '인천 1호선 박촌역 환승 연계',
+        featureBadge: '🚇 지하철 환승권',
+        progressStatus: '착공 및 분양 준비',
+        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
+        note: '기존 박촌역 인프라와 신도시 테크노밸리 자족기능을 동시에 누리는 입지',
+        pinPos: { x: 38, y: 30 }
       }
     ]
   },
@@ -426,7 +356,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '2024년 8월 국토부 지구계획 승인 완료. 2025~2026년 주택 분양 착수 예정.',
     proTip: '서초구 양재동과 맞닿아 사실상 강남 생활권. 3기 신도시 중 시세 상승 잠재력과 평당 분양가가 가장 높은 최상급지.',
     naverNewsQuery: '과천 과천지구 3기 신도시 분양 4호선',
-    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    officialBlueprintUrl: '/maps/gwacheon_gwacheon_plan.jpg',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B3%BC%EC%B2%9C%EA%B3%BC%EC%B2%9C%EC%A7%80%EA%B5%AC',
     lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 470, y: 470, gangnamTime: '양재 8분 / 강남역 15분', seoulTime: '사당 7분 (4호선)' },
@@ -443,7 +373,35 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '2025~2026년 분양 예정',
         progressStatusColor: 'bg-[#0066ff] text-white',
         note: '서초구 양재동 바로 옆! 사당·강남 10분대 진입 가능한 3기 신도시 최고의 로또 블록',
-        pinPos: { x: 50, y: 40 }
+        pinPos: { x: 46, y: 35 }
+      },
+      {
+        blockCode: '과천 A-2 블록',
+        shortCode: 'A-2',
+        supplyType: '신혼희망타운',
+        units: 480,
+        sizes: '전용 55㎡, 59㎡',
+        priceEstimate: '55㎡ 약 5.8억 예상',
+        stationDistance: '양재천 수변공원 조망',
+        featureBadge: '🌿 양재천 에코라이프',
+        progressStatus: '지구조성 준비 중',
+        progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
+        note: '양재천 자전거 도로와 직결되며 서초구 우면산 R&CD 배후단지로 신혼부부 청약 1순위',
+        pinPos: { x: 58, y: 48 }
+      },
+      {
+        blockCode: '과천 B-1 블록',
+        shortCode: 'B-1',
+        supplyType: '민간분양',
+        units: 850,
+        sizes: '전용 84㎡, 105㎡, 120㎡',
+        priceEstimate: '84㎡ 약 10억~11억 예상',
+        stationDistance: '위례과천선 / 4호선 환승역세권',
+        featureBadge: '🏢 하이엔드 대단지',
+        progressStatus: '지구계획 승인 완료',
+        progressStatusColor: 'bg-purple-50 text-purple-700 border-purple-200',
+        note: '1군 메이저 브랜드가 들어설 대형 평형 단지로 준공 후 20억 클럽 진입 유력',
+        pinPos: { x: 52, y: 65 }
       }
     ]
   }
@@ -655,7 +613,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] text-[11px] font-black mb-1">
                     <FileText className="w-3 h-3" />
-                    <span>남양주 왕숙 공공주택지구 토지이용계획(변경)도 정밀 원본</span>
+                    <span>{selectedTown.name} 공공주택지구 공식 토지이용계획도 원본</span>
                   </div>
                   <h3 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
                     <span>{selectedTown.name} 공식 마스터플랜 도면 뷰어</span>
