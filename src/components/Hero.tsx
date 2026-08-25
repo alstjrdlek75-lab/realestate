@@ -83,22 +83,19 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
       <div className="mt-14 max-w-5xl mx-auto">
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-10 relative overflow-hidden">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center font-black shrink-0">
-                <Scale className="w-5 h-5" />
-              </div>
-              <div>
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-5 border-b border-slate-100">
+            <div>
+              <div className="mb-2">
                 <span className="text-[11px] font-black text-amber-600 tracking-wider uppercase bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
                   부동산 매수 필독 원칙
                 </span>
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-1">
-                  왜 '살고 싶은 곳(Living)'과 '사야 하는 곳(Buying)'을 분리해야 할까요?
-                </h2>
               </div>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-normal whitespace-nowrap">
+                왜 '살고 싶은 곳(Living)'과 '사야 하는 곳(Buying)'을 분리해야 할까요?
+              </h2>
             </div>
 
-            <span className="text-xs text-slate-400 font-medium">
+            <span className="text-xs text-slate-400 font-medium whitespace-nowrap shrink-0">
               대한민국 가계 자산의 70%가 묶이는 부동산의 본질
             </span>
           </div>
