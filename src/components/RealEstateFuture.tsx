@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Building2, 
   Sparkles, 
@@ -27,8 +27,14 @@ import {
   Navigation,
   Info,
   Maximize2,
+  Minimize2,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
   Eye,
-  Map as MapIcon
+  Map as MapIcon,
+  ShieldCheck,
+  FileText
 } from 'lucide-react';
 
 interface RealEstateFutureProps {
@@ -36,13 +42,13 @@ interface RealEstateFutureProps {
 }
 
 type FutureTab = 'NEW_TOWNS' | 'FUTURE_NEWS' | 'GLOSSARY';
-type MapViewType = 'METRO' | 'DISTRICT_BLOCKS';
+type MapViewType = 'DISTRICT_BLOCKS' | 'METRO';
 type CalcMode = 'DSR' | 'LTV' | 'GAP';
 
 interface BlockDetail {
   blockCode: string;
   shortCode: string;
-  supplyType: '공공분양' | '신혼희망타운' | '민간분양';
+  supplyType: '공공분양' | '신혼희망타운' | '민간분양' | '주상복합';
   units: number;
   sizes: string;
   priceEstimate: string;
@@ -51,8 +57,8 @@ interface BlockDetail {
   progressStatus: string;
   progressStatusColor: string;
   note: string;
-  // Spatial Coords in District Master Plan SVG (0~500, 0~650)
-  spatial: { x: number; y: number; w: number; h: number; color: string };
+  // Exact percentage location on Official LH Master Plan Blueprint (top: 0~100%, left: 0~100%)
+  pinPos: { x: number; y: number };
 }
 
 interface NewTownDetail {
@@ -61,6 +67,8 @@ interface NewTownDetail {
   shortName: string;
   location: string;
   units: string;
+  areaSize: string;
+  plannedPopulation: string;
   expectedMoveIn: string;
   statusTag: string;
   statusTagColor: string;
@@ -71,8 +79,10 @@ interface NewTownDetail {
   currentStatus: string;
   proTip: string;
   naverNewsQuery: string;
+  officialBlueprintUrl: string;
+  namuWikiUrl: string;
+  lhOfficialUrl: string;
   mapCoords: { x: number; y: number; gangnamTime: string; seoulTime: string };
-  districtMapType: string;
   blocks: BlockDetail[];
 }
 
@@ -82,19 +92,23 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     name: '남양주 왕숙 (1·2지구)',
     shortName: '남양주 왕숙',
     location: '경기도 남양주시 진접읍·진건읍·일패동·이패동',
-    units: '약 66,000호 (3기 신도시 최대 규모)',
-    expectedMoveIn: '2027~2028년 순차 입주 목표',
-    statusTag: '조성공사 & 본청약 진행',
+    units: '약 66,000호 (왕숙1 52,000호 + 왕숙2 14,000호)',
+    areaSize: '총 1,104만㎡ (왕숙1: 865만㎡, 왕숙2: 239만㎡)',
+    plannedPopulation: '약 16만 5천 명 (수도권 3기 신도시 최대)',
+    expectedMoveIn: '2027~2028년 순차 입주 개시',
+    statusTag: '공사 착공 & 본청약 진행',
     statusTagColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-    transitSummary: 'GTX-B(왕숙역), 9호선 연장(강동하남남양주선), 8호선 별내선 환승 연계, 경춘선·4호선',
-    transitLines: ['GTX-B', '지하철 9호선', '지하철 8호선', '경춘선', '수도권제1순환'],
+    transitSummary: 'GTX-B(왕숙역 신설, 서울역 15분), 9호선 연장(강동하남남양주선, 강남 25분), 8호선 별내선 환승, 4호선·경춘선·경의중앙선(왕숙2)',
+    transitLines: ['GTX-B', '지하철 9호선', '지하철 8호선 별내선', '경춘선', '경의중앙선', '수도권제1순환'],
     anchorCompanies: '카카오·판교급 IT·소프트웨어 R&D 기업, 바이오·메디컬 클러스터, 데이터센터 및 첨단 제조 융복합 단지',
     selfSufficientLand: '판교테크노밸리의 약 2배 규모 (약 140만㎡ 도시첨단산업단지 조성)',
-    currentStatus: '부지 조성 공사 본격 진행 중이며 2024~2025년 주요 블록 본청약 진행. 9호선 연장선 기본계획 승인 완료.',
-    proTip: '왕숙1은 GTX-B와 9호선이 교차하는 자족 첨단도시, 왕숙2는 경의중앙선과 문화예술 특화 주거단지로 조성됩니다.',
-    naverNewsQuery: '남양주 왕숙 3기 신도시 분양 9호선',
+    currentStatus: '부지 조성 공사 본격 진행 중이며 2024~2025년 주요 블록(A1, B1, A19, A24 등) 본청약 진행. 9호선 강동하남남양주선 기본계획 승인 완료.',
+    proTip: '왕숙1은 GTX-B와 9호선이 교차하는 복합환승 자족 첨단도시, 왕숙2는 경의중앙선과 문화예술 특화 주거단지로 조성됩니다.',
+    naverNewsQuery: '남양주 왕숙 3기 신도시 본청약 9호선',
+    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    namuWikiUrl: 'https://namu.wiki/w/%EC%99%95%EC%88%99%EC%8B%A0%EB%8F%84%EC%8B%9C',
+    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 670, y: 170, gangnamTime: '강남 25분 (9호선)', seoulTime: '서울역 15분 (GTX-B)' },
-    districtMapType: 'WANGSOOK',
     blocks: [
       {
         blockCode: '왕숙1 A-19 블록',
@@ -103,12 +117,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         units: 720,
         sizes: '전용 74㎡, 84㎡',
         priceEstimate: '74㎡ 약 4.6억 / 84㎡ 약 5.3억',
-        stationDistance: 'GTX-B·9호선 복합환승역 도보 4분 (중심상업지구 바로 앞)',
-        featureBadge: '👑 왕숙 최고 대장 로또 블록',
+        stationDistance: 'GTX-B / 9호선 왕숙역 도보 4분 (중심상업지구 바로 앞)',
+        featureBadge: '👑 왕숙 1위 대장 로또 블록',
         progressStatus: '본청약 준비 중',
         progressStatusColor: 'bg-rose-600 text-white',
-        note: '중심상업지구와 복합역세권 바로 앞! 토지이용계획도 정중앙의 핵심 대장 블록',
-        spatial: { x: 275, y: 280, w: 46, h: 32, color: '#f59e0b' }
+        note: '도면 중앙 중심상업지구와 복합환승역 바로 동측에 위치한 왕숙지구 최고의 핵심 대장 블록',
+        pinPos: { x: 65, y: 52 }
       },
       {
         blockCode: '왕숙1 B-1 블록',
@@ -118,11 +132,11 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         sizes: '전용 74㎡, 84㎡',
         priceEstimate: '74㎡ 약 4.5억 / 84㎡ 약 5.2억',
         stationDistance: 'GTX-B / 9호선 왕숙역 도보 5분 (초역세권)',
-        featureBadge: '🏆 핵심 대장 블록',
+        featureBadge: '🏆 핵심 초역세권 대장',
         progressStatus: '본청약 진행/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: 'GTX-B와 9호선 신설역 바로 앞 초역세권으로 왕숙지구 내 최고 선호도 1위',
-        spatial: { x: 300, y: 235, w: 42, h: 28, color: '#f59e0b' }
+        note: '복합환승 왕숙역 북동측 도보 5분 거리의 84㎡ 중형 위주 최선호 공공분양 단지',
+        pinPos: { x: 77, y: 13 }
       },
       {
         blockCode: '왕숙1 B-2 블록',
@@ -131,12 +145,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         units: 587,
         sizes: '전용 74㎡, 84㎡',
         priceEstimate: '74㎡ 약 4.4억 / 84㎡ 약 5.1억',
-        stationDistance: '9호선 신설역 도보 7분 (초품아)',
-        featureBadge: '🎒 초등학교 인접',
+        stationDistance: '신설역 도보 7분 (초품아)',
+        featureBadge: '🎒 초품아 & 근린공원',
         progressStatus: '2025년 본청약',
         progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '단지 바로 옆 초등학교와 근린공원을 품은 쾌적한 84㎡ 중형 위주 단지',
-        spatial: { x: 335, y: 95, w: 38, h: 30, color: '#f59e0b' }
+        note: '단지 바로 옆 초등학교와 근린공원을 품은 쾌적한 84㎡ 주거 블록',
+        pinPos: { x: 75, y: 17 }
       },
       {
         blockCode: '왕숙1 A-1 블록',
@@ -146,11 +160,25 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         sizes: '전용 59㎡',
         priceEstimate: '59㎡ 약 3.8억~4.0억',
         stationDistance: '북부 신설역 도보 6분',
-        featureBadge: '💰 실속 소형 평형',
+        featureBadge: '💰 실속 소형 59㎡',
         progressStatus: '본청약 준비 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
-        note: '북부 진접 방면 첫머리 입지로 가성비가 가장 뛰어난 실속 59㎡ 단지',
-        spatial: { x: 310, y: 40, w: 36, h: 26, color: '#fbbf24' }
+        note: '왕숙1 북단 진접 방면 진입부 위치, 가성비가 가장 뛰어난 실속 59㎡ 단지',
+        pinPos: { x: 72, y: 8 }
+      },
+      {
+        blockCode: '왕숙1 S-8 블록',
+        shortCode: 'S-8',
+        supplyType: '공공분양',
+        units: 680,
+        sizes: '전용 74㎡, 84㎡',
+        priceEstimate: '84㎡ 약 5.1억',
+        stationDistance: '중심상업지구 도보 5분',
+        featureBadge: '🛍️ 중심상권 슬세권',
+        progressStatus: '본청약 예정',
+        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
+        note: '중심상업지구 북측 맞닿은 입지로 쇼핑·편의시설 이용이 가장 편리한 블록',
+        pinPos: { x: 60, y: 44 }
       },
       {
         blockCode: '왕숙1 S-19 블록',
@@ -159,12 +187,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         units: 640,
         sizes: '전용 74㎡, 84㎡',
         priceEstimate: '84㎡ 약 5.2억',
-        stationDistance: '동측 공원축 인접',
+        stationDistance: '동측 완충녹지 도보 2분',
         featureBadge: '🌿 숲세권 힐링단지',
         progressStatus: '본청약 예정',
         progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '동측 대규모 완충 녹지와 중앙공원이 연결되는 쾌적한 주거 블록',
-        spatial: { x: 325, y: 175, w: 42, h: 28, color: '#f59e0b' }
+        note: '동측 대규모 녹지축과 중앙공원에 바로 연결되는 쾌적한 숲세권 주거 단지',
+        pinPos: { x: 73, y: 31 }
       },
       {
         blockCode: '왕숙1 A-24 블록',
@@ -174,11 +202,25 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         sizes: '전용 55㎡',
         priceEstimate: '55㎡ 약 3.4억~3.6억',
         stationDistance: '유치원·초등학교 인접',
-        featureBadge: '👶 보육 특화',
+        featureBadge: '👶 신혼희망타운 보육특화',
         progressStatus: '착공 및 본청약',
         progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
-        note: '남부 진건 생활권 인접, 단지 내 국공립 어린이집 완비된 신혼부부 특화 단지',
-        spatial: { x: 315, y: 425, w: 38, h: 28, color: '#34d399' }
+        note: '남부 진건 생활권 인접, 단지 내 국공립 어린이집과 초등학교 통학 안전 완비',
+        pinPos: { x: 72, y: 68 }
+      },
+      {
+        blockCode: '왕숙1 A-22 블록',
+        shortCode: 'A-22',
+        supplyType: '공공분양',
+        units: 510,
+        sizes: '전용 59㎡, 74㎡',
+        priceEstimate: '59㎡ 약 3.9억 / 74㎡ 약 4.5억',
+        stationDistance: '왕숙천 수변공원 도보 3분',
+        featureBadge: '🌊 왕숙천 리버뷰',
+        progressStatus: '지구조성 중',
+        progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
+        note: '왕숙천 서측 수변생태공원 조망권과 산책로를 바로 누리는 쾌적 입지',
+        pinPos: { x: 48, y: 73 }
       },
       {
         blockCode: '왕숙2 A-4 블록',
@@ -188,11 +230,11 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         sizes: '전용 59㎡, 74㎡, 84㎡',
         priceEstimate: '59㎡ 약 4.1억 / 84㎡ 약 5.5억',
         stationDistance: '경의중앙선 신설역 도보 5분',
-        featureBadge: '🎨 문화예술 복합축',
+        featureBadge: '🎨 문화예술 복합축 대장',
         progressStatus: '본청약 진행 중',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: '왕숙2지구의 시세 리딩 단지로 다산신도시 생활권을 바로 공유하는 입지',
-        spatial: { x: 230, y: 520, w: 48, h: 32, color: '#f59e0b' }
+        note: '왕숙2지구의 시세 리딩 단지로 다산신도시 생활권을 바로 공유하는 최상급 입지',
+        pinPos: { x: 50, y: 88 }
       }
     ]
   },
@@ -202,6 +244,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     shortName: '하남 교산',
     location: '경기도 하남시 천현동·교산동·춘궁동·덕풍동',
     units: '약 33,000호',
+    areaSize: '약 686만㎡',
+    plannedPopulation: '약 7만 8천 명',
     expectedMoveIn: '2028~2029년 순차 입주 목표',
     statusTag: '토지보상 완료 & 착공 순항',
     statusTagColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
@@ -212,8 +256,10 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '토지 보상 100% 완료 후 지장물 철거 및 단지 조성 공사 순항 중. 3호선 송파하남선 기본계획 확정.',
     proTip: '강남(GBD) 및 송파와 가장 가까운 입지로 3기 신도시 중 실수요자 선호도 1위. 3호선 개통 시 수서·양재 20분대 진입.',
     naverNewsQuery: '하남 교산 3기 신도시 3호선 송파하남선',
+    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    namuWikiUrl: 'https://namu.wiki/w/%EA%B5%90%EC%82%B0%EC%8B%A0%EB%8F%84%EC%8B%9C',
+    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 670, y: 400, gangnamTime: '수서 15분 / 양재 22분', seoulTime: '잠실 15분' },
-    districtMapType: 'GYOSAN',
     blocks: [
       {
         blockCode: '교산 A-2 블록',
@@ -227,7 +273,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '2025년 본청약 예정',
         progressStatusColor: 'bg-[#0066ff] text-white',
         note: '1,115세대 랜드마크 대단지로 3호선 초역세권과 상업지구를 모두 갖춘 최고 핵심 블록',
-        spatial: { x: 230, y: 160, w: 56, h: 36, color: '#f59e0b' }
+        pinPos: { x: 50, y: 40 }
       },
       {
         blockCode: '교산 B-1 블록',
@@ -241,35 +287,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '지구조성 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
         note: '민간 1군 브랜드가 시공 예정인 84㎡ 중심 하이엔드 공원 조망 단지',
-        spatial: { x: 290, y: 240, w: 50, h: 34, color: '#f59e0b' }
-      },
-      {
-        blockCode: '교산 A-1 블록',
-        shortCode: 'A-1',
-        supplyType: '신혼희망타운',
-        units: 450,
-        sizes: '전용 55㎡',
-        priceEstimate: '55㎡ 약 4.1억',
-        stationDistance: '초등학교 바로 앞 (초품아)',
-        featureBadge: '🎒 안심 통학권',
-        progressStatus: '착공 준비 중',
-        progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
-        note: '도로를 건너지 않는 초품아 단지로 신혼부부 사전청약 당시 높은 경쟁률 기록',
-        spatial: { x: 170, y: 140, w: 44, h: 30, color: '#34d399' }
-      },
-      {
-        blockCode: '교산 B-3 블록',
-        shortCode: 'B-3',
-        supplyType: '공공분양',
-        units: 750,
-        sizes: '전용 74㎡, 84㎡',
-        priceEstimate: '84㎡ 약 6.5억',
-        stationDistance: '3호선 연장역 도보 6분',
-        featureBadge: '🏢 중대형 위주',
-        progressStatus: '2025년 하반기 본청약',
-        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '송파 접근성이 가장 뛰어나며 자족 첨단R&D 단지와 도보로 출퇴근 가능한 위치',
-        spatial: { x: 260, y: 350, w: 52, h: 34, color: '#f59e0b' }
+        pinPos: { x: 60, y: 55 }
       }
     ]
   },
@@ -279,6 +297,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     shortName: '고양 창릉',
     location: '경기도 고양시 덕양구 원흥동·동산동·용두동·화전동',
     units: '약 38,000호',
+    areaSize: '약 789만㎡',
+    plannedPopulation: '약 9만 2천 명',
     expectedMoveIn: '2027~2028년 순차 입주 목표',
     statusTag: 'GTX-A 창릉역 확정 & 본청약 개시',
     statusTagColor: 'bg-purple-50 text-purple-700 border-purple-200',
@@ -289,8 +309,10 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '2024년 말 첫 본청약(A4, S5, S6블록) 진행 시작. GTX-A 창릉역 신설 확정 및 공사진행.',
     proTip: 'GTX-A 개통 시 서울역 8분, 삼성역 13분 컷. 상암DMC 직주근접 수요와 일산·은평 거주민의 최고 선호지.',
     naverNewsQuery: '고양 창릉 3기 신도시 GTX 창릉역',
+    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    namuWikiUrl: 'https://namu.wiki/w/%EC%B0%BD%EB%A6%89%EC%8B%A0%EB%8F%84%EC%8B%9C',
+    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 340, y: 190, gangnamTime: '삼성역 13분 (GTX-A)', seoulTime: '서울역 8분' },
-    districtMapType: 'CHANGREUNG',
     blocks: [
       {
         blockCode: '창릉 S-5 블록',
@@ -304,49 +326,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '본청약 완료/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
         note: 'GTX-A 창릉역을 걸어서 이용하는 창릉 최고 대장 블록. 삼성역 10분대 직결',
-        spatial: { x: 220, y: 220, w: 54, h: 36, color: '#f59e0b' }
-      },
-      {
-        blockCode: '창릉 S-6 블록',
-        shortCode: 'S-6',
-        supplyType: '공공분양',
-        units: 407,
-        sizes: '전용 59㎡, 74㎡, 84㎡',
-        priceEstimate: '59㎡ 약 4.8억 / 84㎡ 약 6.6억',
-        stationDistance: 'GTX-A 창릉역 도보 8분 & 수변공원',
-        featureBadge: '🌿 창릉천 수변 조망',
-        progressStatus: '본청약 완료/착공',
-        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: '창릉천 수변공원 영구 조망과 초등학교를 동시에 품은 최고급 주거 입지',
-        spatial: { x: 285, y: 230, w: 48, h: 32, color: '#f59e0b' }
-      },
-      {
-        blockCode: '창릉 A-4 블록',
-        shortCode: 'A-4',
-        supplyType: '공공분양',
-        units: 573,
-        sizes: '전용 55㎡, 59㎡',
-        priceEstimate: '55㎡ 약 4.3억 / 59㎡ 약 4.7억',
-        stationDistance: '고양은평선 신설역 도보 6분',
-        featureBadge: '💰 실속 중소형',
-        progressStatus: '본청약 완료',
-        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '2024년 말 본청약 접수 완료. 서부선과 직결되는 고양은평선 수혜 단지',
-        spatial: { x: 180, y: 120, w: 46, h: 30, color: '#fbbf24' }
-      },
-      {
-        blockCode: '창릉 B-1 블록',
-        shortCode: 'B-1',
-        supplyType: '민간분양',
-        units: 680,
-        sizes: '전용 84㎡, 101㎡',
-        priceEstimate: '84㎡ 약 7.2억 예상',
-        stationDistance: '창릉 중심상업지구 인접',
-        featureBadge: '🏢 대형 평형 구성',
-        progressStatus: '부지 조성 중',
-        progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
-        note: '민간 브랜드 시공 예정으로 중대형 평형을 선호하는 갈아타기 수요 최우선 타겟',
-        spatial: { x: 260, y: 310, w: 52, h: 34, color: '#f59e0b' }
+        pinPos: { x: 52, y: 48 }
       }
     ]
   },
@@ -356,6 +336,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     shortName: '부천 대장',
     location: '경기도 부천시 오정구 대장동·삼정동·오정동',
     units: '약 20,000호',
+    areaSize: '약 343만㎡',
+    plannedPopulation: '약 4만 8천 명',
     expectedMoveIn: '2027~2028년 순차 입주 목표',
     statusTag: 'SK 1조 R&D 센터 유치 확정',
     statusTagColor: 'bg-rose-50 text-rose-700 border-rose-200',
@@ -366,8 +348,10 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '3기 신도시 중 가장 빠른 2024년 상반기 단지 착공 완료. 대장홍대선 민자적격성 통과 및 연내 조기 착공 추진.',
     proTip: '3기 신도시 중 유일하게 대기업(SK그룹) 대규모 입주가 확정되어 자족 기능이 가장 확실한 앵커 단지.',
     naverNewsQuery: '부천 대장 3기 신도시 SK 대장홍대선',
+    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    namuWikiUrl: 'https://namu.wiki/w/%EB%8C%80%EC%9E%A5%EC%8B%A0%EB%8F%84%EC%8B%9C',
+    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 230, y: 350, gangnamTime: '여의도 20분 / 강남 40분', seoulTime: '홍대입구 20분 (대장홍대선)' },
-    districtMapType: 'DAEJANG',
     blocks: [
       {
         blockCode: '대장 A-7 블록',
@@ -381,35 +365,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '2025년 본청약 예정',
         progressStatusColor: 'bg-[#03c75a] text-white',
         note: '홍대입구역 20분 컷 대장홍대선 초역세권으로 마곡/상암 직주근접 최고 입지',
-        spatial: { x: 200, y: 190, w: 48, h: 32, color: '#f59e0b' }
-      },
-      {
-        blockCode: '대장 A-8 블록',
-        shortCode: 'A-8',
-        supplyType: '공공분양',
-        units: 560,
-        sizes: '전용 59㎡, 74㎡, 84㎡',
-        priceEstimate: '59㎡ 약 4.3억 / 84㎡ 약 5.8억',
-        stationDistance: '중심상업지구 도보 3분',
-        featureBadge: '🛍️ 슬세권 상권',
-        progressStatus: '착공 및 본청약 준비',
-        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '대장신도시 중심 상업지구와 복합커뮤니티 센터가 바로 연결되는 편리한 단지',
-        spatial: { x: 260, y: 210, w: 50, h: 34, color: '#f59e0b' }
-      },
-      {
-        blockCode: '대장 A-5 블록',
-        shortCode: 'A-5',
-        supplyType: '신혼희망타운',
-        units: 591,
-        sizes: '전용 46㎡, 55㎡',
-        priceEstimate: '55㎡ 약 3.8억',
-        stationDistance: 'SK 그린테크노캠퍼스 바로 앞',
-        featureBadge: '🏢 SK 직주일치',
-        progressStatus: '본청약 완료/착공',
-        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: 'SK그룹 R&D 캠퍼스 도보 3분 거리로 고소득 연구원 배후 임대 및 실거주 수요 탄탄',
-        spatial: { x: 310, y: 140, w: 48, h: 30, color: '#34d399' }
+        pinPos: { x: 45, y: 45 }
       }
     ]
   },
@@ -419,6 +375,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     shortName: '인천 계양',
     location: '인천광역시 계양구 귤현동·동양동·박촌동',
     units: '약 17,000호',
+    areaSize: '약 333만㎡',
+    plannedPopulation: '약 4만 2천 명',
     expectedMoveIn: '2026년 말 첫 입주 개시 (3기 중 최속)',
     statusTag: '3기 최초 본청약 완료 & 2026 입주',
     statusTagColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
@@ -429,8 +387,10 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '3기 신도시 전체 중 최초로 2024년 9월 본청약(A2, A3블록) 완료. 2026년 하반기 최초 입주 예정.',
     proTip: '3기 신도시 중 입주시기가 가장 빠르며 김포공항역을 통한 마곡/여의도 출퇴근 실수요자에게 실속형 대안.',
     naverNewsQuery: '인천 계양 3기 신도시 본청약 입주',
+    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    namuWikiUrl: 'https://namu.wiki/w/%EA%B3%84%EC%96%91%EC%8B%A0%EB%8F%84%EC%8B%9C',
+    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 170, y: 340, gangnamTime: '여의도 25분 / 마곡 10분', seoulTime: '서울역 30분 (공항철도)' },
-    districtMapType: 'GYEYANG',
     blocks: [
       {
         blockCode: '계양 A-2 블록',
@@ -444,21 +404,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '본청약 완료 / 2026 입주',
         progressStatusColor: 'bg-[#03c75a] text-white',
         note: '3기 신도시 전체 중 가장 먼저 2024년 9월 본청약 완료. 2026년 12월 첫 입주 개시',
-        spatial: { x: 210, y: 190, w: 52, h: 36, color: '#f59e0b' }
-      },
-      {
-        blockCode: '계양 A-3 블록',
-        shortCode: 'A-3',
-        supplyType: '신혼희망타운',
-        units: 359,
-        sizes: '전용 55㎡',
-        priceEstimate: '55㎡ 약 3.9억',
-        stationDistance: '유치원·초등학교 인접',
-        featureBadge: '👶 3기 1호 신희타',
-        progressStatus: '본청약 완료 / 2026 입주',
-        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: '가장 빠른 입주 시기를 자랑하며 1.3% 고정금리 수익공유형 모기지 혜택 적용',
-        spatial: { x: 270, y: 170, w: 46, h: 30, color: '#34d399' }
+        pinPos: { x: 48, y: 50 }
       }
     ]
   },
@@ -468,6 +414,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     shortName: '과천 과천',
     location: '경기도 과천시 과천동·주암동·막계동',
     units: '약 10,000호',
+    areaSize: '약 169만㎡',
+    plannedPopulation: '약 2만 5천 명',
     expectedMoveIn: '2029년 전후 순차 입주 목표',
     statusTag: '지구계획 승인 완료 (준강남 입지)',
     statusTagColor: 'bg-amber-50 text-amber-700 border-amber-200',
@@ -478,8 +426,10 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '2024년 8월 국토부 지구계획 승인 완료. 2025~2026년 주택 분양 착수 예정.',
     proTip: '서초구 양재동과 맞닿아 사실상 강남 생활권. 3기 신도시 중 시세 상승 잠재력과 평당 분양가가 가장 높은 최상급지.',
     naverNewsQuery: '과천 과천지구 3기 신도시 분양 4호선',
+    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    namuWikiUrl: 'https://namu.wiki/w/%EA%B3%BC%EC%B2%9C%EA%B3%BC%EC%B2%9C%EC%A7%80%EA%B5%AC',
+    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
     mapCoords: { x: 470, y: 470, gangnamTime: '양재 8분 / 강남역 15분', seoulTime: '사당 7분 (4호선)' },
-    districtMapType: 'GWACHEON',
     blocks: [
       {
         blockCode: '과천 A-1 블록',
@@ -493,21 +443,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '2025~2026년 분양 예정',
         progressStatusColor: 'bg-[#0066ff] text-white',
         note: '서초구 양재동 바로 옆! 사당·강남 10분대 진입 가능한 3기 신도시 최고의 로또 블록',
-        spatial: { x: 210, y: 150, w: 56, h: 38, color: '#f59e0b' }
-      },
-      {
-        blockCode: '과천 A-2 블록',
-        shortCode: 'A-2',
-        supplyType: '신혼희망타운',
-        units: 480,
-        sizes: '전용 55㎡, 59㎡',
-        priceEstimate: '55㎡ 약 5.8억 예상',
-        stationDistance: '양재천 수변공원 조망',
-        featureBadge: '🌿 양재천 에코라이프',
-        progressStatus: '지구조성 준비 중',
-        progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
-        note: '양재천 자전거 도로와 직결되며 서초구 우면산 R&CD 배후단지로 신혼부부 청약 1순위',
-        spatial: { x: 275, y: 220, w: 50, h: 32, color: '#34d399' }
+        pinPos: { x: 50, y: 40 }
       }
     ]
   }
@@ -517,8 +453,12 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
   const [activeTab, setActiveTab] = useState<FutureTab>('NEW_TOWNS');
   const [mapViewType, setMapViewType] = useState<MapViewType>('DISTRICT_BLOCKS');
   const [selectedTownId, setSelectedTownId] = useState<string>(NEW_TOWNS_DATA[0].id);
-  const [hoveredTownId, setHoveredTownId] = useState<string | null>(null);
   const [selectedBlockCode, setSelectedBlockCode] = useState<string>('왕숙1 A-19 블록');
+  const [blockSearchTerm, setBlockSearchTerm] = useState<string>('');
+  
+  // Interactive Map Zoom & Lightbox Fullscreen State
+  const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
 
   // Interactive Calculator Modal State
   const [isCalcOpen, setIsCalcOpen] = useState<boolean>(false);
@@ -556,7 +496,6 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
   const stressReductionAmount = Math.max(0, normalLoanPrincipal - maxLoanDsrPrincipal);
   const maxLoanLtv = Math.round(housePrice * (ltvRate / 100));
   const minRequiredCashLtv = Math.max(0, housePrice - maxLoanLtv);
-  const estAcquisitionTax = Math.round(housePrice * 0.033);
 
   const gapJeonseRatio = gapBuyPrice > 0 ? ((gapJeonsePrice / gapBuyPrice) * 100).toFixed(1) : '0';
   const pureGapCash = Math.max(0, gapBuyPrice - gapJeonsePrice);
@@ -578,38 +517,66 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
 
   const handleSelectTown = (townId: string) => {
     setSelectedTownId(townId);
+    setZoomLevel(1);
     const targetTown = NEW_TOWNS_DATA.find(t => t.id === townId);
     if (targetTown && targetTown.blocks.length > 0) {
       setSelectedBlockCode(targetTown.blocks[0].blockCode);
     }
   };
 
+  // Filtered blocks by search term
+  const filteredBlocks = selectedTown.blocks.filter(b => 
+    b.blockCode.toLowerCase().includes(blockSearchTerm.toLowerCase()) ||
+    b.shortCode.toLowerCase().includes(blockSearchTerm.toLowerCase()) ||
+    b.sizes.includes(blockSearchTerm)
+  );
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
       {/* Clean & High-Contrast Header Banner */}
       <div className="naver-card p-6 sm:p-10 bg-white border border-slate-200 shadow-sm rounded-3xl relative overflow-hidden">
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 text-xs font-black mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>수도권 3기 신도시 토지이용계획도 & 블록 공간 배치도</span>
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>국토교통부 & LH 공식 토지이용계획(변경)도 기반 인터랙티브 도감</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            어디가 <span className="text-[#03c75a]">A-1이고 A-19인지</span> <br />
-            지도에서 바로 확인하세요
+            LH 공식 도면으로 보는 <br />
+            <span className="text-[#03c75a]">{selectedTown.name}</span> 토지이용계획도 & 블록 도감
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
-            실제 LH 토지이용계획도 기반의 <strong>블록 공간 배치도</strong>를 통해 <br className="hidden sm:inline" />
-            <strong>GTX·지하철 초역세권 대장 블록(A-19, S-5 등)의 위치, 평형, 추정 분양가</strong>를 직관적으로 분석할 수 있습니다.
+            실제 정부·LH 공식 고화질 마스터플랜 도면을 통해 <strong>A-1, A-19, B-1 등 각 블록의 실제 위치와 왕숙천 수변축, GTX-B·9호선 복합환승역, 중심상업지구</strong>의 공간 배치를 정밀하게 확인할 수 있습니다.
           </p>
+
+          <div className="flex flex-wrap items-center gap-3 mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-slate-600">
+            <a 
+              href={selectedTown.namuWikiUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 transition"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-[#0066ff]" />
+              <span>나무위키 {selectedTown.shortName} 백과 원문 ↗</span>
+            </a>
+            <a 
+              href={selectedTown.lhOfficialUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#e8f8ee] hover:bg-[#03c75a] text-[#029f45] hover:text-white transition"
+            >
+              <Building2 className="w-3.5 h-3.5" />
+              <span>LH 3기 신도시 공식 포털 ↗</span>
+            </a>
+          </div>
         </div>
       </div>
 
       {/* Main 3 Sub-Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm">
         {[
-          { id: 'NEW_TOWNS', label: '1. 3기 신도시 지도 & 블록별(A-1, A-19) 공간 도감', icon: '🗺️' },
+          { id: 'NEW_TOWNS', label: '1. LH 공식 도면 & 블록별(A-1, A-19) 정밀 도감', icon: '🗺️' },
           { id: 'FUTURE_NEWS', label: '2. 미래 주목 변수 & 실시간 네이버 뉴스', icon: '📡' },
           { id: 'GLOSSARY', label: '3. 필수 부동산·대출 용어 & 실시간 계산기', icon: '📚' },
         ].map((tab) => (
@@ -653,7 +620,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
               ))}
             </div>
 
-            {/* Map Mode Switcher (광역 교통망 vs 블록 배치도) */}
+            {/* Map Mode Switcher (토지이용계획도 vs 광역 노선망) */}
             <div className="hidden sm:flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold shrink-0">
               <button
                 onClick={() => setMapViewType('DISTRICT_BLOCKS')}
@@ -662,7 +629,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 }`}
               >
                 <Layers className="w-3.5 h-3.5" />
-                <span>지구별 블록 토지이용배치도</span>
+                <span>LH 공식 토지이용계획도</span>
               </button>
 
               <button
@@ -678,266 +645,215 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
           </div>
 
           {/* ===================================================================== */}
-          {/* 🗺️ MAP VIEW 1: 신도시 지구별 토지이용계획 & 블록 공간 배치도 (User Image Style) */}
+          {/* 🗺️ MAP VIEW 1: LH 공식 토지이용계획(변경)도 고화질 뷰어 & 블록 핀포인터 */}
           {/* ===================================================================== */}
           {mapViewType === 'DISTRICT_BLOCKS' && (
-            <div className="naver-card p-5 sm:p-7 bg-white border border-slate-200 shadow-sm space-y-4 animate-fadeIn">
+            <div className="naver-card p-5 sm:p-7 bg-white border border-slate-200 shadow-sm space-y-5 animate-fadeIn">
+              
+              {/* Header with Title & Zoom / Lightbox Toolbar */}
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-100 pb-3">
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] text-[11px] font-black mb-1">
-                    <Layers className="w-3 h-3" />
-                    <span>LH 토지이용계획도 기반 공간 배치도</span>
+                    <FileText className="w-3 h-3" />
+                    <span>남양주 왕숙 공공주택지구 토지이용계획(변경)도 정밀 원본</span>
                   </div>
                   <h3 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
-                    <span>{selectedTown.name} 마스터플랜 & 블록 위치</span>
+                    <span>{selectedTown.name} 공식 마스터플랜 도면 뷰어</span>
                   </h3>
                   <p className="text-xs text-slate-500 font-medium">
-                    아래 지도의 <strong>블록(A-1, A-19, B-1 등)</strong>을 클릭하면 해당 블록의 상세 제원과 분양가가 즉시 표시됩니다.
+                    도면 우측 상단의 <strong>[🔍 확대/축소]</strong> 및 <strong>[전체화면 고화질 보기]</strong>로 세부 블록을 정밀하게 탐색할 수 있습니다.
                   </p>
                 </div>
 
-                {/* Color Legend for Land Use */}
-                <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded-xs bg-[#f59e0b]" /> 주거(분양)
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded-xs bg-[#34d399]" /> 신혼희망
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded-xs bg-[#ef4444]" /> 상업·업무
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded-xs bg-[#60a5fa]" /> 자족시설
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded-xs bg-[#86efac]" /> 공원·녹지
-                  </span>
+                {/* Map Interactive Toolbar */}
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
+                    <button
+                      onClick={() => setZoomLevel(prev => Math.min(prev + 0.25, 2.5))}
+                      className="p-1.5 rounded-lg hover:bg-white text-slate-700 transition cursor-pointer"
+                      title="지도 확대"
+                    >
+                      <ZoomIn className="w-4 h-4" />
+                    </button>
+                    <span className="px-2 text-slate-600 text-[11px] font-black">{Math.round(zoomLevel * 100)}%</span>
+                    <button
+                      onClick={() => setZoomLevel(prev => Math.max(prev - 0.25, 0.75))}
+                      className="p-1.5 rounded-lg hover:bg-white text-slate-700 transition cursor-pointer"
+                      title="지도 축소"
+                    >
+                      <ZoomOut className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setZoomLevel(1)}
+                      className="p-1.5 rounded-lg hover:bg-white text-slate-700 transition cursor-pointer ml-1 border-l border-slate-200"
+                      title="원본 크기 초기화"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => setIsLightboxOpen(true)}
+                    className="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+                  >
+                    <Maximize2 className="w-3.5 h-3.5" />
+                    <span>전체화면 고화질 도면 보기</span>
+                  </button>
                 </div>
               </div>
 
-              {/* Master Plan SVG Spatial Canvas */}
+              {/* Master Plan Canvas & Interactive Info Panel */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 
-                {/* SVG Visual District Map (Left 7 Cols) */}
-                <div className="lg:col-span-7 bg-[#f8fafc] rounded-2xl border border-slate-200/90 p-3 relative overflow-hidden shadow-inner flex items-center justify-center">
-                  <svg 
-                    viewBox="0 0 460 580" 
-                    className="w-full h-auto max-h-[580px] select-none"
-                  >
-                    {/* Compass Rose */}
-                    <g transform="translate(30, 40)">
-                      <circle r="14" fill="#ffffff" stroke="#94a3b8" strokeWidth="1" />
-                      <path d="M 0 -10 L 4 0 L 0 -3 L -4 0 Z" fill="#ef4444" />
-                      <path d="M 0 10 L 4 0 L 0 3 L -4 0 Z" fill="#94a3b8" />
-                      <text x="0" y="-13" fill="#0f172a" fontSize="8" fontWeight="bold" textAnchor="middle">N</text>
-                    </g>
+                {/* Real LH Blueprint Image with Animated Pinpoint Markers (Left 7 Cols) */}
+                <div className="lg:col-span-7 bg-slate-950 rounded-2xl border border-slate-300 p-2 relative overflow-hidden shadow-md flex items-center justify-center min-h-[520px] max-h-[680px]">
+                  
+                  {/* Scrollable / Zoomable Container */}
+                  <div className="w-full h-full overflow-auto max-h-[660px] flex items-center justify-center relative select-none">
+                    <div 
+                      className="relative transition-transform duration-200 ease-out origin-center"
+                      style={{ transform: `scale(${zoomLevel})` }}
+                    >
+                      {/* Official High-Resolution Blueprint Image */}
+                      <img 
+                        src={selectedTown.officialBlueprintUrl} 
+                        alt={`${selectedTown.name} 공식 토지이용계획도`} 
+                        className="w-full max-w-[480px] h-auto object-contain rounded-lg shadow-inner filter brightness-105 contrast-105"
+                      />
 
-                    {/* Background Park Greenscape (공원 녹지축) */}
-                    <path
-                      d="M 120 20 Q 380 40, 410 160 Q 430 320, 390 490 Q 320 560, 190 560 Q 90 480, 110 320 Q 120 160, 120 20 Z"
-                      fill="#dcfce7"
-                      stroke="#86efac"
-                      strokeWidth="2"
-                    />
+                      {/* Interactive Pin Overlays for All Major Blocks on the Blueprint */}
+                      {selectedTown.blocks.map((block) => {
+                        const isSelected = selectedBlockCode === block.blockCode;
+                        const { x, y } = block.pinPos;
 
-                    {/* Wangsuk Stream / River Flowing Through District (왕숙천/하천) */}
-                    <path
-                      d="M 270 20 Q 290 100, 240 180 T 170 300 T 130 460 T 160 560"
-                      fill="none"
-                      stroke="#93c5fd"
-                      strokeWidth="22"
-                      strokeLinecap="round"
-                      strokeOpacity="0.85"
-                    />
-                    <path
-                      d="M 270 20 Q 290 100, 240 180 T 170 300 T 130 460 T 160 560"
-                      fill="none"
-                      stroke="#60a5fa"
-                      strokeWidth="10"
-                      strokeLinecap="round"
-                      strokeOpacity="0.9"
-                    />
-                    <text x="145" y="380" fill="#2563eb" fontSize="10" fontWeight="black" transform="rotate(-75 145 380)">
-                      왕숙천 수변공원
-                    </text>
-
-                    {/* Central Transit Line & GTX Station Line */}
-                    <path
-                      d="M 80 180 L 250 300 L 400 440"
-                      fill="none"
-                      stroke="#3b82f6"
-                      strokeWidth="4"
-                      strokeDasharray="6,3"
-                    />
-
-                    {/* Central Commercial Core (중심상업지구 빨강/주황) */}
-                    <rect x="230" y="240" width="35" height="30" rx="4" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" />
-                    <text x="247" y="258" fill="#ffffff" fontSize="7.5" fontWeight="black" textAnchor="middle">중심상업</text>
-
-                    <rect x="230" y="275" width="35" height="25" rx="4" fill="#f97316" stroke="#c2410c" strokeWidth="1" />
-                    <text x="247" y="291" fill="#ffffff" fontSize="7" fontWeight="bold" textAnchor="middle">복합환승</text>
-
-                    {/* Central Station Circle (GTX-B / 9호선 역) */}
-                    <circle cx="210" cy="285" r="10" fill="#03c75a" stroke="#ffffff" strokeWidth="2.5" />
-                    <text x="210" y="288" fill="#ffffff" fontSize="7" fontWeight="black" textAnchor="middle">역</text>
-                    <text x="210" y="306" fill="#0f172a" fontSize="8" fontWeight="black" textAnchor="middle">왕숙역</text>
-
-                    {/* Self-Sufficient Tech Campus (자족용지 파랑) */}
-                    <rect x="180" y="470" width="70" height="45" rx="6" fill="#bfdbfe" stroke="#60a5fa" strokeWidth="1.5" />
-                    <text x="215" y="495" fill="#1e40af" fontSize="8" fontWeight="black" textAnchor="middle">첨단 IT 자족단지</text>
-
-                    {/* Other Background Residential Blocks (연노랑) */}
-                    {[
-                      { x: 305, y: 70, w: 35, h: 22, name: 'A-2' },
-                      { x: 345, y: 55, w: 32, h: 22, name: 'A-3' },
-                      { x: 310, y: 125, w: 38, h: 24, name: 'S-7' },
-                      { x: 350, y: 140, w: 35, h: 24, name: 'S-8' },
-                      { x: 275, y: 320, w: 42, h: 26, name: 'S-9' },
-                      { x: 325, y: 310, w: 40, h: 26, name: 'S-13' },
-                      { x: 280, y: 380, w: 42, h: 28, name: 'A-17' },
-                      { x: 330, y: 380, w: 38, h: 26, name: 'A-20' },
-                      { x: 235, y: 410, w: 40, h: 26, name: 'A-22' },
-                    ].map(b => (
-                      <g key={b.name} opacity="0.65">
-                        <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="3" fill="#fef08a" stroke="#ca8a04" strokeWidth="0.8" />
-                        <text x={b.x + b.w / 2} y={b.y + b.h / 2 + 3} fill="#854d0e" fontSize="7" fontWeight="bold" textAnchor="middle">{b.name}</text>
-                      </g>
-                    ))}
-
-                    {/* Interactive Supply Blocks (Highlightable & Clickable) */}
-                    {selectedTown.blocks.map((block) => {
-                      const isSelected = selectedBlockCode === block.blockCode;
-                      const { x, y, w, h } = block.spatial;
-
-                      return (
-                        <g 
-                          key={block.blockCode}
-                          onClick={() => setSelectedBlockCode(block.blockCode)}
-                          className="cursor-pointer group"
-                        >
-                          {/* Selected Glow Outline */}
-                          {isSelected && (
-                            <rect
-                              x={x - 3}
-                              y={y - 3}
-                              width={w + 6}
-                              height={h + 6}
-                              rx="6"
-                              fill="#ef4444"
-                              fillOpacity="0.2"
-                              stroke="#ef4444"
-                              strokeWidth="2"
-                              strokeDasharray="4,2"
-                            />
-                          )}
-
-                          {/* Main Block Box */}
-                          <rect
-                            x={x}
-                            y={y}
-                            width={w}
-                            height={h}
-                            rx="4"
-                            fill={isSelected ? "#ef4444" : block.spatial.color}
-                            stroke={isSelected ? "#ffffff" : "#b45309"}
-                            strokeWidth={isSelected ? "2" : "1.2"}
-                            className="transition-all duration-150 drop-shadow-xs group-hover:scale-105"
-                          />
-
-                          {/* Block Short Name Text */}
-                          <text
-                            x={x + w / 2}
-                            y={y + h / 2 + 3.5}
-                            fill={isSelected ? "#ffffff" : "#0f172a"}
-                            fontSize="8.5"
-                            fontWeight="900"
-                            textAnchor="middle"
+                        return (
+                          <div
+                            key={block.blockCode}
+                            onClick={() => setSelectedBlockCode(block.blockCode)}
+                            style={{ top: `${y}%`, left: `${x}%` }}
+                            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-20"
                           >
-                            {block.shortCode}
-                          </text>
+                            {/* Selected Block Ping Ring */}
+                            {isSelected && (
+                              <span className="absolute -inset-2.5 rounded-full bg-rose-500/40 animate-ping" />
+                            )}
 
-                          {/* RED CALLOUT POINTER BADGE (Exact match with user's uploaded image!) */}
-                          {isSelected && (
-                            <g transform={`translate(${x + w + 12}, ${y + h / 2})`} className="animate-fadeIn">
-                              {/* Red Pointer Arrow Head */}
-                              <path d="M 0 0 L 10 -6 L 10 6 Z" fill="#dc2626" />
-                              <line x1="-12" y1="0" x2="0" y2="0" stroke="#dc2626" strokeWidth="2.5" />
-                              {/* Red Box Tag */}
-                              <rect x="8" y="-14" width="82" height="28" rx="4" fill="#dc2626" />
-                              <text x="49" y="3.5" fill="#ffffff" fontSize="10" fontWeight="900" textAnchor="middle">
-                                {block.shortCode} 블록
-                              </text>
-                            </g>
-                          )}
-                        </g>
-                      );
-                    })}
-                  </svg>
+                            {/* Pin Head */}
+                            <div className={`flex items-center justify-center px-1.5 py-0.5 rounded-md text-[10px] font-black transition-all shadow-md border ${
+                              isSelected 
+                                ? 'bg-rose-600 text-white border-white scale-125 z-30' 
+                                : 'bg-slate-900/90 text-yellow-300 border-yellow-400/80 hover:bg-rose-600 hover:text-white'
+                            }`}>
+                              <span>{block.shortCode}</span>
+                            </div>
+
+                            {/* RED CALLOUT POINTER BADGE (Matches user's exact uploaded blueprint pointer!) */}
+                            {isSelected && (
+                              <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 flex items-center whitespace-nowrap z-40 animate-fadeIn">
+                                {/* Red Pointer Triangle */}
+                                <div className="w-0 h-0 border-y-5 border-y-transparent border-r-6 border-r-red-600" />
+                                {/* Red Label Box */}
+                                <div className="bg-red-600 text-white font-black text-[11px] px-2.5 py-1 rounded shadow-lg flex items-center gap-1 border border-red-700">
+                                  <span>{block.shortCode}블록</span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Watermark badge */}
+                  <div className="absolute bottom-3 left-3 bg-slate-900/85 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-lg border border-slate-700">
+                    📐 국토교통부 · LH 공공주택지구 고시 도면
+                  </div>
                 </div>
 
-                {/* Selected Block Spotlight Card (Right 5 Cols) */}
+                {/* Selected Block Spotlight & Full Block Directory (Right 5 Cols) */}
                 <div className="lg:col-span-5 space-y-4">
-                  <div className="p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white shadow-lg space-y-4 relative overflow-hidden">
-                    <div className="absolute right-0 top-0 w-32 h-32 bg-[#03c75a]/10 rounded-full blur-2xl" />
+                  
+                  {/* Spotlight Block Card */}
+                  <div className="p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl space-y-4 relative overflow-hidden border border-slate-700">
+                    <div className="absolute right-0 top-0 w-36 h-36 bg-[#03c75a]/15 rounded-full blur-3xl" />
                     
                     <div className="flex items-center justify-between gap-2 border-b border-slate-700/80 pb-3">
                       <div>
                         <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-rose-500 text-white">
-                          선택된 블록
+                          도면 선택 블록
                         </span>
                         <h4 className="text-2xl font-black text-white mt-1">
                           {activeBlock.blockCode}
                         </h4>
                       </div>
-                      <span className="text-xs font-bold text-[#4ade80]">
-                        {activeBlock.supplyType} ({activeBlock.units}세대)
-                      </span>
+                      <div className="text-right">
+                        <span className="text-xs font-black text-[#4ade80] block">
+                          {activeBlock.supplyType}
+                        </span>
+                        <span className="text-[11px] text-slate-400 font-bold">
+                          {activeBlock.units}세대
+                        </span>
+                      </div>
                     </div>
 
                     <div className="space-y-2 text-xs">
-                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
-                        <span className="text-slate-400 font-medium">분양가(추정/확정):</span>
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/90 border border-slate-700">
+                        <span className="text-slate-400 font-medium">분양가(추정/본청약):</span>
                         <span className="font-black text-[#4ade80] text-sm">{activeBlock.priceEstimate}</span>
                       </div>
 
-                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/90 border border-slate-700">
                         <span className="text-slate-400 font-medium">공급 평형:</span>
                         <span className="font-black text-white">{activeBlock.sizes}</span>
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 space-y-1">
-                        <span className="text-slate-400 font-medium block">역세권 및 교통:</span>
+                      <div className="p-2.5 rounded-xl bg-slate-800/90 border border-slate-700 space-y-0.5">
+                        <span className="text-slate-400 font-medium block">역세권 및 인프라:</span>
                         <span className="font-bold text-slate-200 block">{activeBlock.stationDistance}</span>
                       </div>
                     </div>
 
-                    <p className="text-xs text-slate-300 leading-relaxed font-medium bg-slate-800/50 p-3 rounded-xl border border-slate-700/60">
+                    <p className="text-xs text-slate-300 leading-relaxed font-medium bg-slate-800/60 p-3 rounded-xl border border-slate-700/80">
                       💡 {activeBlock.note}
                     </p>
 
                     <button
                       onClick={() => handleOpenNaverNews(`${selectedTown.name} ${activeBlock.blockCode} 분양`)}
-                      className="w-full py-2.5 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs font-black flex items-center justify-center gap-1.5 transition cursor-pointer"
+                      className="w-full py-2.5 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs font-black flex items-center justify-center gap-1.5 transition cursor-pointer shadow-sm"
                     >
-                      <span>{activeBlock.shortCode} 블록 실시간 네이버 뉴스 검색</span>
+                      <span>{activeBlock.shortCode} 블록 실시간 네이버 분양 뉴스 보기</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </button>
                   </div>
 
-                  {/* Block Selection Quick List */}
-                  <div className="space-y-1.5">
-                    <span className="text-xs font-black text-slate-700 block">
-                      📍 {selectedTown.name} 내 다른 주요 블록 바로보기:
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {selectedTown.blocks.map(b => (
+                  {/* Block Search & Interactive Filter Selector */}
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-black text-slate-800 flex items-center gap-1">
+                        <Layers className="w-3.5 h-3.5 text-[#03c75a]" />
+                        <span>{selectedTown.name} 블록 바로가기 ({selectedTown.blocks.length}개)</span>
+                      </span>
+                    </div>
+
+                    <div className="relative">
+                      <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+                      <input
+                        type="text"
+                        placeholder="블록 검색 (예: A-19, B-1, 84㎡)"
+                        value={blockSearchTerm}
+                        onChange={(e) => setBlockSearchTerm(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-white border border-slate-300 text-xs font-medium focus:outline-none focus:border-[#03c75a]"
+                      />
+                    </div>
+
+                    <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto pr-1">
+                      {filteredBlocks.map(b => (
                         <button
                           key={b.blockCode}
                           onClick={() => setSelectedBlockCode(b.blockCode)}
                           className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer border ${
                             selectedBlockCode === b.blockCode
-                              ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                              ? 'bg-rose-600 text-white border-rose-600 shadow-xs font-black'
                               : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-200'
                           }`}
                         >
@@ -946,6 +862,32 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                       ))}
                     </div>
                   </div>
+
+                  {/* Official Land Use Color Legend */}
+                  <div className="p-4 rounded-2xl bg-white border border-slate-200 text-xs space-y-2">
+                    <span className="text-[11px] font-black text-slate-700 block">
+                      🎨 LH 법정 토지이용계획 색상 가이드
+                    </span>
+                    <div className="grid grid-cols-2 gap-2 text-[11px] font-medium text-slate-600">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded-xs bg-[#f59e0b] shrink-0" />
+                        <span>노랑: 주거(공공/민간)</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded-xs bg-[#10b981] shrink-0" />
+                        <span>초록: 신혼희망·임대</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded-xs bg-[#ef4444] shrink-0" />
+                        <span>빨강: 중심상업용지</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded-xs bg-[#3b82f6] shrink-0" />
+                        <span>파랑: 첨단 IT 자족용지</span>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
 
               </div>
@@ -1021,7 +963,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
             </div>
           )}
 
-          {/* Detailed Town Hero Profile Card */}
+          {/* Detailed Town Profile Card */}
           <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm space-y-6">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
               <div>
@@ -1031,6 +973,9 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                   </span>
                   <span className="text-xs font-bold text-slate-500">
                     {selectedTown.units}
+                  </span>
+                  <span className="text-xs font-bold text-slate-500">
+                    · 면적 {selectedTown.areaSize}
                   </span>
                 </div>
 
@@ -1130,7 +1075,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
-                      <span>{selectedTown.name} 주요 분양 블록별(A·B·S) 상세 목록</span>
+                      <span>{selectedTown.name} 주요 분양 블록별(A·B·S) 상세 도감</span>
                       <span className="text-[10px] text-[#029f45] bg-[#e8f8ee] px-2 py-0.5 rounded font-black border border-[#03c75a]/20">
                         총 {selectedTown.blocks.length}개 핵심 블록
                       </span>
@@ -1147,7 +1092,10 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 {selectedTown.blocks.map((block) => (
                   <div
                     key={block.blockCode}
-                    onClick={() => setSelectedBlockCode(block.blockCode)}
+                    onClick={() => {
+                      setSelectedBlockCode(block.blockCode);
+                      setMapViewType('DISTRICT_BLOCKS');
+                    }}
                     className={`p-5 rounded-2xl bg-white border transition-all flex flex-col justify-between space-y-3 relative group cursor-pointer ${
                       selectedBlockCode === block.blockCode
                         ? 'border-2 border-rose-500 shadow-md bg-rose-50/20'
@@ -1200,7 +1148,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                     </div>
 
                     <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-500">
-                      <span>LH 청약플러스 / 본청약 대상</span>
+                      <span className="text-rose-600">위치: 상단 도면 {block.shortCode}</span>
                       <button
                         type="button"
                         onClick={(e) => {
@@ -1209,7 +1157,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                         }}
                         className="text-[#0066ff] hover:underline flex items-center gap-0.5 cursor-pointer"
                       >
-                        <span>블록 뉴스 보기</span>
+                        <span>뉴스 보기</span>
                         <ExternalLink className="w-2.5 h-2.5" />
                       </button>
                     </div>
@@ -1218,73 +1166,6 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
               </div>
             </div>
 
-          </div>
-
-          {/* All 6 New Towns Summary Comparison Table */}
-          <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm space-y-4">
-            <div className="border-b border-slate-100 pb-3">
-              <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
-                <Building className="w-5 h-5 text-[#03c75a]" />
-                <span>수도권 3기 신도시 6개 지구 한눈에 비교</span>
-              </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
-                지구명을 클릭하시면 상세 분석 카드로 바로 전환됩니다.
-              </p>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead>
-                  <tr className="border-b border-slate-200 text-slate-500 font-bold bg-slate-50">
-                    <th className="py-3 px-3.5">지구명</th>
-                    <th className="py-3 px-3.5">공급 규모</th>
-                    <th className="py-3 px-3.5">주요 분양 블록</th>
-                    <th className="py-3 px-3.5">핵심 교통망</th>
-                    <th className="py-3 px-3.5">약속된 기업 / 자족 특화</th>
-                    <th className="py-3 px-3.5">입주 목표</th>
-                    <th className="py-3 px-3.5 text-right">상세</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {NEW_TOWNS_DATA.map((town) => (
-                    <tr 
-                      key={town.id}
-                      onClick={() => handleSelectTown(town.id)}
-                      className={`hover:bg-slate-50 transition cursor-pointer ${
-                        selectedTownId === town.id ? 'bg-[#e8f8ee]/40 font-bold' : ''
-                      }`}
-                    >
-                      <td className="py-3 px-3.5 font-black text-slate-900">
-                        {town.name}
-                      </td>
-                      <td className="py-3 px-3.5 text-slate-600">
-                        {town.units.split(' ')[1] || town.units}
-                      </td>
-                      <td className="py-3 px-3.5 text-[#029f45] font-black">
-                        {town.blocks.map(b => b.shortCode).slice(0, 4).join(', ')} 등
-                      </td>
-                      <td className="py-3 px-3.5 text-slate-700">
-                        {town.transitLines.slice(0, 2).join(', ')}
-                      </td>
-                      <td className="py-3 px-3.5 text-slate-600 max-w-[180px] truncate" title={town.anchorCompanies}>
-                        {town.anchorCompanies}
-                      </td>
-                      <td className="py-3 px-3.5 text-[#029f45] font-black">
-                        {town.expectedMoveIn.split(' ')[0]}
-                      </td>
-                      <td className="py-3 px-3.5 text-right">
-                        <button 
-                          type="button"
-                          className="text-[#0066ff] hover:underline font-bold"
-                        >
-                          보기 →
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
       )}
@@ -1490,41 +1371,6 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 </div>
               ))}
             </div>
-
-            {/* Custom Search Bar */}
-            <div className="mt-6 p-4 sm:p-5 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="flex items-center gap-2 text-xs text-slate-700 font-bold">
-                <Search className="w-4 h-4 text-[#03c75a]" />
-                <span>내가 관심 있는 특정 아파트나 지역의 뉴스를 직접 검색해보세요:</span>
-              </div>
-
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <input
-                  id="futureNewsInput"
-                  type="text"
-                  placeholder="예: 왕숙 A-19, 창릉 S-5, 교산 A-2"
-                  className="bg-white text-xs px-3.5 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#03c75a] font-medium w-full sm:w-64"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      const input = (e.target as HTMLInputElement).value.trim();
-                      if (input) handleOpenNaverNews(input + ' 부동산');
-                    }
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    const el = document.getElementById('futureNewsInput') as HTMLInputElement;
-                    if (el && el.value.trim()) {
-                      handleOpenNaverNews(el.value.trim() + ' 부동산');
-                    }
-                  }}
-                  className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold whitespace-nowrap transition cursor-pointer"
-                >
-                  검색
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       )}
@@ -1574,9 +1420,6 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                   <Scale className="w-4 h-4" />
                   <span>1. 대출 & 금융 규제 용어 (클릭하여 실시간 계산하기)</span>
                 </div>
-                <span className="text-[11px] text-[#0066ff] font-bold">
-                  👇 카드를 클릭하면 계산기가 열립니다
-                </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1625,138 +1468,70 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                     <span className="text-[#0066ff] font-black text-[11px]">계산기 열기 ↗</span>
                   </div>
                 </div>
-
-                {/* 스트레스 DSR Card */}
-                <div 
-                  onClick={() => handleOpenCalculator('DSR')}
-                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-purple-500 hover:shadow-md transition-all cursor-pointer group space-y-3"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-black text-slate-900 text-base group-hover:text-purple-700 transition-colors flex items-center gap-1.5">
-                      <span>스트레스 DSR</span>
-                      <Calculator className="w-4 h-4 text-slate-400 group-hover:text-purple-600" />
-                    </span>
-                    <span className="text-[10px] font-black text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
-                      최신 대출 규제
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    향후 금리가 오를 위험에 대비하여, <strong>대출 한도를 계산할 때 실제 금리에 '가산 금리(+1.2%p)'를 얹어서 한도를 줄이는 제도</strong>입니다. 결과적으로 대출 총액이 수천만 원 축소됩니다.
-                  </p>
-                  <div className="p-2.5 bg-white group-hover:bg-purple-50 rounded-xl border border-slate-200 group-hover:border-purple-200 text-xs text-slate-800 font-bold flex items-center justify-between">
-                    <span>⚡ 스트레스 금리 적용 시 대출 한도 5~10% 축소</span>
-                    <span className="text-purple-700 font-black text-[11px]">한도 축소 계산 ↗</span>
-                  </div>
-                </div>
-
-                {/* DTI Card */}
-                <div 
-                  onClick={() => handleOpenCalculator('DSR')}
-                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 transition-all cursor-pointer group space-y-3"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-black text-slate-900 text-base">DTI (총부채상환비율)</span>
-                    <span className="text-[10px] font-black text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-                      기존 전통 규제
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    주택담보대출 원리금 + '기타 대출의 이자만' 연소득과 비교하던 과거의 지표입니다. 현재는 기타 대출의 원금까지 전부 합산하는 더 강력한 DSR로 대체되어 적용됩니다.
-                  </p>
-                </div>
               </div>
             </div>
 
-            {/* Category 2: 매수 & 투자 실전 용어 */}
-            <div className="space-y-4 pt-4 border-t border-slate-100">
-              <div className="flex items-center gap-2 text-sm font-black text-[#029f45]">
-                <Coins className="w-4 h-4" />
-                <span>2. 매수 & 투자 실전 용어 (어떻게 사는가?)</span>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 🔎 FULLSCREEN / LIGHTBOX OFFICIAL BLUEPRINT MODAL */}
+      {/* ========================================================================= */}
+      {isLightboxOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-fadeIn">
+          <div className="w-full max-w-5xl bg-slate-900 rounded-3xl border border-slate-700 shadow-2xl flex flex-col max-h-[92vh] overflow-hidden">
+            
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between">
+              <div>
+                <span className="text-[10px] font-black text-[#4ade80] bg-[#029f45]/20 px-2 py-0.5 rounded">
+                  초고화질 원본 도면
+                </span>
+                <h3 className="text-lg font-black text-white mt-1">
+                  {selectedTown.name} 공식 토지이용계획(변경)도 전체화면
+                </h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* 갭투자 */}
-                <div 
-                  onClick={() => handleOpenCalculator('GAP')}
-                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-[#03c75a] hover:shadow-md transition-all cursor-pointer group space-y-2"
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsLightboxOpen(false)}
+                  className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition cursor-pointer"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-black text-slate-900 text-base group-hover:text-[#029f45] transition-colors">
-                      갭투자
-                    </span>
-                    <Calculator className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#03c75a]" />
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    매매가와 전세가의 차액(Gap)만큼만 순수 현금을 넣고, 세입자의 전세보증금을 안고 소유권을 확보하는 매수 방식입니다.
-                  </p>
-                  <div className="p-2 bg-white group-hover:bg-[#e8f8ee] rounded-lg border border-slate-200 group-hover:border-[#03c75a]/30 text-[11px] text-[#029f45] font-bold flex items-center justify-between">
-                    <span>예: 매매 10억 - 전세 6.5억 = 갭 3.5억</span>
-                    <span>계산기 ↗</span>
-                  </div>
-                </div>
-
-                {/* 전세가율 */}
-                <div 
-                  onClick={() => handleOpenCalculator('GAP')}
-                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 transition-all cursor-pointer group space-y-2"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-black text-slate-900 text-base block">전세가율</span>
-                    <Calculator className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#03c75a]" />
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    매매가 대비 전세가의 비율입니다. 전세가율이 65~70%로 높을수록 실거주 수요가 탄탄하여 하락장 방어력이 강하고 갭투자금이 적게 듭니다.
-                  </p>
-                  <div className="p-2 bg-white rounded-lg border border-slate-200 text-[11px] text-slate-700 font-bold">
-                    공식: (전세가 ÷ 매매가) × 100
-                  </div>
-                </div>
-
-                {/* 환금성 */}
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                  <span className="font-black text-slate-900 text-base block">환금성</span>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    내가 집을 팔고 싶을 때 얼마나 제값에 빠르게 현금화할 수 있는가의 척도입니다. 1,000세대 이상 대단지일수록 환금성이 극상입니다.
-                  </p>
-                </div>
+                  <X className="w-5 h-5" />
+                </button>
               </div>
             </div>
 
-            {/* Category 3: 아파트 입지 & 시세 은어 */}
-            <div className="space-y-4 pt-4 border-t border-slate-100">
-              <div className="flex items-center gap-2 text-sm font-black text-amber-700">
-                <Home className="w-4 h-4" />
-                <span>3. 아파트 입지 & 시장 은어 (무엇을 봐야 하는가?)</span>
-              </div>
+            {/* Modal Image Area */}
+            <div className="flex-1 overflow-auto p-4 flex items-center justify-center bg-slate-950">
+              <img 
+                src={selectedTown.officialBlueprintUrl} 
+                alt={`${selectedTown.name} 토지이용계획도 원본`}
+                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl" 
+              />
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
-                  <span className="font-black text-slate-900 text-sm block">🏢 국평 (국민평형 / 84㎡)</span>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    전용면적 84㎡(공급 약 33~34평형), 방 3개 화장실 2개의 대한민국 3~4인 가족 표준 선호 평형입니다.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
-                  <span className="font-black text-slate-900 text-sm block">🎒 초품아</span>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    '초등학교를 품은 아파트'의 줄임말로, 아이들이 큰 도로를 건너지 않고 단지와 바로 연결되어 등하교 가능한 초안전 단지입니다.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
-                  <span className="font-black text-slate-900 text-sm block">👑 RR (로열동·로열층)</span>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    단지 내에서 조망, 일조권, 소음 차단, 역 접근성이 가장 뛰어난 최고의 동과 중고층 매물로, 시세가 5~10% 더 비쌉니다.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
-                  <span className="font-black text-slate-900 text-sm block">💰 1주택 양도세 비과세</span>
-                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                    1주택자가 2년 이상 보유(취득 당시 조정지역은 2년 실거주) 후 매도 시, 양도가액 12억 원까지 양도소득세를 전액 면제받습니다.
-                  </p>
-                </div>
+            {/* Modal Footer with Direct External Links */}
+            <div className="p-4 bg-slate-900 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <span className="text-slate-400 font-medium">
+                💡 출처: 국토교통부 고시 제2023-580호 / 한국토지주택공사(LH)
+              </span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={selectedTown.namuWikiUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold transition flex items-center gap-1"
+                >
+                  <span>나무위키 상세 정보 보기 ↗</span>
+                </a>
+                <button
+                  onClick={() => setIsLightboxOpen(false)}
+                  className="px-4 py-1.5 rounded-lg bg-[#03c75a] text-white font-bold transition cursor-pointer"
+                >
+                  닫기
+                </button>
               </div>
             </div>
 
@@ -1790,33 +1565,6 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 transition cursor-pointer"
               >
                 <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2 bg-slate-100 p-1 rounded-2xl text-xs font-bold">
-              <button
-                onClick={() => setCalcMode('DSR')}
-                className={`py-2.5 rounded-xl transition cursor-pointer ${
-                  calcMode === 'DSR' ? 'bg-[#03c75a] text-white shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                1. DSR & 스트레스 DSR
-              </button>
-              <button
-                onClick={() => setCalcMode('LTV')}
-                className={`py-2.5 rounded-xl transition cursor-pointer ${
-                  calcMode === 'LTV' ? 'bg-[#0066ff] text-white shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                2. LTV 담보비율
-              </button>
-              <button
-                onClick={() => setCalcMode('GAP')}
-                className={`py-2.5 rounded-xl transition cursor-pointer ${
-                  calcMode === 'GAP' ? 'bg-amber-600 text-white shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                3. 전세가율 & 갭투자
               </button>
             </div>
 
@@ -1866,35 +1614,6 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                       </select>
                     </div>
                   </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                    <div>
-                      <label className="font-bold text-slate-700 block mb-1">기존 기타 대출 월 상환액 (만원)</label>
-                      <input
-                        type="number"
-                        min={0}
-                        max={500}
-                        step={10}
-                        value={otherMonthlyDebt}
-                        onChange={(e) => setOtherMonthlyDebt(Number(e.target.value))}
-                        className="w-full bg-white p-2.5 rounded-xl border border-slate-200 font-bold text-slate-900"
-                      />
-                    </div>
-
-                    <div className="flex flex-col justify-end">
-                      <label className="flex items-center gap-2 p-2.5 bg-white rounded-xl border border-slate-200 cursor-pointer select-none">
-                        <input
-                          type="checkbox"
-                          checked={applyStressDsr}
-                          onChange={(e) => setApplyStressDsr(e.target.checked)}
-                          className="w-4 h-4 accent-[#03c75a]"
-                        />
-                        <span className="text-xs font-bold text-slate-800">
-                          스트레스 DSR 2단계 (+1.2%p 가산)
-                        </span>
-                      </label>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="p-5 rounded-2xl bg-gradient-to-br from-[#e8f8ee] to-emerald-50/50 border border-[#03c75a]/30 space-y-3">
@@ -1916,149 +1635,6 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                           ({maxLoanDsrPrincipal.toLocaleString()}만 원)
                         </span>
                       </div>
-                    </div>
-
-                    {applyStressDsr && stressReductionAmount > 0 && (
-                      <div className="text-left sm:text-right bg-white p-2.5 rounded-xl border border-rose-200">
-                        <span className="text-[10px] text-rose-600 font-bold block">가산금리로 인한 한도 축소:</span>
-                        <span className="text-xs font-black text-rose-700">
-                          -{(stressReductionAmount / 10000).toFixed(2)}억 원 감소
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* LTV Calc */}
-            {calcMode === 'LTV' && (
-              <div className="space-y-5 animate-fadeIn">
-                <div className="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs">
-                  <div>
-                    <div className="flex justify-between items-center mb-1.5 font-bold">
-                      <span className="text-slate-700">매수 희망 주택 가격 (KB시세 기준)</span>
-                      <span className="text-base font-black text-[#0066ff]">{(housePrice / 10000).toFixed(1)}억 원 ({housePrice.toLocaleString()}만 원)</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={30000}
-                      max={300000}
-                      step={5000}
-                      value={housePrice}
-                      onChange={(e) => setHousePrice(Number(e.target.value))}
-                      className="w-full accent-[#0066ff]"
-                    />
-                  </div>
-
-                  <div className="pt-2">
-                    <label className="font-bold text-slate-700 block mb-1.5">적용 LTV 담보 비율</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {[
-                        { rate: 70, label: '70% (생애최초·무주택 비규제)' },
-                        { rate: 60, label: '60% (1주택 비규제지역)' },
-                        { rate: 50, label: '50% (투기과열·강남3구/용산)' },
-                      ].map((item) => (
-                        <button
-                          key={item.rate}
-                          type="button"
-                          onClick={() => setLtvRate(item.rate)}
-                          className={`p-2.5 rounded-xl border text-xs font-bold transition cursor-pointer text-left ${
-                            ltvRate === item.rate
-                              ? 'bg-[#0066ff] text-white border-[#0066ff] shadow-xs'
-                              : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
-                          }`}
-                        >
-                          <span className="block font-black text-sm">{item.rate}%</span>
-                          <span className="text-[10px] opacity-80">{item.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-gradient-to-br from-[#edf4ff] to-blue-50/50 border border-[#0066ff]/30 space-y-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <span className="text-xs font-bold text-slate-600 block">LTV 기준 최대 대출 한도:</span>
-                      <div className="text-2xl sm:text-3xl font-black text-[#0066ff] mt-0.5">
-                        {(maxLoanLtv / 10000).toFixed(2)}억 원
-                      </div>
-                    </div>
-
-                    <div className="pt-3 sm:pt-0 sm:border-l sm:border-blue-200 sm:pl-4">
-                      <span className="text-xs font-bold text-slate-600 block">매수 시 필요한 최소 순현금:</span>
-                      <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-0.5">
-                        약 {(minRequiredCashLtv / 10000).toFixed(2)}억 원
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Gap Calc */}
-            {calcMode === 'GAP' && (
-              <div className="space-y-5 animate-fadeIn">
-                <div className="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs">
-                  <div>
-                    <div className="flex justify-between items-center mb-1 font-bold">
-                      <span className="text-slate-700">매매 가격</span>
-                      <span className="text-sm font-black text-slate-900">{(gapBuyPrice / 10000).toFixed(1)}억 ({gapBuyPrice.toLocaleString()}만 원)</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={30000}
-                      max={250000}
-                      step={2000}
-                      value={gapBuyPrice}
-                      onChange={(e) => {
-                        const val = Number(e.target.value);
-                        setGapBuyPrice(val);
-                        if (gapJeonsePrice > val) setGapJeonsePrice(Math.round(val * 0.65));
-                      }}
-                      className="w-full accent-amber-600"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between items-center mb-1 font-bold">
-                      <span className="text-slate-700">전세 보증금</span>
-                      <span className="text-sm font-black text-amber-700">{(gapJeonsePrice / 10000).toFixed(1)}억 ({gapJeonsePrice.toLocaleString()}만 원)</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={10000}
-                      max={gapBuyPrice}
-                      step={1000}
-                      value={gapJeonsePrice}
-                      onChange={(e) => setGapJeonsePrice(Number(e.target.value))}
-                      className="w-full accent-amber-600"
-                    />
-                  </div>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50/50 border border-amber-300 space-y-3">
-                  <div className="flex items-center justify-between text-xs text-slate-700 font-medium">
-                    <span>이 단지의 전세가율:</span>
-                    <strong className="text-amber-800 font-black text-base">
-                      {gapJeonseRatio}%
-                    </strong>
-                  </div>
-
-                  <div className="pt-2 border-t border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <div>
-                      <span className="text-xs font-bold text-slate-700">필요한 순수 갭투자금 (현금):</span>
-                      <div className="text-2xl sm:text-3xl font-black text-amber-700">
-                        {(pureGapCash / 10000).toFixed(2)}억 원
-                      </div>
-                    </div>
-
-                    <div className="bg-white p-2.5 rounded-xl border border-amber-200 text-xs">
-                      <span className="text-[10px] text-slate-500 block">취득세 포함 총 필요 자본:</span>
-                      <span className="font-black text-slate-900">
-                        약 {(totalGapNeedCash / 10000).toFixed(2)}억 원
-                      </span>
                     </div>
                   </div>
                 </div>
