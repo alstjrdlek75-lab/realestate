@@ -26,7 +26,9 @@ import {
   Check,
   Navigation,
   Info,
-  Maximize2
+  Maximize2,
+  Eye,
+  Map as MapIcon
 } from 'lucide-react';
 
 interface RealEstateFutureProps {
@@ -34,10 +36,12 @@ interface RealEstateFutureProps {
 }
 
 type FutureTab = 'NEW_TOWNS' | 'FUTURE_NEWS' | 'GLOSSARY';
+type MapViewType = 'METRO' | 'DISTRICT_BLOCKS';
 type CalcMode = 'DSR' | 'LTV' | 'GAP';
 
 interface BlockDetail {
   blockCode: string;
+  shortCode: string;
   supplyType: '공공분양' | '신혼희망타운' | '민간분양';
   units: number;
   sizes: string;
@@ -47,6 +51,8 @@ interface BlockDetail {
   progressStatus: string;
   progressStatusColor: string;
   note: string;
+  // Spatial Coords in District Master Plan SVG (0~500, 0~650)
+  spatial: { x: number; y: number; w: number; h: number; color: string };
 }
 
 interface NewTownDetail {
@@ -66,6 +72,7 @@ interface NewTownDetail {
   proTip: string;
   naverNewsQuery: string;
   mapCoords: { x: number; y: number; gangnamTime: string; seoulTime: string };
+  districtMapType: string;
   blocks: BlockDetail[];
 }
 
@@ -87,9 +94,25 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     proTip: '왕숙1은 GTX-B와 9호선이 교차하는 자족 첨단도시, 왕숙2는 경의중앙선과 문화예술 특화 주거단지로 조성됩니다.',
     naverNewsQuery: '남양주 왕숙 3기 신도시 분양 9호선',
     mapCoords: { x: 670, y: 170, gangnamTime: '강남 25분 (9호선)', seoulTime: '서울역 15분 (GTX-B)' },
+    districtMapType: 'WANGSOOK',
     blocks: [
       {
+        blockCode: '왕숙1 A-19 블록',
+        shortCode: 'A-19',
+        supplyType: '공공분양',
+        units: 720,
+        sizes: '전용 74㎡, 84㎡',
+        priceEstimate: '74㎡ 약 4.6억 / 84㎡ 약 5.3억',
+        stationDistance: 'GTX-B·9호선 복합환승역 도보 4분 (중심상업지구 바로 앞)',
+        featureBadge: '👑 왕숙 최고 대장 로또 블록',
+        progressStatus: '본청약 준비 중',
+        progressStatusColor: 'bg-rose-600 text-white',
+        note: '중심상업지구와 복합역세권 바로 앞! 토지이용계획도 정중앙의 핵심 대장 블록',
+        spatial: { x: 275, y: 280, w: 46, h: 32, color: '#f59e0b' }
+      },
+      {
         blockCode: '왕숙1 B-1 블록',
+        shortCode: 'B-1',
         supplyType: '공공분양',
         units: 569,
         sizes: '전용 74㎡, 84㎡',
@@ -98,10 +121,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🏆 핵심 대장 블록',
         progressStatus: '본청약 진행/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: 'GTX-B와 9호선 신설역 바로 앞 초역세권으로 왕숙지구 내 최고 선호도 1위'
+        note: 'GTX-B와 9호선 신설역 바로 앞 초역세권으로 왕숙지구 내 최고 선호도 1위',
+        spatial: { x: 300, y: 235, w: 42, h: 28, color: '#f59e0b' }
       },
       {
         blockCode: '왕숙1 B-2 블록',
+        shortCode: 'B-2',
         supplyType: '공공분양',
         units: 587,
         sizes: '전용 74㎡, 84㎡',
@@ -110,22 +135,40 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🎒 초등학교 인접',
         progressStatus: '2025년 본청약',
         progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '단지 바로 옆 초등학교와 근린공원을 품은 쾌적한 84㎡ 중형 위주 단지'
+        note: '단지 바로 옆 초등학교와 근린공원을 품은 쾌적한 84㎡ 중형 위주 단지',
+        spatial: { x: 335, y: 95, w: 38, h: 30, color: '#f59e0b' }
       },
       {
         blockCode: '왕숙1 A-1 블록',
+        shortCode: 'A-1',
         supplyType: '공공분양',
         units: 583,
         sizes: '전용 59㎡',
         priceEstimate: '59㎡ 약 3.8억~4.0억',
-        stationDistance: '9호선 신설역 도보 6분',
+        stationDistance: '북부 신설역 도보 6분',
         featureBadge: '💰 실속 소형 평형',
         progressStatus: '본청약 준비 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
-        note: '가성비가 가장 뛰어나며 사회초년생 및 신혼부부에게 최적화된 59㎡ 단지'
+        note: '북부 진접 방면 첫머리 입지로 가성비가 가장 뛰어난 실속 59㎡ 단지',
+        spatial: { x: 310, y: 40, w: 36, h: 26, color: '#fbbf24' }
+      },
+      {
+        blockCode: '왕숙1 S-19 블록',
+        shortCode: 'S-19',
+        supplyType: '공공분양',
+        units: 640,
+        sizes: '전용 74㎡, 84㎡',
+        priceEstimate: '84㎡ 약 5.2억',
+        stationDistance: '동측 공원축 인접',
+        featureBadge: '🌿 숲세권 힐링단지',
+        progressStatus: '본청약 예정',
+        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
+        note: '동측 대규모 완충 녹지와 중앙공원이 연결되는 쾌적한 주거 블록',
+        spatial: { x: 325, y: 175, w: 42, h: 28, color: '#f59e0b' }
       },
       {
         blockCode: '왕숙1 A-24 블록',
+        shortCode: 'A-24',
         supplyType: '신혼희망타운',
         units: 602,
         sizes: '전용 55㎡',
@@ -134,10 +177,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '👶 보육 특화',
         progressStatus: '착공 및 본청약',
         progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
-        note: '단지 내 어린이집, 실내놀이터 완비된 신혼부부 전용 저금리 모기지 지원 단지'
+        note: '남부 진건 생활권 인접, 단지 내 국공립 어린이집 완비된 신혼부부 특화 단지',
+        spatial: { x: 315, y: 425, w: 38, h: 28, color: '#34d399' }
       },
       {
         blockCode: '왕숙2 A-4 블록',
+        shortCode: '왕숙2 A-4',
         supplyType: '공공분양',
         units: 520,
         sizes: '전용 59㎡, 74㎡, 84㎡',
@@ -146,19 +191,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🎨 문화예술 복합축',
         progressStatus: '본청약 진행 중',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: '왕숙2지구의 시세 리딩 단지로 다산신도시 생활권을 바로 공유하는 입지'
-      },
-      {
-        blockCode: '왕숙2 A-1 블록',
-        supplyType: '신혼희망타운',
-        units: 762,
-        sizes: '전용 55㎡',
-        priceEstimate: '55㎡ 약 3.7억',
-        stationDistance: '경의중앙선 도보 8분',
-        featureBadge: '🏫 초·중학교 인접',
-        progressStatus: '착공 진행 중',
-        progressStatusColor: 'bg-purple-50 text-purple-700 border-purple-200',
-        note: '대단지 신혼희망타운으로 초등학교와 중학교가 나란히 붙어있어 통학 안심'
+        note: '왕숙2지구의 시세 리딩 단지로 다산신도시 생활권을 바로 공유하는 입지',
+        spatial: { x: 230, y: 520, w: 48, h: 32, color: '#f59e0b' }
       }
     ]
   },
@@ -179,9 +213,11 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     proTip: '강남(GBD) 및 송파와 가장 가까운 입지로 3기 신도시 중 실수요자 선호도 1위. 3호선 개통 시 수서·양재 20분대 진입.',
     naverNewsQuery: '하남 교산 3기 신도시 3호선 송파하남선',
     mapCoords: { x: 670, y: 400, gangnamTime: '수서 15분 / 양재 22분', seoulTime: '잠실 15분' },
+    districtMapType: 'GYOSAN',
     blocks: [
       {
         blockCode: '교산 A-2 블록',
+        shortCode: 'A-2',
         supplyType: '공공분양',
         units: 1115,
         sizes: '전용 51㎡, 59㎡, 74㎡, 84㎡',
@@ -190,10 +226,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🏆 교산 1호 대단지',
         progressStatus: '2025년 본청약 예정',
         progressStatusColor: 'bg-[#0066ff] text-white',
-        note: '1,115세대 랜드마크 대단지로 3호선 초역세권과 상업지구를 모두 갖춘 최고 핵심 블록'
+        note: '1,115세대 랜드마크 대단지로 3호선 초역세권과 상업지구를 모두 갖춘 최고 핵심 블록',
+        spatial: { x: 230, y: 160, w: 56, h: 36, color: '#f59e0b' }
       },
       {
         blockCode: '교산 B-1 블록',
+        shortCode: 'B-1',
         supplyType: '민간분양',
         units: 840,
         sizes: '전용 74㎡, 84㎡',
@@ -202,10 +240,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🌿 호수공원 조망',
         progressStatus: '지구조성 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
-        note: '민간 1군 브랜드가 시공 예정인 84㎡ 중심 하이엔드 공원 조망 단지'
+        note: '민간 1군 브랜드가 시공 예정인 84㎡ 중심 하이엔드 공원 조망 단지',
+        spatial: { x: 290, y: 240, w: 50, h: 34, color: '#f59e0b' }
       },
       {
         blockCode: '교산 A-1 블록',
+        shortCode: 'A-1',
         supplyType: '신혼희망타운',
         units: 450,
         sizes: '전용 55㎡',
@@ -214,10 +254,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🎒 안심 통학권',
         progressStatus: '착공 준비 중',
         progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
-        note: '도로를 건너지 않는 초품아 단지로 신혼부부 사전청약 당시 높은 경쟁률 기록'
+        note: '도로를 건너지 않는 초품아 단지로 신혼부부 사전청약 당시 높은 경쟁률 기록',
+        spatial: { x: 170, y: 140, w: 44, h: 30, color: '#34d399' }
       },
       {
         blockCode: '교산 B-3 블록',
+        shortCode: 'B-3',
         supplyType: '공공분양',
         units: 750,
         sizes: '전용 74㎡, 84㎡',
@@ -226,7 +268,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🏢 중대형 위주',
         progressStatus: '2025년 하반기 본청약',
         progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '송파 접근성이 가장 뛰어나며 자족 첨단R&D 단지와 도보로 출퇴근 가능한 위치'
+        note: '송파 접근성이 가장 뛰어나며 자족 첨단R&D 단지와 도보로 출퇴근 가능한 위치',
+        spatial: { x: 260, y: 350, w: 52, h: 34, color: '#f59e0b' }
       }
     ]
   },
@@ -247,9 +290,11 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     proTip: 'GTX-A 개통 시 서울역 8분, 삼성역 13분 컷. 상암DMC 직주근접 수요와 일산·은평 거주민의 최고 선호지.',
     naverNewsQuery: '고양 창릉 3기 신도시 GTX 창릉역',
     mapCoords: { x: 340, y: 190, gangnamTime: '삼성역 13분 (GTX-A)', seoulTime: '서울역 8분' },
+    districtMapType: 'CHANGREUNG',
     blocks: [
       {
         blockCode: '창릉 S-5 블록',
+        shortCode: 'S-5',
         supplyType: '공공분양',
         units: 718,
         sizes: '전용 51㎡, 59㎡, 74㎡, 84㎡',
@@ -258,10 +303,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🏆 3기 신도시 최고 경쟁률',
         progressStatus: '본청약 완료/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: 'GTX-A 창릉역을 걸어서 이용하는 창릉 최고 대장 블록. 삼성역 10분대 직결'
+        note: 'GTX-A 창릉역을 걸어서 이용하는 창릉 최고 대장 블록. 삼성역 10분대 직결',
+        spatial: { x: 220, y: 220, w: 54, h: 36, color: '#f59e0b' }
       },
       {
         blockCode: '창릉 S-6 블록',
+        shortCode: 'S-6',
         supplyType: '공공분양',
         units: 407,
         sizes: '전용 59㎡, 74㎡, 84㎡',
@@ -270,10 +317,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🌿 창릉천 수변 조망',
         progressStatus: '본청약 완료/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: '창릉천 수변공원 영구 조망과 초등학교를 동시에 품은 최고급 주거 입지'
+        note: '창릉천 수변공원 영구 조망과 초등학교를 동시에 품은 최고급 주거 입지',
+        spatial: { x: 285, y: 230, w: 48, h: 32, color: '#f59e0b' }
       },
       {
         blockCode: '창릉 A-4 블록',
+        shortCode: 'A-4',
         supplyType: '공공분양',
         units: 573,
         sizes: '전용 55㎡, 59㎡',
@@ -282,10 +331,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '💰 실속 중소형',
         progressStatus: '본청약 완료',
         progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '2024년 말 본청약 접수 완료. 서부선과 직결되는 고양은평선 수혜 단지'
+        note: '2024년 말 본청약 접수 완료. 서부선과 직결되는 고양은평선 수혜 단지',
+        spatial: { x: 180, y: 120, w: 46, h: 30, color: '#fbbf24' }
       },
       {
         blockCode: '창릉 B-1 블록',
+        shortCode: 'B-1',
         supplyType: '민간분양',
         units: 680,
         sizes: '전용 84㎡, 101㎡',
@@ -294,7 +345,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🏢 대형 평형 구성',
         progressStatus: '부지 조성 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
-        note: '민간 브랜드 시공 예정으로 중대형 평형을 선호하는 갈아타기 수요 최우선 타겟'
+        note: '민간 브랜드 시공 예정으로 중대형 평형을 선호하는 갈아타기 수요 최우선 타겟',
+        spatial: { x: 260, y: 310, w: 52, h: 34, color: '#f59e0b' }
       }
     ]
   },
@@ -315,9 +367,11 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     proTip: '3기 신도시 중 유일하게 대기업(SK그룹) 대규모 입주가 확정되어 자족 기능이 가장 확실한 앵커 단지.',
     naverNewsQuery: '부천 대장 3기 신도시 SK 대장홍대선',
     mapCoords: { x: 230, y: 350, gangnamTime: '여의도 20분 / 강남 40분', seoulTime: '홍대입구 20분 (대장홍대선)' },
+    districtMapType: 'DAEJANG',
     blocks: [
       {
         blockCode: '대장 A-7 블록',
+        shortCode: 'A-7',
         supplyType: '공공분양',
         units: 449,
         sizes: '전용 59㎡',
@@ -326,10 +380,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🏆 대장지구 대장 블록',
         progressStatus: '2025년 본청약 예정',
         progressStatusColor: 'bg-[#03c75a] text-white',
-        note: '홍대입구역 20분 컷 대장홍대선 초역세권으로 마곡/상암 직주근접 최고 입지'
+        note: '홍대입구역 20분 컷 대장홍대선 초역세권으로 마곡/상암 직주근접 최고 입지',
+        spatial: { x: 200, y: 190, w: 48, h: 32, color: '#f59e0b' }
       },
       {
         blockCode: '대장 A-8 블록',
+        shortCode: 'A-8',
         supplyType: '공공분양',
         units: 560,
         sizes: '전용 59㎡, 74㎡, 84㎡',
@@ -338,10 +394,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🛍️ 슬세권 상권',
         progressStatus: '착공 및 본청약 준비',
         progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '대장신도시 중심 상업지구와 복합커뮤니티 센터가 바로 연결되는 편리한 단지'
+        note: '대장신도시 중심 상업지구와 복합커뮤니티 센터가 바로 연결되는 편리한 단지',
+        spatial: { x: 260, y: 210, w: 50, h: 34, color: '#f59e0b' }
       },
       {
         blockCode: '대장 A-5 블록',
+        shortCode: 'A-5',
         supplyType: '신혼희망타운',
         units: 591,
         sizes: '전용 46㎡, 55㎡',
@@ -350,19 +408,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🏢 SK 직주일치',
         progressStatus: '본청약 완료/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: 'SK그룹 R&D 캠퍼스 도보 3분 거리로 고소득 연구원 배후 임대 및 실거주 수요 탄탄'
-      },
-      {
-        blockCode: '대장 A-6 블록',
-        supplyType: '신혼희망타운',
-        units: 430,
-        sizes: '전용 55㎡',
-        priceEstimate: '55㎡ 약 3.7억',
-        stationDistance: '초등학교 바로 앞 (초품아)',
-        featureBadge: '🎒 안심 교육특화',
-        progressStatus: '착공 순항 중',
-        progressStatusColor: 'bg-purple-50 text-purple-700 border-purple-200',
-        note: '유치원과 초등학교를 단지 안마당처럼 품고 있는 안심 보육 단지'
+        note: 'SK그룹 R&D 캠퍼스 도보 3분 거리로 고소득 연구원 배후 임대 및 실거주 수요 탄탄',
+        spatial: { x: 310, y: 140, w: 48, h: 30, color: '#34d399' }
       }
     ]
   },
@@ -383,9 +430,11 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     proTip: '3기 신도시 중 입주시기가 가장 빠르며 김포공항역을 통한 마곡/여의도 출퇴근 실수요자에게 실속형 대안.',
     naverNewsQuery: '인천 계양 3기 신도시 본청약 입주',
     mapCoords: { x: 170, y: 340, gangnamTime: '여의도 25분 / 마곡 10분', seoulTime: '서울역 30분 (공항철도)' },
+    districtMapType: 'GYEYANG',
     blocks: [
       {
         blockCode: '계양 A-2 블록',
+        shortCode: 'A-2',
         supplyType: '공공분양',
         units: 813,
         sizes: '전용 59㎡, 74㎡, 84㎡',
@@ -394,10 +443,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🏆 3기 최초 본청약 단지',
         progressStatus: '본청약 완료 / 2026 입주',
         progressStatusColor: 'bg-[#03c75a] text-white',
-        note: '3기 신도시 전체 중 가장 먼저 2024년 9월 본청약 완료. 2026년 12월 첫 입주 개시'
+        note: '3기 신도시 전체 중 가장 먼저 2024년 9월 본청약 완료. 2026년 12월 첫 입주 개시',
+        spatial: { x: 210, y: 190, w: 52, h: 36, color: '#f59e0b' }
       },
       {
         blockCode: '계양 A-3 블록',
+        shortCode: 'A-3',
         supplyType: '신혼희망타운',
         units: 359,
         sizes: '전용 55㎡',
@@ -406,19 +457,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '👶 3기 1호 신희타',
         progressStatus: '본청약 완료 / 2026 입주',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
-        note: '가장 빠른 입주 시기를 자랑하며 1.3% 고정금리 수익공유형 모기지 혜택 적용'
-      },
-      {
-        blockCode: '계양 A-1 블록',
-        supplyType: '공공분양',
-        units: 612,
-        sizes: '전용 59㎡, 74㎡, 84㎡',
-        priceEstimate: '84㎡ 약 5.9억 예상',
-        stationDistance: '인천 1호선 박촌역 환승 연계',
-        featureBadge: '🚇 지하철 환승권',
-        progressStatus: '착공 및 분양 준비',
-        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '기존 박촌역 인프라와 신도시 테크노밸리 자족기능을 동시에 누리는 입지'
+        note: '가장 빠른 입주 시기를 자랑하며 1.3% 고정금리 수익공유형 모기지 혜택 적용',
+        spatial: { x: 270, y: 170, w: 46, h: 30, color: '#34d399' }
       }
     ]
   },
@@ -439,9 +479,11 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     proTip: '서초구 양재동과 맞닿아 사실상 강남 생활권. 3기 신도시 중 시세 상승 잠재력과 평당 분양가가 가장 높은 최상급지.',
     naverNewsQuery: '과천 과천지구 3기 신도시 분양 4호선',
     mapCoords: { x: 470, y: 470, gangnamTime: '양재 8분 / 강남역 15분', seoulTime: '사당 7분 (4호선)' },
+    districtMapType: 'GWACHEON',
     blocks: [
       {
         blockCode: '과천 A-1 블록',
+        shortCode: 'A-1',
         supplyType: '공공분양',
         units: 650,
         sizes: '전용 59㎡, 84㎡',
@@ -450,10 +492,12 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '👑 3기 신도시 원탑 황금 입지',
         progressStatus: '2025~2026년 분양 예정',
         progressStatusColor: 'bg-[#0066ff] text-white',
-        note: '서초구 양재동 바로 옆! 사당·강남 10분대 진입 가능한 3기 신도시 최고의 로또 블록'
+        note: '서초구 양재동 바로 옆! 사당·강남 10분대 진입 가능한 3기 신도시 최고의 로또 블록',
+        spatial: { x: 210, y: 150, w: 56, h: 38, color: '#f59e0b' }
       },
       {
         blockCode: '과천 A-2 블록',
+        shortCode: 'A-2',
         supplyType: '신혼희망타운',
         units: 480,
         sizes: '전용 55㎡, 59㎡',
@@ -462,19 +506,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         featureBadge: '🌿 양재천 에코라이프',
         progressStatus: '지구조성 준비 중',
         progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
-        note: '양재천 자전거 도로와 직결되며 서초구 우면산 R&CD 배후단지로 신혼부부 청약 1순위'
-      },
-      {
-        blockCode: '과천 B-1 블록',
-        supplyType: '민간분양',
-        units: 850,
-        sizes: '전용 84㎡, 105㎡, 120㎡',
-        priceEstimate: '84㎡ 약 10억~11억 예상',
-        stationDistance: '위례과천선 / 4호선 환승역세권',
-        featureBadge: '🏢 하이엔드 대단지',
-        progressStatus: '지구계획 승인 완료',
-        progressStatusColor: 'bg-purple-50 text-purple-700 border-purple-200',
-        note: '1군 메이저 브랜드가 들어설 대형 평형 단지로 준공 후 20억 클럽 진입 유력'
+        note: '양재천 자전거 도로와 직결되며 서초구 우면산 R&CD 배후단지로 신혼부부 청약 1순위',
+        spatial: { x: 275, y: 220, w: 50, h: 32, color: '#34d399' }
       }
     ]
   }
@@ -482,8 +515,10 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
 
 export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
   const [activeTab, setActiveTab] = useState<FutureTab>('NEW_TOWNS');
+  const [mapViewType, setMapViewType] = useState<MapViewType>('DISTRICT_BLOCKS');
   const [selectedTownId, setSelectedTownId] = useState<string>(NEW_TOWNS_DATA[0].id);
   const [hoveredTownId, setHoveredTownId] = useState<string | null>(null);
+  const [selectedBlockCode, setSelectedBlockCode] = useState<string>('왕숙1 A-19 블록');
 
   // Interactive Calculator Modal State
   const [isCalcOpen, setIsCalcOpen] = useState<boolean>(false);
@@ -539,6 +574,15 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
   };
 
   const selectedTown = NEW_TOWNS_DATA.find(t => t.id === selectedTownId) || NEW_TOWNS_DATA[0];
+  const activeBlock = selectedTown.blocks.find(b => b.blockCode === selectedBlockCode) || selectedTown.blocks[0];
+
+  const handleSelectTown = (townId: string) => {
+    setSelectedTownId(townId);
+    const targetTown = NEW_TOWNS_DATA.find(t => t.id === townId);
+    if (targetTown && targetTown.blocks.length > 0) {
+      setSelectedBlockCode(targetTown.blocks[0].blockCode);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
@@ -547,17 +591,17 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 text-xs font-black mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>수도권 3기 신도시 인터랙티브 광역 지도 & 블록별 공급 도감</span>
+            <span>수도권 3기 신도시 토지이용계획도 & 블록 공간 배치도</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            한눈에 보는 <span className="text-[#03c75a]">3기 신도시 지도</span>와 <br />
-            블록별(A·B·S) 공급 총정리
+            어디가 <span className="text-[#03c75a]">A-1이고 A-19인지</span> <br />
+            지도에서 바로 확인하세요
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
-            지도의 마커나 블록을 클릭하면 <strong>왕숙·교산·창릉·대장·계양·과천</strong>의 서울 직결 철도망 시간, 
-            약속된 앵커 기업, 분양가(추정/본청약) 및 입주 시기를 인터랙티브하게 확인할 수 있습니다.
+            실제 LH 토지이용계획도 기반의 <strong>블록 공간 배치도</strong>를 통해 <br className="hidden sm:inline" />
+            <strong>GTX·지하철 초역세권 대장 블록(A-19, S-5 등)의 위치, 평형, 추정 분양가</strong>를 직관적으로 분석할 수 있습니다.
           </p>
         </div>
       </div>
@@ -565,7 +609,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
       {/* Main 3 Sub-Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm">
         {[
-          { id: 'NEW_TOWNS', label: '1. 3기 신도시 지도 & 블록별(A-1, B-1) 공급 도감', icon: '🗺️' },
+          { id: 'NEW_TOWNS', label: '1. 3기 신도시 지도 & 블록별(A-1, A-19) 공간 도감', icon: '🗺️' },
           { id: 'FUTURE_NEWS', label: '2. 미래 주목 변수 & 실시간 네이버 뉴스', icon: '📡' },
           { id: 'GLOSSARY', label: '3. 필수 부동산·대출 용어 & 실시간 계산기', icon: '📚' },
         ].map((tab) => (
@@ -590,293 +634,14 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
       {activeTab === 'NEW_TOWNS' && (
         <div className="space-y-6 animate-fadeIn">
 
-          {/* ===================================================================== */}
-          {/* 🗺️ INTERACTIVE METROPOLITAN MAP SECTION (수도권 광역 인터랙티브 지도) */}
-          {/* ===================================================================== */}
-          <div className="naver-card p-4 sm:p-7 bg-white border border-slate-200 shadow-sm space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
-              <div>
-                <h3 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
-                  <Compass className="w-5 h-5 text-[#03c75a]" />
-                  <span>수도권 3기 신도시 광역 입지 & 철도망 인터랙티브 지도</span>
-                </h3>
-                <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                  지도 위 <strong>초록색 신도시 핀</strong>을 클릭하시면 해당 신도시의 상세 분석과 블록(A-1, B-1 등) 정보가 즉시 연동됩니다.
-                </p>
-              </div>
-
-              {/* Map Legend */}
-              <div className="flex items-center gap-2 text-[11px] font-bold text-slate-600 bg-slate-50 p-2 rounded-xl border border-slate-200 shrink-0">
-                <span className="flex items-center gap-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#03c75a]" /> 3기 신도시
-                </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-slate-800" /> 서울 3대 도심
-                </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-3 h-0.5 bg-[#0066ff]" /> 광역 철도망
-                </span>
-              </div>
-            </div>
-
-            {/* SVG Interactive Map Container */}
-            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] max-h-[560px] bg-gradient-to-br from-[#f8fafc] via-[#f1f5f9] to-[#e2e8f0] rounded-2xl border border-slate-200/80 overflow-hidden shadow-inner select-none">
-              <svg 
-                viewBox="0 0 860 540" 
-                className="w-full h-full"
-              >
-                <defs>
-                  {/* Subtle Grid Pattern */}
-                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#cbd5e1" strokeWidth="0.5" strokeOpacity="0.4" />
-                  </pattern>
-
-                  {/* Pulsing Marker Animation */}
-                  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="3" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                  </filter>
-                </defs>
-
-                {/* Grid Overlay */}
-                <rect width="100%" height="100%" fill="url(#grid)" />
-
-                {/* Han River (한강 줄기) */}
-                <path
-                  d="M 120 280 Q 250 320, 370 290 T 520 310 T 640 260 T 780 230 T 840 200"
-                  fill="none"
-                  stroke="#93c5fd"
-                  strokeWidth="18"
-                  strokeLinecap="round"
-                  strokeOpacity="0.8"
-                />
-                <path
-                  d="M 520 310 Q 520 380, 530 460"
-                  fill="none"
-                  stroke="#bfdbfe"
-                  strokeWidth="8"
-                  strokeLinecap="round"
-                  strokeOpacity="0.7"
-                />
-                <text x="730" y="225" fill="#3b82f6" fontSize="11" fontWeight="bold" opacity="0.6">한강 (Han River)</text>
-                <text x="540" y="440" fill="#3b82f6" fontSize="10" fontWeight="bold" opacity="0.5">탄천</text>
-
-                {/* Seoul City Boundary (서울시 경계 대략) */}
-                <path
-                  d="M 310 210 Q 420 180, 560 210 Q 610 280, 580 370 Q 530 430, 420 420 Q 300 400, 280 320 Z"
-                  fill="#ffffff"
-                  fillOpacity="0.75"
-                  stroke="#94a3b8"
-                  strokeWidth="1.5"
-                  strokeDasharray="4,4"
-                />
-                <text x="420" y="240" fill="#64748b" fontSize="13" fontWeight="900" letterSpacing="3" opacity="0.5">
-                  서울특별시 (SEOUL)
-                </text>
-
-                {/* Gyeonggi / Incheon Region Labels */}
-                <text x="210" y="160" fill="#94a3b8" fontSize="12" fontWeight="bold" opacity="0.7">고양시</text>
-                <text x="700" y="140" fill="#94a3b8" fontSize="12" fontWeight="bold" opacity="0.7">남양주시</text>
-                <text x="700" y="440" fill="#94a3b8" fontSize="12" fontWeight="bold" opacity="0.7">하남시</text>
-                <text x="440" y="515" fill="#94a3b8" fontSize="12" fontWeight="bold" opacity="0.7">과천시 / 안양</text>
-                <text x="140" y="380" fill="#94a3b8" fontSize="12" fontWeight="bold" opacity="0.7">부천시 / 인천</text>
-
-                {/* ================================================================= */}
-                {/* Major Transit Railway Lines (GTX & Subway Extension Lines) */}
-                {/* ================================================================= */}
-
-                {/* 1. GTX-A (창릉 -> 서울역 -> 삼성) Cyan */}
-                <path
-                  d="M 340 190 L 420 280 L 490 350 L 530 460"
-                  fill="none"
-                  stroke="#0ea5e9"
-                  strokeWidth="3"
-                  strokeDasharray="6,3"
-                />
-                <text x="360" y="240" fill="#0284c7" fontSize="10" fontWeight="bold">GTX-A</text>
-
-                {/* 2. GTX-B (왕숙 -> 청량리 -> 서울역 -> 여의도) Indigo */}
-                <path
-                  d="M 670 170 L 510 250 L 420 280 L 360 310 L 230 350"
-                  fill="none"
-                  stroke="#6366f1"
-                  strokeWidth="3"
-                  strokeDasharray="6,3"
-                />
-                <text x="590" y="200" fill="#4f46e5" fontSize="10" fontWeight="bold">GTX-B</text>
-
-                {/* 3. 지하철 3호선 송파하남선 (수서/오금 -> 하남교산) Orange */}
-                <path
-                  d="M 490 350 L 550 360 L 670 400"
-                  fill="none"
-                  stroke="#f97316"
-                  strokeWidth="3"
-                  strokeDasharray="5,3"
-                />
-                <text x="580" y="395" fill="#ea580c" fontSize="10" fontWeight="bold">3호선 (송파하남선)</text>
-
-                {/* 4. 지하철 9호선 연장 (강남/강동 -> 남양주 왕숙) Amber */}
-                <path
-                  d="M 490 350 L 560 310 L 620 250 L 670 170"
-                  fill="none"
-                  stroke="#eab308"
-                  strokeWidth="3"
-                  strokeDasharray="5,3"
-                />
-                <text x="580" y="290" fill="#ca8a04" fontSize="10" fontWeight="bold">9호선 연장선</text>
-
-                {/* 5. 대장홍대선 (부천대장 -> 화곡 -> 홍대입구) Emerald */}
-                <path
-                  d="M 230 350 L 310 320 L 380 270"
-                  fill="none"
-                  stroke="#10b981"
-                  strokeWidth="3"
-                  strokeDasharray="5,3"
-                />
-                <text x="270" y="300" fill="#059669" fontSize="10" fontWeight="bold">대장홍대선</text>
-
-                {/* 6. 지하철 4호선 & GTX-C (과천 -> 사당/양재) Blue */}
-                <path
-                  d="M 470 470 L 440 380 L 420 280"
-                  fill="none"
-                  stroke="#3b82f6"
-                  strokeWidth="3"
-                  strokeDasharray="5,3"
-                />
-                <text x="475" y="440" fill="#2563eb" fontSize="10" fontWeight="bold">4호선 / GTX-C</text>
-
-                {/* ================================================================= */}
-                {/* Seoul 3 Core Job Hub Nodes (서울 3대 핵심 업무지구) */}
-                {/* ================================================================= */}
-
-                {/* CBD: 광화문 / 서울역 */}
-                <g transform="translate(420, 280)">
-                  <circle r="9" fill="#1e293b" stroke="#ffffff" strokeWidth="2" />
-                  <text x="0" y="4" fill="#ffffff" fontSize="8" fontWeight="bold" textAnchor="middle">도심</text>
-                  <text x="0" y="-13" fill="#1e293b" fontSize="11" fontWeight="black" textAnchor="middle">서울역·CBD</text>
-                </g>
-
-                {/* YBD: 여의도 */}
-                <g transform="translate(360, 310)">
-                  <circle r="8" fill="#1e293b" stroke="#ffffff" strokeWidth="2" />
-                  <text x="0" y="3" fill="#ffffff" fontSize="7" fontWeight="bold" textAnchor="middle">여의</text>
-                  <text x="0" y="20" fill="#1e293b" fontSize="10" fontWeight="black" textAnchor="middle">여의도(YBD)</text>
-                </g>
-
-                {/* GBD: 강남역 / 삼성역 */}
-                <g transform="translate(490, 350)">
-                  <circle r="12" fill="#03c75a" stroke="#ffffff" strokeWidth="2.5" />
-                  <text x="0" y="4" fill="#ffffff" fontSize="8" fontWeight="black" textAnchor="middle">GBD</text>
-                  <text x="0" y="22" fill="#0f172a" fontSize="12" fontWeight="black" textAnchor="middle">강남·삼성역</text>
-                </g>
-
-                {/* Magok: 마곡 */}
-                <g transform="translate(290, 270)">
-                  <circle r="5" fill="#64748b" stroke="#ffffff" strokeWidth="1.5" />
-                  <text x="0" y="-8" fill="#475569" fontSize="9" fontWeight="bold" textAnchor="middle">마곡 R&D</text>
-                </g>
-
-                {/* Pangyo: 판교 */}
-                <g transform="translate(530, 480)">
-                  <circle r="7" fill="#64748b" stroke="#ffffff" strokeWidth="2" />
-                  <text x="0" y="16" fill="#334155" fontSize="10" fontWeight="black" textAnchor="middle">판교 테크노</text>
-                </g>
-
-                {/* ================================================================= */}
-                {/* 3rd New Towns 6 Interactive Nodes (3기 신도시 6개 거점) */}
-                {/* ================================================================= */}
-                {NEW_TOWNS_DATA.map((town) => {
-                  const isSelected = selectedTownId === town.id;
-                  const isHovered = hoveredTownId === town.id;
-                  const { x, y } = town.mapCoords;
-
-                  return (
-                    <g 
-                      key={town.id}
-                      transform={`translate(${x}, ${y})`}
-                      onClick={() => setSelectedTownId(town.id)}
-                      onMouseEnter={() => setHoveredTownId(town.id)}
-                      onMouseLeave={() => setHoveredTownId(null)}
-                      className="cursor-pointer group"
-                    >
-                      {/* Active/Hover Outer Pulse Ring */}
-                      {(isSelected || isHovered) && (
-                        <circle 
-                          r="26" 
-                          fill="#03c75a" 
-                          fillOpacity="0.2" 
-                          className="animate-ping" 
-                        />
-                      )}
-
-                      {/* Main Node Background Circle */}
-                      <circle 
-                        r={isSelected ? "18" : "15"} 
-                        fill={isSelected ? "#03c75a" : "#ffffff"} 
-                        stroke={isSelected ? "#ffffff" : "#03c75a"} 
-                        strokeWidth={isSelected ? "3" : "3"}
-                        className="transition-all duration-200 drop-shadow-md"
-                      />
-
-                      {/* Pin Icon / Number */}
-                      <text 
-                        x="0" 
-                        y="4" 
-                        fill={isSelected ? "#ffffff" : "#029f45"} 
-                        fontSize="11" 
-                        fontWeight="900" 
-                        textAnchor="middle"
-                      >
-                        3기
-                      </text>
-
-                      {/* Floating Name & Time Badge */}
-                      <g transform={`translate(0, ${y > 400 ? -28 : 28})`}>
-                        <rect
-                          x="-58"
-                          y="-14"
-                          width="116"
-                          height="28"
-                          rx="8"
-                          fill={isSelected ? "#0f172a" : "#ffffff"}
-                          stroke={isSelected ? "#03c75a" : "#cbd5e1"}
-                          strokeWidth={isSelected ? "2" : "1"}
-                          className="drop-shadow-sm transition-colors"
-                        />
-                        <text
-                          x="0"
-                          y="-1"
-                          fill={isSelected ? "#ffffff" : "#0f172a"}
-                          fontSize="10"
-                          fontWeight="900"
-                          textAnchor="middle"
-                        >
-                          {town.shortName}
-                        </text>
-                        <text
-                          x="0"
-                          y="9"
-                          fill={isSelected ? "#4ade80" : "#029f45"}
-                          fontSize="8.5"
-                          fontWeight="bold"
-                          textAnchor="middle"
-                        >
-                          {town.mapCoords.gangnamTime}
-                        </text>
-                      </g>
-                    </g>
-                  );
-                })}
-              </svg>
-            </div>
-
-            {/* Quick Town Pill Selectors */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none pt-1">
+          {/* Quick Town Pill Selectors */}
+          <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-none">
+            <div className="flex items-center gap-2">
               {NEW_TOWNS_DATA.map((town) => (
                 <button
                   key={town.id}
-                  onClick={() => setSelectedTownId(town.id)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-black transition shrink-0 flex items-center gap-1.5 cursor-pointer border ${
+                  onClick={() => handleSelectTown(town.id)}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-black transition shrink-0 flex items-center gap-1.5 cursor-pointer border ${
                     selectedTownId === town.id
                       ? 'bg-[#03c75a] text-white border-[#03c75a] shadow-sm'
                       : 'bg-white text-slate-700 hover:bg-slate-50 border-slate-200'
@@ -887,7 +652,374 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 </button>
               ))}
             </div>
+
+            {/* Map Mode Switcher (광역 교통망 vs 블록 배치도) */}
+            <div className="hidden sm:flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold shrink-0">
+              <button
+                onClick={() => setMapViewType('DISTRICT_BLOCKS')}
+                className={`px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 ${
+                  mapViewType === 'DISTRICT_BLOCKS' ? 'bg-white text-[#029f45] shadow-xs font-black' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5" />
+                <span>지구별 블록 토지이용배치도</span>
+              </button>
+
+              <button
+                onClick={() => setMapViewType('METRO')}
+                className={`px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 ${
+                  mapViewType === 'METRO' ? 'bg-white text-[#0066ff] shadow-xs font-black' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Compass className="w-3.5 h-3.5" />
+                <span>수도권 광역 노선망</span>
+              </button>
+            </div>
           </div>
+
+          {/* ===================================================================== */}
+          {/* 🗺️ MAP VIEW 1: 신도시 지구별 토지이용계획 & 블록 공간 배치도 (User Image Style) */}
+          {/* ===================================================================== */}
+          {mapViewType === 'DISTRICT_BLOCKS' && (
+            <div className="naver-card p-5 sm:p-7 bg-white border border-slate-200 shadow-sm space-y-4 animate-fadeIn">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] text-[11px] font-black mb-1">
+                    <Layers className="w-3 h-3" />
+                    <span>LH 토지이용계획도 기반 공간 배치도</span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
+                    <span>{selectedTown.name} 마스터플랜 & 블록 위치</span>
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium">
+                    아래 지도의 <strong>블록(A-1, A-19, B-1 등)</strong>을 클릭하면 해당 블록의 상세 제원과 분양가가 즉시 표시됩니다.
+                  </p>
+                </div>
+
+                {/* Color Legend for Land Use */}
+                <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                  <span className="flex items-center gap-1">
+                    <span className="w-3 h-3 rounded-xs bg-[#f59e0b]" /> 주거(분양)
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-3 h-3 rounded-xs bg-[#34d399]" /> 신혼희망
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-3 h-3 rounded-xs bg-[#ef4444]" /> 상업·업무
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-3 h-3 rounded-xs bg-[#60a5fa]" /> 자족시설
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-3 h-3 rounded-xs bg-[#86efac]" /> 공원·녹지
+                  </span>
+                </div>
+              </div>
+
+              {/* Master Plan SVG Spatial Canvas */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                
+                {/* SVG Visual District Map (Left 7 Cols) */}
+                <div className="lg:col-span-7 bg-[#f8fafc] rounded-2xl border border-slate-200/90 p-3 relative overflow-hidden shadow-inner flex items-center justify-center">
+                  <svg 
+                    viewBox="0 0 460 580" 
+                    className="w-full h-auto max-h-[580px] select-none"
+                  >
+                    {/* Compass Rose */}
+                    <g transform="translate(30, 40)">
+                      <circle r="14" fill="#ffffff" stroke="#94a3b8" strokeWidth="1" />
+                      <path d="M 0 -10 L 4 0 L 0 -3 L -4 0 Z" fill="#ef4444" />
+                      <path d="M 0 10 L 4 0 L 0 3 L -4 0 Z" fill="#94a3b8" />
+                      <text x="0" y="-13" fill="#0f172a" fontSize="8" fontWeight="bold" textAnchor="middle">N</text>
+                    </g>
+
+                    {/* Background Park Greenscape (공원 녹지축) */}
+                    <path
+                      d="M 120 20 Q 380 40, 410 160 Q 430 320, 390 490 Q 320 560, 190 560 Q 90 480, 110 320 Q 120 160, 120 20 Z"
+                      fill="#dcfce7"
+                      stroke="#86efac"
+                      strokeWidth="2"
+                    />
+
+                    {/* Wangsuk Stream / River Flowing Through District (왕숙천/하천) */}
+                    <path
+                      d="M 270 20 Q 290 100, 240 180 T 170 300 T 130 460 T 160 560"
+                      fill="none"
+                      stroke="#93c5fd"
+                      strokeWidth="22"
+                      strokeLinecap="round"
+                      strokeOpacity="0.85"
+                    />
+                    <path
+                      d="M 270 20 Q 290 100, 240 180 T 170 300 T 130 460 T 160 560"
+                      fill="none"
+                      stroke="#60a5fa"
+                      strokeWidth="10"
+                      strokeLinecap="round"
+                      strokeOpacity="0.9"
+                    />
+                    <text x="145" y="380" fill="#2563eb" fontSize="10" fontWeight="black" transform="rotate(-75 145 380)">
+                      왕숙천 수변공원
+                    </text>
+
+                    {/* Central Transit Line & GTX Station Line */}
+                    <path
+                      d="M 80 180 L 250 300 L 400 440"
+                      fill="none"
+                      stroke="#3b82f6"
+                      strokeWidth="4"
+                      strokeDasharray="6,3"
+                    />
+
+                    {/* Central Commercial Core (중심상업지구 빨강/주황) */}
+                    <rect x="230" y="240" width="35" height="30" rx="4" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" />
+                    <text x="247" y="258" fill="#ffffff" fontSize="7.5" fontWeight="black" textAnchor="middle">중심상업</text>
+
+                    <rect x="230" y="275" width="35" height="25" rx="4" fill="#f97316" stroke="#c2410c" strokeWidth="1" />
+                    <text x="247" y="291" fill="#ffffff" fontSize="7" fontWeight="bold" textAnchor="middle">복합환승</text>
+
+                    {/* Central Station Circle (GTX-B / 9호선 역) */}
+                    <circle cx="210" cy="285" r="10" fill="#03c75a" stroke="#ffffff" strokeWidth="2.5" />
+                    <text x="210" y="288" fill="#ffffff" fontSize="7" fontWeight="black" textAnchor="middle">역</text>
+                    <text x="210" y="306" fill="#0f172a" fontSize="8" fontWeight="black" textAnchor="middle">왕숙역</text>
+
+                    {/* Self-Sufficient Tech Campus (자족용지 파랑) */}
+                    <rect x="180" y="470" width="70" height="45" rx="6" fill="#bfdbfe" stroke="#60a5fa" strokeWidth="1.5" />
+                    <text x="215" y="495" fill="#1e40af" fontSize="8" fontWeight="black" textAnchor="middle">첨단 IT 자족단지</text>
+
+                    {/* Other Background Residential Blocks (연노랑) */}
+                    {[
+                      { x: 305, y: 70, w: 35, h: 22, name: 'A-2' },
+                      { x: 345, y: 55, w: 32, h: 22, name: 'A-3' },
+                      { x: 310, y: 125, w: 38, h: 24, name: 'S-7' },
+                      { x: 350, y: 140, w: 35, h: 24, name: 'S-8' },
+                      { x: 275, y: 320, w: 42, h: 26, name: 'S-9' },
+                      { x: 325, y: 310, w: 40, h: 26, name: 'S-13' },
+                      { x: 280, y: 380, w: 42, h: 28, name: 'A-17' },
+                      { x: 330, y: 380, w: 38, h: 26, name: 'A-20' },
+                      { x: 235, y: 410, w: 40, h: 26, name: 'A-22' },
+                    ].map(b => (
+                      <g key={b.name} opacity="0.65">
+                        <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="3" fill="#fef08a" stroke="#ca8a04" strokeWidth="0.8" />
+                        <text x={b.x + b.w / 2} y={b.y + b.h / 2 + 3} fill="#854d0e" fontSize="7" fontWeight="bold" textAnchor="middle">{b.name}</text>
+                      </g>
+                    ))}
+
+                    {/* Interactive Supply Blocks (Highlightable & Clickable) */}
+                    {selectedTown.blocks.map((block) => {
+                      const isSelected = selectedBlockCode === block.blockCode;
+                      const { x, y, w, h } = block.spatial;
+
+                      return (
+                        <g 
+                          key={block.blockCode}
+                          onClick={() => setSelectedBlockCode(block.blockCode)}
+                          className="cursor-pointer group"
+                        >
+                          {/* Selected Glow Outline */}
+                          {isSelected && (
+                            <rect
+                              x={x - 3}
+                              y={y - 3}
+                              width={w + 6}
+                              height={h + 6}
+                              rx="6"
+                              fill="#ef4444"
+                              fillOpacity="0.2"
+                              stroke="#ef4444"
+                              strokeWidth="2"
+                              strokeDasharray="4,2"
+                            />
+                          )}
+
+                          {/* Main Block Box */}
+                          <rect
+                            x={x}
+                            y={y}
+                            width={w}
+                            height={h}
+                            rx="4"
+                            fill={isSelected ? "#ef4444" : block.spatial.color}
+                            stroke={isSelected ? "#ffffff" : "#b45309"}
+                            strokeWidth={isSelected ? "2" : "1.2"}
+                            className="transition-all duration-150 drop-shadow-xs group-hover:scale-105"
+                          />
+
+                          {/* Block Short Name Text */}
+                          <text
+                            x={x + w / 2}
+                            y={y + h / 2 + 3.5}
+                            fill={isSelected ? "#ffffff" : "#0f172a"}
+                            fontSize="8.5"
+                            fontWeight="900"
+                            textAnchor="middle"
+                          >
+                            {block.shortCode}
+                          </text>
+
+                          {/* RED CALLOUT POINTER BADGE (Exact match with user's uploaded image!) */}
+                          {isSelected && (
+                            <g transform={`translate(${x + w + 12}, ${y + h / 2})`} className="animate-fadeIn">
+                              {/* Red Pointer Arrow Head */}
+                              <path d="M 0 0 L 10 -6 L 10 6 Z" fill="#dc2626" />
+                              <line x1="-12" y1="0" x2="0" y2="0" stroke="#dc2626" strokeWidth="2.5" />
+                              {/* Red Box Tag */}
+                              <rect x="8" y="-14" width="82" height="28" rx="4" fill="#dc2626" />
+                              <text x="49" y="3.5" fill="#ffffff" fontSize="10" fontWeight="900" textAnchor="middle">
+                                {block.shortCode} 블록
+                              </text>
+                            </g>
+                          )}
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+
+                {/* Selected Block Spotlight Card (Right 5 Cols) */}
+                <div className="lg:col-span-5 space-y-4">
+                  <div className="p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white shadow-lg space-y-4 relative overflow-hidden">
+                    <div className="absolute right-0 top-0 w-32 h-32 bg-[#03c75a]/10 rounded-full blur-2xl" />
+                    
+                    <div className="flex items-center justify-between gap-2 border-b border-slate-700/80 pb-3">
+                      <div>
+                        <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-rose-500 text-white">
+                          선택된 블록
+                        </span>
+                        <h4 className="text-2xl font-black text-white mt-1">
+                          {activeBlock.blockCode}
+                        </h4>
+                      </div>
+                      <span className="text-xs font-bold text-[#4ade80]">
+                        {activeBlock.supplyType} ({activeBlock.units}세대)
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 text-xs">
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                        <span className="text-slate-400 font-medium">분양가(추정/확정):</span>
+                        <span className="font-black text-[#4ade80] text-sm">{activeBlock.priceEstimate}</span>
+                      </div>
+
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
+                        <span className="text-slate-400 font-medium">공급 평형:</span>
+                        <span className="font-black text-white">{activeBlock.sizes}</span>
+                      </div>
+
+                      <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 space-y-1">
+                        <span className="text-slate-400 font-medium block">역세권 및 교통:</span>
+                        <span className="font-bold text-slate-200 block">{activeBlock.stationDistance}</span>
+                      </div>
+                    </div>
+
+                    <p className="text-xs text-slate-300 leading-relaxed font-medium bg-slate-800/50 p-3 rounded-xl border border-slate-700/60">
+                      💡 {activeBlock.note}
+                    </p>
+
+                    <button
+                      onClick={() => handleOpenNaverNews(`${selectedTown.name} ${activeBlock.blockCode} 분양`)}
+                      className="w-full py-2.5 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs font-black flex items-center justify-center gap-1.5 transition cursor-pointer"
+                    >
+                      <span>{activeBlock.shortCode} 블록 실시간 네이버 뉴스 검색</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  {/* Block Selection Quick List */}
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-black text-slate-700 block">
+                      📍 {selectedTown.name} 내 다른 주요 블록 바로보기:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {selectedTown.blocks.map(b => (
+                        <button
+                          key={b.blockCode}
+                          onClick={() => setSelectedBlockCode(b.blockCode)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer border ${
+                            selectedBlockCode === b.blockCode
+                              ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                              : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-200'
+                          }`}
+                        >
+                          {b.shortCode}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
+
+          {/* ===================================================================== */}
+          {/* 🗺️ MAP VIEW 2: 수도권 광역 교통망 지도 */}
+          {/* ===================================================================== */}
+          {mapViewType === 'METRO' && (
+            <div className="naver-card p-4 sm:p-7 bg-white border border-slate-200 shadow-sm space-y-4 animate-fadeIn">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                <div>
+                  <h3 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+                    <Compass className="w-5 h-5 text-[#0066ff]" />
+                    <span>수도권 3기 신도시 광역 입지 & 철도망 지도</span>
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium">
+                    서울 3대 도심(강남·도심·여의도)과 6개 신도시 간의 직결 철도 노선망을 보여줍니다.
+                  </p>
+                </div>
+              </div>
+
+              {/* Metro SVG Map */}
+              <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] max-h-[520px] bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] rounded-2xl border border-slate-200 overflow-hidden shadow-inner">
+                <svg viewBox="0 0 860 540" className="w-full h-full">
+                  {/* Han River */}
+                  <path d="M 120 280 Q 250 320, 370 290 T 520 310 T 640 260 T 780 230 T 840 200" fill="none" stroke="#93c5fd" strokeWidth="18" strokeLinecap="round" strokeOpacity="0.8" />
+                  {/* Seoul Boundary */}
+                  <path d="M 310 210 Q 420 180, 560 210 Q 610 280, 580 370 Q 530 430, 420 420 Q 300 400, 280 320 Z" fill="#ffffff" fillOpacity="0.75" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4,4" />
+                  <text x="420" y="240" fill="#64748b" fontSize="13" fontWeight="900" letterSpacing="3" opacity="0.5">서울특별시 (SEOUL)</text>
+
+                  {/* Transit Lines */}
+                  <path d="M 340 190 L 420 280 L 490 350 L 530 460" fill="none" stroke="#0ea5e9" strokeWidth="3" strokeDasharray="6,3" />
+                  <path d="M 670 170 L 510 250 L 420 280 L 360 310 L 230 350" fill="none" stroke="#6366f1" strokeWidth="3" strokeDasharray="6,3" />
+                  <path d="M 490 350 L 550 360 L 670 400" fill="none" stroke="#f97316" strokeWidth="3" strokeDasharray="5,3" />
+                  <path d="M 490 350 L 560 310 L 620 250 L 670 170" fill="none" stroke="#eab308" strokeWidth="3" strokeDasharray="5,3" />
+                  <path d="M 230 350 L 310 320 L 380 270" fill="none" stroke="#10b981" strokeWidth="3" strokeDasharray="5,3" />
+                  <path d="M 470 470 L 440 380 L 420 280" fill="none" stroke="#3b82f6" strokeWidth="3" strokeDasharray="5,3" />
+
+                  {/* Seoul Hubs */}
+                  <g transform="translate(420, 280)"><circle r="9" fill="#1e293b" /><text x="0" y="4" fill="#fff" fontSize="8" fontWeight="bold" textAnchor="middle">도심</text></g>
+                  <g transform="translate(360, 310)"><circle r="8" fill="#1e293b" /><text x="0" y="3" fill="#fff" fontSize="7" fontWeight="bold" textAnchor="middle">여의</text></g>
+                  <g transform="translate(490, 350)"><circle r="12" fill="#03c75a" /><text x="0" y="4" fill="#fff" fontSize="8" fontWeight="black" textAnchor="middle">GBD</text><text x="0" y="22" fill="#0f172a" fontSize="12" fontWeight="black" textAnchor="middle">강남·삼성역</text></g>
+
+                  {/* 6 New Towns Nodes */}
+                  {NEW_TOWNS_DATA.map((town) => {
+                    const isSelected = selectedTownId === town.id;
+                    const { x, y } = town.mapCoords;
+                    return (
+                      <g 
+                        key={town.id} 
+                        transform={`translate(${x}, ${y})`} 
+                        onClick={() => {
+                          handleSelectTown(town.id);
+                          setMapViewType('DISTRICT_BLOCKS');
+                        }}
+                        className="cursor-pointer group"
+                      >
+                        {isSelected && <circle r="26" fill="#03c75a" fillOpacity="0.2" className="animate-ping" />}
+                        <circle r="16" fill={isSelected ? "#03c75a" : "#fff"} stroke="#03c75a" strokeWidth="3" />
+                        <text x="0" y="4" fill={isSelected ? "#fff" : "#029f45"} fontSize="11" fontWeight="900" textAnchor="middle">3기</text>
+                        <g transform={`translate(0, ${y > 400 ? -28 : 28})`}>
+                          <rect x="-56" y="-13" width="112" height="26" rx="6" fill={isSelected ? "#0f172a" : "#fff"} stroke="#cbd5e1" />
+                          <text x="0" y="-1" fill={isSelected ? "#fff" : "#0f172a"} fontSize="10" fontWeight="900" textAnchor="middle">{town.shortName}</text>
+                          <text x="0" y="9" fill="#029f45" fontSize="8" fontWeight="bold" textAnchor="middle">{town.mapCoords.gangnamTime}</text>
+                        </g>
+                      </g>
+                    );
+                  })}
+                </svg>
+              </div>
+            </div>
+          )}
 
           {/* Detailed Town Hero Profile Card */}
           <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm space-y-6">
@@ -988,7 +1120,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
             </div>
 
             {/* ========================================================================= */}
-            {/* 🏢 지구별 구체적인 블록(A-1, B-1, S-5 등) 공급 도감 */}
+            {/* 🏢 지구별 구체적인 블록(A-1, A-19, B-1 등) 공급 도감 */}
             {/* ========================================================================= */}
             <div className="pt-4 border-t border-slate-100 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -998,7 +1130,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
-                      <span>{selectedTown.name} 주요 분양 블록별(A·B·S) 상세 현황</span>
+                      <span>{selectedTown.name} 주요 분양 블록별(A·B·S) 상세 목록</span>
                       <span className="text-[10px] text-[#029f45] bg-[#e8f8ee] px-2 py-0.5 rounded font-black border border-[#03c75a]/20">
                         총 {selectedTown.blocks.length}개 핵심 블록
                       </span>
@@ -1015,7 +1147,12 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 {selectedTown.blocks.map((block) => (
                   <div
                     key={block.blockCode}
-                    className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#03c75a] hover:shadow-md transition-all flex flex-col justify-between space-y-3 relative group"
+                    onClick={() => setSelectedBlockCode(block.blockCode)}
+                    className={`p-5 rounded-2xl bg-white border transition-all flex flex-col justify-between space-y-3 relative group cursor-pointer ${
+                      selectedBlockCode === block.blockCode
+                        ? 'border-2 border-rose-500 shadow-md bg-rose-50/20'
+                        : 'border-slate-200 hover:border-[#03c75a] hover:shadow-md'
+                    }`}
                   >
                     <div>
                       {/* Badge & Status Header */}
@@ -1066,7 +1203,10 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                       <span>LH 청약플러스 / 본청약 대상</span>
                       <button
                         type="button"
-                        onClick={() => handleOpenNaverNews(`${selectedTown.name} ${block.blockCode} 분양`)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenNaverNews(`${selectedTown.name} ${block.blockCode} 분양`);
+                        }}
                         className="text-[#0066ff] hover:underline flex items-center gap-0.5 cursor-pointer"
                       >
                         <span>블록 뉴스 보기</span>
@@ -1109,7 +1249,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                   {NEW_TOWNS_DATA.map((town) => (
                     <tr 
                       key={town.id}
-                      onClick={() => setSelectedTownId(town.id)}
+                      onClick={() => handleSelectTown(town.id)}
                       className={`hover:bg-slate-50 transition cursor-pointer ${
                         selectedTownId === town.id ? 'bg-[#e8f8ee]/40 font-bold' : ''
                       }`}
@@ -1121,7 +1261,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                         {town.units.split(' ')[1] || town.units}
                       </td>
                       <td className="py-3 px-3.5 text-[#029f45] font-black">
-                        {town.blocks.map(b => b.blockCode.replace(/.*지구\s*|\s*블록/g, '').trim()).slice(0, 3).join(', ')} 등
+                        {town.blocks.map(b => b.shortCode).slice(0, 4).join(', ')} 등
                       </td>
                       <td className="py-3 px-3.5 text-slate-700">
                         {town.transitLines.slice(0, 2).join(', ')}
@@ -1362,7 +1502,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 <input
                   id="futureNewsInput"
                   type="text"
-                  placeholder="예: 왕숙 B-1, 창릉 S-5, 교산 A-2"
+                  placeholder="예: 왕숙 A-19, 창릉 S-5, 교산 A-2"
                   className="bg-white text-xs px-3.5 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#03c75a] font-medium w-full sm:w-64"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
