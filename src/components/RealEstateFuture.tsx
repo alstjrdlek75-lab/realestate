@@ -48,6 +48,7 @@ type FutureTab = 'NEW_TOWNS' | 'FUTURE_NEWS' | 'GLOSSARY';
 type MapViewType = 'DISTRICT_BLOCKS' | 'METRO';
 type BlockViewDisplay = 'TABLE' | 'CARDS';
 type CalcMode = 'DSR' | 'LTV' | 'GAP';
+export type ZoneCategory = 'ALL' | 'NEW_TOWN' | 'REDEVELOPMENT';
 
 export interface BlockDetail {
   blockCode: string;
@@ -92,6 +93,8 @@ export interface NewTownDetail {
   lhOfficialUrl: string;
   discoUrl?: string;
   hdecNewsUrl?: string;
+  category: 'NEW_TOWN' | 'REDEVELOPMENT';
+  categoryLabel: string;
   mapCoords: { x: number; y: number; gangnamTime: string; seoulTime: string };
   blocks: BlockDetail[];
 }
@@ -101,6 +104,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     id: 'namyangju_wangsook',
     name: '남양주 왕숙 (1·2지구)',
     shortName: '남양주 왕숙',
+    category: 'NEW_TOWN',
+    categoryLabel: '3기 신도시 & 신규택지',
     location: '경기도 남양주시 진접읍·진건읍·일패동·이패동',
     units: '약 66,000호 (왕숙1 52,000호 + 왕숙2 14,000호)',
     areaSize: '총 1,104만㎡ (왕숙1: 865만㎡, 왕숙2: 239만㎡)',
@@ -450,6 +455,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     id: 'hanam_gyosan',
     name: '하남 교산',
     shortName: '하남 교산',
+    category: 'NEW_TOWN',
+    categoryLabel: '3기 신도시 & 신규택지',
     location: '경기도 하남시 천현동·교산동·춘궁동·덕풍동',
     units: '약 33,000호',
     areaSize: '약 686만㎡',
@@ -551,6 +558,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     id: 'goyang_changreung',
     name: '고양 창릉',
     shortName: '고양 창릉',
+    category: 'NEW_TOWN',
+    categoryLabel: '3기 신도시 & 신규택지',
     location: '경기도 고양시 덕양구 원흥동·동산동·용두동·화전동',
     units: '약 38,000호',
     areaSize: '약 789만㎡',
@@ -652,6 +661,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     id: 'bucheon_daejang',
     name: '부천 대장',
     shortName: '부천 대장',
+    category: 'NEW_TOWN',
+    categoryLabel: '3기 신도시 & 신규택지',
     location: '경기도 부천시 오정구 대장동·삼정동·오정동',
     units: '약 20,000호',
     areaSize: '약 343만㎡',
@@ -829,6 +840,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     id: 'incheon_gyeyang',
     name: '인천 계양',
     shortName: '인천 계양',
+    category: 'NEW_TOWN',
+    categoryLabel: '3기 신도시 & 신규택지',
     location: '인천광역시 계양구 귤현동·동양동·박촌동',
     units: '약 17,000호',
     areaSize: '약 333만㎡',
@@ -1196,6 +1209,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     id: 'gwacheon_gwacheon',
     name: '과천 과천지구',
     shortName: '과천 과천',
+    category: 'NEW_TOWN',
+    categoryLabel: '3기 신도시 & 신규택지',
     location: '경기도 과천시 과천동·주암동·막계동',
     units: '약 10,000호',
     areaSize: '약 169만㎡',
@@ -1276,67 +1291,30 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'guri_topyeong',
-    name: '구리 토평·수택 (구리토평2 & 수택재개발)',
-    shortName: '구리 토평·수택',
+    name: '구리 토평 (구리토평2 2.2만호)',
+    shortName: '구리 토평 (신규택지)',
+    category: 'NEW_TOWN',
+    categoryLabel: '3기 신도시 & 신규택지',
     location: '경기도 구리시 교문동·수택동·토평동·아천동 일원',
-    units: '약 32,000호 (구리토평2 2.2만호 + 현대건설 수택 7,007세대 + 수택E 3,022세대)',
-    areaSize: '총 350만㎡+ (구리토평2 275만㎡ + 수택재개발 일원)',
-    plannedPopulation: '약 8만 명 (수도권 한강변 최대 메가타운)',
-    expectedMoveIn: '2028~2034년 순차 공급/입주 목표',
-    statusTag: '현대건설 7,007세대 수주 & 토평2 고시',
-    statusTagColor: 'bg-indigo-50 text-indigo-900 border-indigo-300',
-    transitSummary: '지하철 8호선(장자호수공원역·구리역), 경의중앙선(구리역), GTX-B(갈매 연계), 강변북로 지하화/확장, 세종포천고속도로(남구리IC), 수도권제1순환(토평IC)',
-    transitLines: ['지하철 8호선 (장자호수공원역·구리역)', '경의중앙선', '강변북로', '세종포천고속도로', '수도권제1순환'],
-    anchorCompanies: '현대건설(힐스테이트)·포스코이앤씨 2.8조 수택재개발(7,007세대), DL이앤씨·GS·SK 수택E(3,022세대), AI·빅데이터·SW 혁신 산업, 스마트 MICE 복합 클러스터',
+    units: '약 18,500~22,000호',
+    areaSize: '약 275만㎡ (약 83만 평)',
+    plannedPopulation: '약 5만 3천 명',
+    expectedMoveIn: '2029~2034년 순차 공급/입주 목표',
+    statusTag: '지구지정 고시 완료 & 한강변 리버프론트',
+    statusTagColor: 'bg-cyan-50 text-cyan-800 border-cyan-300',
+    transitSummary: '지하철 8호선(장자호수공원역), 경의중앙선(구리역), GTX-B(갈매 연계), 강변북로 지하화/확장, 세종포천고속도로(남구리IC), 수도권제1순환(토평IC)',
+    transitLines: ['지하철 8호선 (장자호수공원역)', '경의중앙선', '강변북로', '세종포천고속도로', '수도권제1순환'],
+    anchorCompanies: 'AI·빅데이터·SW 혁신 산업, 디지털 헬스케어, MICE·수변 레저 문화 복합 클러스터, 첨단 스타트업 밸리',
     selfSufficientLand: '약 55만㎡ 자족시설용지 (한강변 워터프론트 복합 자족도시)',
-    currentStatus: '현대건설 컨소시엄의 국내 최대 수택동 7,007세대 재개발(공사비 2.8조) 시공사 선정 완료 + 구리토평2(2.2만호) 지구지정 고시 완료로 총 3.2만세대 한강변 메가 주거타운 형성.',
-    proTip: '대한민국 재개발 최대어 현대건설 7,007세대와 한강 영구조망 구리토평2(2.2만호)가 결합되는 수도권 동북부의 대장 입지. 8호선으로 잠실 15분대 진입!',
-    naverNewsQuery: '구리 수택동 재개발 현대건설 토평2',
+    currentStatus: '2023년 11월 신규택지 발표 후 2025년 12월 지구지정 및 지형도면 고시 완료. 2026년 지구계획 수립 승인 신청 및 2027년 최초 청약/보상 본격화 추진.',
+    proTip: '한강 영구 조망권과 8호선 장자호수공원역을 품은 3.5기 신도시 최대어. 잠실 15분, 강남 25분대 진입 가능한 준강남급 한강변 최상급 입지.',
+    naverNewsQuery: '구리 토평2 공공주택지구 분양 8호선',
     officialBlueprintUrl: '/maps/guri_topyeong_plan.png',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B5%AC%EB%A6%AC%ED%86%A0%ED%8F%892%EC%A7%80%EA%B5%AC',
     lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/Main.do',
     discoUrl: 'https://disco.re/b/sgd9n6tv/',
-    hdecNewsUrl: 'https://www.hdec.kr/kr/newsroom/news_view.aspx?NewsSeq=1282&NewsType=SOCIAL&NewsListType=news_list',
     mapCoords: { x: 630, y: 310, gangnamTime: '잠실 15분 / 강남 25분 (8호선)', seoulTime: '을지로 25분' },
     blocks: [
-      {
-        blockCode: '수택 재개발 메가블록',
-        shortCode: '수택7007',
-        complexName: '구리 수택동 재개발 (현대건설·포스코)',
-        unitsTotal: '7,007세대 (국내 최대 재개발)',
-        units: 7007,
-        supplyType: '민간재개발',
-        subscriptionDate: '2026~2027년 예정',
-        moveInDate: '2030년',
-        builder: '현대건설 | 포스코이앤씨',
-        sizes: '전용 39㎡ ~ 120㎡ (최고 49층 27개 동)',
-        priceEstimate: '84㎡ 약 8.5억 ~ 9.8억 원 예상',
-        stationDistance: '8호선 장자호수공원역·구리역 생활권 (잠실 15분)',
-        featureBadge: '🏆 7,007세대 수도권 최대 재개발',
-        progressStatus: '시공사 선정 완료 (공사비 2.8조)',
-        progressStatusColor: 'bg-indigo-100 text-indigo-900 border-indigo-300',
-        note: '현대건설·포스코 컨소시엄 2조 8,069억 수주! 최고 49층 27개 동, 해외 JERDE 특화설계 및 스카이 커뮤니티 6개소를 품은 초대형 랜드마크',
-        pinPos: { x: 40, y: 25 }
-      },
-      {
-        blockCode: '수택E구역 하이니티',
-        shortCode: '수택E',
-        complexName: '구리역 하이니티 리버파크 (수택E구역)',
-        unitsTotal: '3,022세대',
-        units: 3022,
-        supplyType: '민간재개발',
-        subscriptionDate: '2025~2026년 일반분양',
-        moveInDate: '2028년 12월',
-        builder: 'DL이앤씨 | GS건설 | SK에코플랜트',
-        sizes: '전용 29㎡ ~ 110㎡ (최고 35층 26개 동)',
-        priceEstimate: '84㎡ 약 8.8억 ~ 9.6억 원',
-        stationDistance: '8호선·경의중앙선 구리역 도보 5분 (더블역세권)',
-        featureBadge: '🚇 8호선 구리역 더블역세권 3,022세대',
-        progressStatus: '착공 및 분양 준비',
-        progressStatusColor: 'bg-blue-100 text-blue-800 border-blue-300',
-        note: '8호선 잠실 직결 구리역 초역세권 3,022세대 메이저 3사 컨소시엄 대단지',
-        pinPos: { x: 50, y: 20 }
-      },
       {
         blockCode: '토평 리버프론트 1블록',
         shortCode: '리버1',
@@ -1414,11 +1392,239 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         pinPos: { x: 35, y: 55 }
       }
     ]
+  },
+
+  // =========================================================================
+  // 🏗️ 서울 & 수도권 메가 재개발 & 뉴타운 정비사업
+  // =========================================================================
+  {
+    id: 'guri_sutaek_redev',
+    name: '구리 수택동 메가 재개발 (현대건설 7,007세대)',
+    shortName: '구리 수택 (재개발)',
+    category: 'REDEVELOPMENT',
+    categoryLabel: '서울·수도권 메가 재개발',
+    location: '경기도 구리시 수택동 454-9번지 및 수택E구역 일원',
+    units: '총 10,029세대 (수택동 7,007세대 + 수택E구역 3,022세대)',
+    areaSize: '약 45만㎡ (수택동 통합 정비구역)',
+    plannedPopulation: '약 2만 6천 명 (수도권 최대 단일 재개발)',
+    expectedMoveIn: '2028~2030년 순차 준공/입주',
+    statusTag: '현대건설·포스코 2.8조 수주 & 수택E 착공',
+    statusTagColor: 'bg-indigo-50 text-indigo-900 border-indigo-300',
+    transitSummary: '8호선 구리역·장자호수공원역(잠실 15분), 경의중앙선 구리역 더블역세권, 강변북로·세종포천고속도로',
+    transitLines: ['8호선 구리역·장자호수공원역 (잠실 15분)', '경의중앙선 구리역', '강변북로', '세종포천고속도로'],
+    anchorCompanies: '현대건설 힐스테이트·포스코이앤씨(7,007세대), DL이앤씨·GS건설·SK에코플랜트(3,022세대), 롯데백화점 구리점 슬세권',
+    selfSufficientLand: '스카이 커뮤니티 6개소(171m), 광화문 4배 녹지(5.7km 순환 산책로), 상업·업무 복합단지',
+    currentStatus: '대한민국 재개발 사상 최대 규모 현대건설 컨소시엄 7,007세대(공사비 2.8조) 시공사 선정 완료 + 수택E구역 3,022세대 일반분양 및 착공 진행.',
+    proTip: '잠실 15분 8호선 생활권에 1만 세대급 메이저 브랜드 하이엔드 신축 타운이 들어서며 구리 도심 천지개벽!',
+    naverNewsQuery: '구리 수택동 재개발 현대건설 7007세대',
+    officialBlueprintUrl: '/maps/guri_topyeong_plan.png',
+    namuWikiUrl: 'https://namu.wiki/w/%EA%B5%AC%EB%A6%AC%EC%8B%9C/%EC%9E%AC%EA%B0%9C%EB%B0%9C',
+    lhOfficialUrl: 'https://www.guri.go.kr',
+    hdecNewsUrl: 'https://www.hdec.kr/kr/newsroom/news_view.aspx?NewsSeq=1282&NewsType=SOCIAL&NewsListType=news_list',
+    mapCoords: { x: 630, y: 310, gangnamTime: '잠실 15분 / 강남 25분 (8호선)', seoulTime: '을지로 25분' },
+    blocks: [
+      {
+        blockCode: '수택 재개발 메가블록',
+        shortCode: '수택7007',
+        complexName: '구리 수택동 재개발 (현대건설·포스코)',
+        unitsTotal: '7,007세대 (국내 최대 재개발)',
+        units: 7007,
+        supplyType: '민간재개발',
+        subscriptionDate: '2026~2027년 예정',
+        moveInDate: '2030년',
+        builder: '현대건설 | 포스코이앤씨',
+        sizes: '전용 39㎡ ~ 120㎡ (최고 49층 27개 동)',
+        priceEstimate: '84㎡ 약 8.5억 ~ 9.8억 원 예상',
+        stationDistance: '8호선 장자호수공원역·구리역 생활권 (잠실 15분)',
+        featureBadge: '🏆 7,007세대 수도권 최대 재개발',
+        progressStatus: '시공사 선정 완료 (공사비 2.8조)',
+        progressStatusColor: 'bg-indigo-100 text-indigo-900 border-indigo-300',
+        note: '현대건설·포스코 컨소시엄 2조 8,069억 수주! 최고 49층 27개 동, 해외 JERDE 특화설계 및 스카이 커뮤니티 6개소를 품은 초대형 랜드마크',
+        pinPos: { x: 40, y: 25 }
+      },
+      {
+        blockCode: '수택E구역 하이니티',
+        shortCode: '수택E',
+        complexName: '구리역 하이니티 리버파크 (수택E구역)',
+        unitsTotal: '3,022세대',
+        units: 3022,
+        supplyType: '민간재개발',
+        subscriptionDate: '2025~2026년 일반분양',
+        moveInDate: '2028년 12월',
+        builder: 'DL이앤씨 | GS건설 | SK에코플랜트',
+        sizes: '전용 29㎡ ~ 110㎡ (최고 35층 26개 동)',
+        priceEstimate: '84㎡ 약 8.8억 ~ 9.6억 원',
+        stationDistance: '8호선·경의중앙선 구리역 도보 5분 (더블역세권)',
+        featureBadge: '🚇 8호선 구리역 더블역세권 3,022세대',
+        progressStatus: '착공 및 분양 준비',
+        progressStatusColor: 'bg-blue-100 text-blue-800 border-blue-300',
+        note: '8호선 잠실 직결 구리역 초역세권 3,022세대 메이저 3사 컨소시엄 대단지',
+        pinPos: { x: 50, y: 20 }
+      }
+    ]
+  },
+  {
+    id: 'hannam_newtown',
+    name: '한남 뉴타운 (한남2·3·4·5구역)',
+    shortName: '한남 뉴타운',
+    category: 'REDEVELOPMENT',
+    categoryLabel: '서울·수도권 메가 재개발',
+    location: '서울시 용산구 한남동·보광동·이태원동·동빙고동 일원',
+    units: '약 12,500세대 (대한민국 최고 부촌 한강변 랜드마크)',
+    areaSize: '약 111만㎡',
+    plannedPopulation: '약 3만 2천 명',
+    expectedMoveIn: '2027~2031년 순차 입주 (한남3구역 착공)',
+    statusTag: '한남3 착공 & 한남4·5 시공사 선정',
+    statusTagColor: 'bg-amber-50 text-amber-900 border-amber-300',
+    transitSummary: '경의중앙선 한남역, 6호선 이태원역, 신분당선 동빙고역(예정), 올림픽대로·강변북로·한남대교(강남 5분)',
+    transitLines: ['신분당선 동빙고역 (예정)', '경의중앙선 한남역', '6호선 이태원역', '한남대교 직결 (강남 5분)'],
+    anchorCompanies: '현대건설(디에이치 한남), 대우건설(써밋), DL이앤씨(아크로), 삼성물산(래미안) 등 대한민국 1군 하이엔드 총집결',
+    selfSufficientLand: '용산국제업무지구(MICE·글로벌 헤드쿼터) 및 용산민족공원 바로 앞 배후 주거',
+    currentStatus: '한남3구역(디에이치한남 5,816세대) 이주 완료 및 철거 착공. 한남2·4·5구역 건축심의 및 시공사 선정 완료 단계.',
+    proTip: '배산임수(남산-한강) 천혜의 명당. 용산국제업무지구와 한남대교 강남 직결로 대한민국 부촌 서열 1위 등극 유력.',
+    naverNewsQuery: '한남뉴타운 한남3구역 한남4구역 분양',
+    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    namuWikiUrl: 'https://namu.wiki/w/%ED%95%9C%EB%82%A8%EB%89%B4%ED%83%80%EC%9A%B4',
+    lhOfficialUrl: 'https://www.yongsan.go.kr',
+    mapCoords: { x: 440, y: 340, gangnamTime: '강남 5~10분 (한남대교)', seoulTime: '광화문 15분' },
+    blocks: [
+      {
+        blockCode: '한남 3구역',
+        shortCode: '한남3',
+        complexName: '디에이치 한남 (한남3구역)',
+        unitsTotal: '5,816세대 (국내 최대 하이엔드)',
+        units: 5816,
+        supplyType: '민간재개발',
+        subscriptionDate: '2026년 일반분양',
+        moveInDate: '2029년',
+        builder: '현대건설 (THE H)',
+        sizes: '전용 39㎡ ~ 150㎡+ 펜트하우스',
+        priceEstimate: '84㎡ 약 25억~30억+ 예상',
+        stationDistance: '경의중앙선 한남역 / 6호선 이태원역',
+        featureBadge: '👑 대한민국 하이엔드 1위',
+        progressStatus: '철거 및 착공',
+        progressStatusColor: 'bg-amber-100 text-amber-900 border-amber-300',
+        note: '한강 조망과 남산 뷰를 동시에 누리는 5,816세대 현대건설 디에이치 최대 역작',
+        pinPos: { x: 45, y: 55 }
+      },
+      {
+        blockCode: '한남 4구역',
+        shortCode: '한남4',
+        complexName: '한남4구역 랜드마크',
+        unitsTotal: '2,331세대',
+        units: 2331,
+        supplyType: '민간재개발',
+        subscriptionDate: '2027년',
+        moveInDate: '2030년',
+        builder: '시공사 선정 완료',
+        sizes: '전용 59㎡ ~ 160㎡',
+        priceEstimate: '84㎡ 약 26억~32억+',
+        stationDistance: '보광역 신설 검토 / 신분당선 동빙고역',
+        featureBadge: '🌊 한강 영구 평지 조망',
+        progressStatus: '사업시행인가 완료',
+        progressStatusColor: 'bg-blue-100 text-blue-800 border-blue-300',
+        note: '한남뉴타운 중 평지 비율이 가장 높고 한강 영구 조망권이 가장 넓은 알짜 구역',
+        pinPos: { x: 55, y: 65 }
+      }
+    ]
+  },
+  {
+    id: 'seongsu_strategic',
+    name: '성수 전략정비구역 (성수1~4지구)',
+    shortName: '성수 전략정비',
+    category: 'REDEVELOPMENT',
+    categoryLabel: '서울·수도권 메가 재개발',
+    location: '서울시 성동구 성수동1가·2가 일원',
+    units: '약 9,000세대 (최고 50~70층 초고층 한강변 랜드마크)',
+    areaSize: '약 53만㎡',
+    plannedPopulation: '약 2만 4천 명',
+    expectedMoveIn: '2029~2032년 순차 공급',
+    statusTag: '최고 50층+ 지구단위 정비계획 변경',
+    statusTagColor: 'bg-emerald-50 text-emerald-900 border-emerald-300',
+    transitSummary: '분당선 서울숲역, 2호선 성수역·뚝섬역, 성수대교·영동대교(압구정/청담 3분 직결)',
+    transitLines: ['수인분당선 서울숲역', '지하철 2호선 성수역', '성수대교·영동대교 (압구정 3분)'],
+    anchorCompanies: '크래프톤, 무신사, SM엔터테인먼트 등 IT·패션·엔터 유니콘 밸리 + 서울숲 35만평',
+    selfSufficientLand: '삼표레미콘 부지 글로벌 첨단업무 랜드마크 타워 & 성수 IT 밸리',
+    currentStatus: '서울시 한강변 50층 이상 층수 제한 완화 적용으로 성수 1·2·3·4지구 전체 정비계획 변경 결정 고시 완료.',
+    proTip: '압구정 맞은편 한강 남향 조망 + 서울숲 + IT 유니콘 기업들이 결합된 한국의 브루클린·맨해튼 주거지.',
+    naverNewsQuery: '성수전략정비구역 50층 서울숲 한강',
+    officialBlueprintUrl: '/maps/hanam_gyosan_namu_dual.jpg',
+    namuWikiUrl: 'https://namu.wiki/w/%EC%84%B1%EC%88%98%EC%A0%84%EB%9E%B5%EC%A0%95%EB%B9%84%EA%B5%AC%EC%97%AD',
+    lhOfficialUrl: 'https://www.sd.go.kr',
+    mapCoords: { x: 490, y: 330, gangnamTime: '압구정/청담 3~5분 (성수대교)', seoulTime: '을지로 15분' },
+    blocks: [
+      {
+        blockCode: '성수 1지구',
+        shortCode: '성수1',
+        complexName: '성수1지구 서울숲 트리마제 인접',
+        unitsTotal: '3,014세대 (최고 50~70층)',
+        units: 3014,
+        supplyType: '민간재개발',
+        subscriptionDate: '2028년',
+        moveInDate: '2032년',
+        builder: '하이엔드 메이저 브랜드 예정',
+        sizes: '전용 59㎡ ~ 200㎡+ 펜트',
+        priceEstimate: '84㎡ 약 30억~35억+ 예상',
+        stationDistance: '수인분당선 서울숲역 도보 3분 초역세권',
+        featureBadge: '🌳 서울숲 + 한강 남향 듀얼뷰',
+        progressStatus: '건축심의 준비',
+        progressStatusColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
+        note: '서울숲과 한강을 동시에 남향으로 조망하는 성수 전략정비구역 최고의 대장 지구',
+        pinPos: { x: 40, y: 45 }
+      }
+    ]
+  },
+  {
+    id: 'gwangmyeong_newtown',
+    name: '광명 뉴타운 (광명 1~16구역)',
+    shortName: '광명 뉴타운',
+    category: 'REDEVELOPMENT',
+    categoryLabel: '서울·수도권 메가 재개발',
+    location: '경기도 광명시 광명동·철산동 일원',
+    units: '약 25,000세대 (미니신도시급 메가 뉴타운)',
+    areaSize: '약 228만㎡',
+    plannedPopulation: '약 6만 5천 명',
+    expectedMoveIn: '2024~2028년 순차 입주 중',
+    statusTag: '1·2·4·5구역 등 분양/입주 본격화',
+    statusTagColor: 'bg-purple-50 text-purple-900 border-purple-300',
+    transitSummary: '지하철 7호선(광명사거리역·철산역 ➡️ 가산 5분, 강남구청 30분), 1호선 개봉역, 신안산선(예정)',
+    transitLines: ['지하철 7호선 (가산 5분, 강남 30분)', '지하철 1호선', '신안산선 (예정)', '서부간선도로 지하화'],
+    anchorCompanies: '가산디지털단지(G밸리 15만 일자리) 직주일치, 광명시흥 테크노밸리(첨단 R&D)',
+    selfSufficientLand: '목감천 친수공원, 안양천 산책로, 철산 로데오 상권',
+    currentStatus: '광명 1·2·4·5구역(트리우스, 센트럴아이파크 등) 일반분양 완판 및 순차 입주 진행 중.',
+    proTip: '서울 구로·금천과 맞닿은 02 국번 생활권. 7호선 강남 직결 및 2.5만 세대 신축 밭으로 환골탈태.',
+    naverNewsQuery: '광명뉴타운 분양가 입주 7호선',
+    officialBlueprintUrl: '/maps/bucheon_daejang_namu.png',
+    namuWikiUrl: 'https://namu.wiki/w/%EA%B4%91%EB%AA%85%EB%89%B4%ED%83%80%EC%9A%B4',
+    lhOfficialUrl: 'https://www.gm.go.kr',
+    mapCoords: { x: 320, y: 400, gangnamTime: '강남 30분 (7호선) / 여의도 20분', seoulTime: '종로 30분' },
+    blocks: [
+      {
+        blockCode: '광명 1구역',
+        shortCode: '광명1',
+        complexName: '트리우스 광명 (광명1구역)',
+        unitsTotal: '3,344세대',
+        units: 3344,
+        supplyType: '민간재개발',
+        subscriptionDate: '분양 완료',
+        moveInDate: '2024~2025년',
+        builder: '대우건설 | 현대엔지니어링 | 롯데건설',
+        sizes: '전용 36㎡ ~ 102㎡',
+        priceEstimate: '84㎡ 약 10.5억~11.8억',
+        stationDistance: '7호선 광명사거리역 / 1호선 개봉역',
+        featureBadge: '🏢 3,344세대 대단지',
+        progressStatus: '준공 및 입주 중',
+        progressStatusColor: 'bg-purple-100 text-purple-900 border-purple-300',
+        note: '목감천 수변공원을 품은 3,344세대 1군 컨소시엄 대단지',
+        pinPos: { x: 50, y: 35 }
+      }
+    ]
   }
 ];
 
 export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
   const [activeTab, setActiveTab] = useState<FutureTab>('NEW_TOWNS');
+  const [selectedZoneCategory, setSelectedZoneCategory] = useState<ZoneCategory>('ALL');
   const [mapViewType, setMapViewType] = useState<MapViewType>('DISTRICT_BLOCKS');
   const [blockViewDisplay, setBlockViewDisplay] = useState<BlockViewDisplay>('TABLE');
   const [selectedTownId, setSelectedTownId] = useState<string>(NEW_TOWNS_DATA[0].id);
@@ -1443,6 +1649,20 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
   const [ltvRate, setLtvRate] = useState<number>(70);
   const [gapBuyPrice, setGapBuyPrice] = useState<number>(100000);
   const [gapJeonsePrice, setGapJeonsePrice] = useState<number>(65000);
+
+  // Category filtering for new towns vs redevelopment
+  const displayedTowns = useMemo(() => {
+    if (selectedZoneCategory === 'ALL') return NEW_TOWNS_DATA;
+    return NEW_TOWNS_DATA.filter(t => t.category === selectedZoneCategory);
+  }, [selectedZoneCategory]);
+
+  const handleCategoryChange = (category: ZoneCategory) => {
+    setSelectedZoneCategory(category);
+    const filtered = category === 'ALL' ? NEW_TOWNS_DATA : NEW_TOWNS_DATA.filter(t => t.category === category);
+    if (filtered.length > 0 && !filtered.some(t => t.id === selectedTownId)) {
+      handleSelectTown(filtered[0].id);
+    }
+  };
 
   // Calculations
   const maxYearlyPaymentDsr40 = Math.round(annualIncome * 0.4);
@@ -1514,12 +1734,14 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            <span className="text-[#03c75a]">{selectedTown.name}</span> 공동주택 전수 도감 <br />
+            <span className={selectedTown.category === 'REDEVELOPMENT' ? 'text-indigo-600' : 'text-[#03c75a]'}>
+              {selectedTown.name}
+            </span> 공동주택 전수 도감 <br />
             구역·단지명·세대수·시행주체·시공사 총정리
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
-            나무위키 및 LH 청약플러스의 <strong>'3.1. 공동주택'</strong> 전수 데이터(A1~A25, B1~B17, S1~S20 등)를 도표와 공식 도면으로 완벽 구현하여, <strong>시공사(대광건영, 계룡건설, 대우건설, 금호건설 등)와 청약·입주 시기</strong>를 즉시 확인할 수 있습니다.
+            나무위키 및 LH 청약플러스의 <strong>'3.1. 공동주택'</strong> 전수 데이터(A1~A25, B1~B17, S1~S20 등)를 도표와 공식 도면으로 완벽 구현하여, <strong>시공사(대광건영, 계룡건설, 대우건설, 현대건설 등)와 청약·입주 시기</strong>를 즉시 확인할 수 있습니다.
           </p>
 
           <div className="flex flex-wrap items-center gap-2.5 mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-slate-600">
@@ -1548,7 +1770,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#edf4ff] hover:bg-[#0066ff] text-[#0066ff] hover:text-white transition"
             >
               <Radio className="w-3.5 h-3.5" />
-              <span>3기 신도시 청약일정 알리미 ↗</span>
+              <span>청약일정 알리미 ↗</span>
             </a>
             <a 
               href={selectedTown.namuWikiUrl} 
@@ -1588,7 +1810,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
       {/* Main 3 Sub-Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm">
         {[
-          { id: 'NEW_TOWNS', label: '1. 나무위키 3.1. 공동주택 & LH 공식 도면 도감', icon: '🗺️' },
+          { id: 'NEW_TOWNS', label: '1. 신도시 & 메가 재개발 도면 및 전수 도감', icon: '🗺️' },
           { id: 'FUTURE_NEWS', label: '2. 미래 주목 변수 & 실시간 네이버 뉴스', icon: '📡' },
           { id: 'GLOSSARY', label: '3. 필수 부동산·대출 용어 & 실시간 계산기', icon: '📚' },
         ].map((tab) => (
@@ -1608,32 +1830,49 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* SUB-TAB 1: 3기 신도시 지도 & 블록별 공급 도감 */}
+      {/* SUB-TAB 1: 신도시 & 메가 재개발 지도 & 블록별 공급 도감 */}
       {/* ========================================================================= */}
       {activeTab === 'NEW_TOWNS' && (
         <div className="space-y-6 animate-fadeIn">
 
-          {/* Quick Town Pill Selectors */}
-          <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-none">
-            <div className="flex items-center gap-2">
-              {NEW_TOWNS_DATA.map((town) => (
-                <button
-                  key={town.id}
-                  onClick={() => handleSelectTown(town.id)}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-black transition shrink-0 flex items-center gap-1.5 cursor-pointer border ${
-                    selectedTownId === town.id
-                      ? 'bg-[#03c75a] text-white border-[#03c75a] shadow-sm'
-                      : 'bg-white text-slate-700 hover:bg-slate-50 border-slate-200'
-                  }`}
-                >
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>{town.name}</span>
-                </button>
-              ))}
+          {/* Category Filter Switcher & Map Mode Controls */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
+            {/* Category Segment Tabs */}
+            <div className="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs font-black">
+              <button
+                onClick={() => handleCategoryChange('ALL')}
+                className={`px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 ${
+                  selectedZoneCategory === 'ALL'
+                    ? 'bg-white text-slate-900 shadow-xs font-black'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <span>✨ 전체 통합 ({NEW_TOWNS_DATA.length})</span>
+              </button>
+              <button
+                onClick={() => handleCategoryChange('NEW_TOWN')}
+                className={`px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 ${
+                  selectedZoneCategory === 'NEW_TOWN'
+                    ? 'bg-[#03c75a] text-white shadow-xs font-black'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <span>🏙️ 3기 신도시 & 신규택지 ({NEW_TOWNS_DATA.filter(t => t.category === 'NEW_TOWN').length})</span>
+              </button>
+              <button
+                onClick={() => handleCategoryChange('REDEVELOPMENT')}
+                className={`px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1.5 ${
+                  selectedZoneCategory === 'REDEVELOPMENT'
+                    ? 'bg-indigo-600 text-white shadow-xs font-black'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <span>🏗️ 서울·수도권 메가 재개발 ({NEW_TOWNS_DATA.filter(t => t.category === 'REDEVELOPMENT').length})</span>
+              </button>
             </div>
 
             {/* Map Mode Switcher (토지이용계획도 vs 광역 노선망) */}
-            <div className="hidden sm:flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold shrink-0">
+            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold shrink-0 self-end md:self-auto">
               <button
                 onClick={() => setMapViewType('DISTRICT_BLOCKS')}
                 className={`px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1 ${
@@ -1641,7 +1880,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 }`}
               >
                 <Layers className="w-3.5 h-3.5" />
-                <span>LH 공식 토지이용계획도</span>
+                <span>공식 토지이용계획도</span>
               </button>
 
               <button
@@ -1654,6 +1893,40 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 <span>수도권 광역 노선망</span>
               </button>
             </div>
+          </div>
+
+          {/* Quick Town / Project Pill Selectors (Filtered by Category) */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {displayedTowns.map((town) => {
+              const isSelected = selectedTownId === town.id;
+              return (
+                <button
+                  key={town.id}
+                  onClick={() => handleSelectTown(town.id)}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-black transition shrink-0 flex items-center gap-1.5 cursor-pointer border ${
+                    isSelected
+                      ? town.category === 'REDEVELOPMENT' 
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                        : 'bg-[#03c75a] text-white border-[#03c75a] shadow-sm'
+                      : 'bg-white text-slate-700 hover:bg-slate-50 border-slate-200'
+                  }`}
+                >
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span>{town.name}</span>
+                  {selectedZoneCategory === 'ALL' && (
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${
+                      isSelected 
+                        ? 'bg-white/20 text-white' 
+                        : town.category === 'REDEVELOPMENT' 
+                        ? 'bg-indigo-50 text-indigo-700' 
+                        : 'bg-emerald-50 text-[#029f45]'
+                    }`}>
+                      {town.category === 'REDEVELOPMENT' ? '재개발' : '신도시'}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           {/* ===================================================================== */}

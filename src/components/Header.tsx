@@ -86,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-[#03c75a]" />
-            <span>부동산 미래 & 3기 신도시</span>
+            <span>신도시 & 재개발 미래지도</span>
           </button>
         </div>
 
@@ -108,7 +108,7 @@ export const Header: React.FC<HeaderProps> = ({
                 isFutureView ? 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30' : 'bg-slate-100 text-slate-700 border-slate-200'
               }`}
             >
-              미래·3기
+              신도시·재개발
             </button>
           </div>
 
