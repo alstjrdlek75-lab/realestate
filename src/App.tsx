@@ -12,10 +12,11 @@ import { FinancialSimulator } from './components/FinancialSimulator';
 import { ChecklistSection } from './components/ChecklistSection';
 import { ScoreBreakdownModal } from './components/ScoreBreakdownModal';
 import { RealEstateHistory } from './components/RealEstateHistory';
+import { RealEstateFuture } from './components/RealEstateFuture';
 import { Footer } from './components/Footer';
-import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter, History } from 'lucide-react';
+import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter, History, Building } from 'lucide-react';
 
-type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY';
+type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE';
 
 const DEFAULT_INPUTS: DiagnosticInput = {
   cash: 3.5, // 3.5억
@@ -58,6 +59,11 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleGoToFuture = () => {
+    setViewMode('FUTURE');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleFormSubmit = (values: DiagnosticInput) => {
     setDiagnosticInput(values);
     if (values.targetCities) {
@@ -89,7 +95,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f6f8] text-slate-900 flex flex-col justify-between selection:bg-[#03c75a] selection:text-white">
+    <div className="min-h-screen bg-[#f4f6f8] text-slate-900 flex flex-col justify-between selection:bg-[#03c75a] selection:text-white">
       {/* Top Navigation */}
       <Header
         onReset={handleResetToHero}
@@ -98,6 +104,7 @@ export function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onGoToHistory={handleGoToHistory}
+        onGoToFuture={handleGoToFuture}
         onGoToRegionalExplorer={handleScrollToRegionalExplorer}
         currentView={viewMode}
       />
@@ -109,36 +116,62 @@ export function App() {
           <div className="animate-fadeIn">
             <Hero onStart={handleStartDiagnostic} />
             
-            {/* Quick Teaser to History Section */}
-            <div className="max-w-5xl mx-auto px-4 pb-14">
+            {/* Quick Teaser Dual Cards: History & Future 3rd New Towns */}
+            <div className="max-w-5xl mx-auto px-4 pb-14 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Card 1: History */}
               <div 
                 onClick={handleGoToHistory}
-                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-sm cursor-pointer transition flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
               >
-                <div className="flex items-center gap-3.5">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
-                    <History className="w-6 h-6" />
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
+                    <History className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="text-[11px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
-                      필독 칼럼
+                      필독 역사 칼럼
                     </span>
-                    <h3 className="text-base sm:text-lg font-black text-slate-900 mt-1">
-                      📜 대한민국 부동산 50년 역사 & 집값 상승 원동력 총정리
+                    <h3 className="text-base font-black text-slate-900 mt-0.5">
+                      📜 대한민국 부동산 50년사 & 가치 유인
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      강남 개발부터 1기 신도시, 판교, 2026 초양극화까지 — 집값이 오른 진짜 이유와 불변의 가치 공식
-                    </p>
                   </div>
                 </div>
 
-                <button 
-                  type="button"
-                  className="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold shrink-0 self-start sm:self-auto flex items-center gap-1.5 group-hover:bg-[#03c75a] transition-colors"
-                >
-                  <span>역사 탭 읽어보기</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  강남 개발부터 1기 신도시, 판교, 2026 초양극화까지 — 집값이 오른 진짜 이유와 불변의 4대 가치 공식
+                </p>
+
+                <div className="pt-2 flex items-center text-xs font-bold text-indigo-600 group-hover:translate-x-1 transition-transform">
+                  <span>역사 탭 읽어보기 →</span>
+                </div>
+              </div>
+
+              {/* Card 2: Future & 3rd New Towns */}
+              <div 
+                onClick={handleGoToFuture}
+                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-[#e8f8ee] text-[#029f45] flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
+                    <Building className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-black text-[#029f45] bg-[#e8f8ee] px-2 py-0.5 rounded-full">
+                      미래 핵심 전망
+                    </span>
+                    <h3 className="text-base font-black text-slate-900 mt-0.5">
+                      🔮 3기 신도시 총정리 & 부동산 미래
+                    </h3>
+                  </div>
+                </div>
+
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  왕숙·교산·창릉·대장·계양·과천 현재 진행 상황, 앵커 유치 기업, 실시간 네이버 뉴스 & 대출 계산기
+                </p>
+
+                <div className="pt-2 flex items-center text-xs font-bold text-[#029f45] group-hover:translate-x-1 transition-transform">
+                  <span>3기 신도시 & 미래 탭 보기 →</span>
+                </div>
               </div>
             </div>
           </div>
@@ -151,7 +184,14 @@ export function App() {
           </div>
         )}
 
-        {/* VIEW 3: DIAGNOSTIC FORM */}
+        {/* VIEW 3: FUTURE & 3RD NEW TOWNS TAB */}
+        {viewMode === 'FUTURE' && (
+          <div className="animate-fadeIn">
+            <RealEstateFuture onStartDiagnostic={handleStartDiagnostic} />
+          </div>
+        )}
+
+        {/* VIEW 4: DIAGNOSTIC FORM */}
         {viewMode === 'DIAGNOSTIC' && (
           <div className="animate-fadeIn">
             <DiagnosticForm
@@ -164,7 +204,7 @@ export function App() {
           </div>
         )}
 
-        {/* VIEW 4: DIAGNOSTIC RESULT REPORT */}
+        {/* VIEW 5: DIAGNOSTIC RESULT REPORT */}
         {viewMode === 'RESULT' && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
             {/* Result Header Hero Banner */}
@@ -213,19 +253,18 @@ export function App() {
                     </button>
 
                     <button
-                      onClick={handleGoToHistory}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs sm:text-sm font-bold border border-indigo-200 transition cursor-pointer"
+                      onClick={handleGoToFuture}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#edf4ff] hover:bg-[#ddeaff] text-[#0066ff] text-xs sm:text-sm font-bold border border-[#0066ff]/30 transition cursor-pointer"
                     >
-                      <History className="w-4 h-4" />
-                      <span>부동산 역사 & 가치 원동력 칼럼</span>
+                      <Building className="w-4 h-4" />
+                      <span>3기 신도시 & 미래 분석</span>
                     </button>
                   </div>
                 </div>
 
-                {/* Score Quick Glance Box (Clickable for Detailed Rationale) */}
+                {/* Score Quick Glance Box */}
                 <div className="flex flex-col bg-slate-50 p-4 rounded-2xl border border-slate-200 shrink-0">
                   <div className="flex items-center gap-3 sm:gap-4">
-                    {/* Living Score Box */}
                     <div 
                       onClick={() => handleOpenScoreBreakdown('living')}
                       className="text-center px-4 py-2 rounded-xl hover:bg-white hover:shadow-sm cursor-pointer border border-transparent hover:border-slate-200 transition group"
@@ -243,7 +282,6 @@ export function App() {
 
                     <div className="w-[1px] h-14 bg-slate-200" />
 
-                    {/* Buying Score Box */}
                     <div 
                       onClick={() => handleOpenScoreBreakdown('buying')}
                       className="text-center px-4 py-2 rounded-xl hover:bg-white hover:shadow-sm cursor-pointer border border-transparent hover:border-slate-200 transition group"
@@ -291,7 +329,7 @@ export function App() {
               onUpdateInput={handleUpdateInput} 
             />
 
-            {/* Regional Guide & Top Complex Matches (with Search, Zone Tabs, Target City Selection, and 1:1 Side-by-Side Compare) */}
+            {/* Regional Guide & Top Complex Matches */}
             <RegionalGuide 
               result={diagnosticResult} 
               selectedCities={selectedTargetCities}
