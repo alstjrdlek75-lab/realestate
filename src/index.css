@@ -1,66 +1,107 @@
 @import "tailwindcss";
 
 @layer base {
+  html {
+    font-family: "Pretendard GOV", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", helvetica, sans-serif;
+    letter-spacing: -0.025em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
-    background-color: #f5f6f8;
-    color: #191f28;
-    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Noto Sans KR", sans-serif;
-    letter-spacing: -0.02em;
+    background-color: #f4f6f8;
+    color: #1e2022;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-/* Naver Brand & Custom Styles */
+/* ========================================================================= */
+/* NAVER REAL ESTATE DESIGN SYSTEM (네이버 부동산 디자인 시스템) */
+/* ========================================================================= */
 :root {
   --naver-green: #03c75a;
-  --naver-green-dark: #02b14f;
+  --naver-green-dark: #029f45;
   --naver-green-light: #e8f8ee;
   --naver-blue: #0066ff;
   --naver-blue-light: #edf4ff;
-  --naver-red: #ff3b30;
+  --naver-gray-bg: #f4f6f8;
+  --naver-border: #e6e8eb;
+  --naver-text-main: #111111;
+  --naver-text-sub: #666666;
 }
 
+/* Naver Style Cards */
 .naver-card {
-  background: #ffffff;
-  border: 1px solid #e5e8eb;
-  border-radius: 18px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  background-color: #ffffff;
+  border: 1px solid #e6e8eb;
+  border-radius: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .naver-card-hover {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .naver-card-hover:hover {
   border-color: #03c75a;
-  box-shadow: 0 8px 24px rgba(3, 199, 90, 0.12);
+  box-shadow: 0 6px 20px rgba(3, 199, 90, 0.12);
   transform: translateY(-2px);
 }
 
+/* Naver Badges */
 .naver-badge-green {
   background-color: #e8f8ee;
   color: #029f45;
   border: 1px solid rgba(3, 199, 90, 0.25);
+  font-weight: 800;
 }
 
 .naver-badge-blue {
   background-color: #edf4ff;
-  color: #0055d4;
+  color: #0066ff;
   border: 1px solid rgba(0, 102, 255, 0.2);
+  font-weight: 800;
 }
 
 .naver-badge-gray {
-  background-color: #f2f4f6;
-  color: #4e5968;
-  border: 1px solid #e5e8eb;
+  background-color: #f0f2f5;
+  color: #555555;
+  border: 1px solid #e0e3e7;
+  font-weight: 700;
 }
 
-.naver-slider {
-  accent-color: #03c75a;
+/* Naver Inputs & Controls */
+.naver-input {
+  background-color: #f7f9fa;
+  border: 1px solid #dde1e5;
+  border-radius: 12px;
+  color: #111111;
+  transition: all 0.15s ease;
+}
+.naver-input:focus {
+  background-color: #ffffff;
+  border-color: #03c75a;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(3, 199, 90, 0.15);
 }
 
+/* Naver Primary Button */
+.naver-btn-primary {
+  background-color: #03c75a;
+  color: #ffffff;
+  font-weight: 800;
+  border-radius: 12px;
+  transition: all 0.15s ease;
+}
+.naver-btn-primary:hover {
+  background-color: #02b14f;
+  box-shadow: 0 4px 12px rgba(3, 199, 90, 0.25);
+}
+
+/* Custom Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(5px);
   }
   to {
     opacity: 1;
@@ -68,6 +109,30 @@
   }
 }
 
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .animate-fadeIn {
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fadeIn 0.22s ease-out forwards;
+}
+
+.animate-scaleUp {
+  animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Scrollbar Minimal */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
