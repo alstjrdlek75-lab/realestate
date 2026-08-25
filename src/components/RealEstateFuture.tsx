@@ -464,7 +464,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     naverNewsQuery: '하남 교산 3기 신도시 3호선 송파하남선',
     officialBlueprintUrl: '/maps/hanam_gyosan_namu_dual.jpg',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B5%90%EC%82%B0%EC%8B%A0%EB%8F%84%EC%8B%9C#s-2',
-    lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/Contents/Contents.do?mCode=MN050',
+    lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/Contents/Contents.do?mCode=MN056',
     mapCoords: { x: 670, y: 400, gangnamTime: '수서 15분 / 양재 22분', seoulTime: '잠실 15분' },
     blocks: [
       {
@@ -484,7 +484,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '2025년 본청약 예정',
         progressStatusColor: 'bg-[#0066ff] text-white',
         note: '1,115세대 랜드마크 대단지로 3호선 초역세권과 상업지구를 모두 갖춘 최고 핵심 블록',
-        pinPos: { x: 74, y: 35 }
+        pinPos: { x: 74, y: 30 }
       },
       {
         blockCode: '교산 A-1',
@@ -503,7 +503,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '착공 준비 중',
         progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
         note: '도로를 건너지 않는 초품아 단지로 신혼부부 사전청약 당시 높은 경쟁률 기록',
-        pinPos: { x: 70, y: 28 }
+        pinPos: { x: 70, y: 22 }
       },
       {
         blockCode: '교산 B-1',
@@ -522,7 +522,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '지구조성 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
         note: '민간 1군 브랜드가 시공 예정인 84㎡ 중심 하이엔드 공원 조망 단지',
-        pinPos: { x: 80, y: 48 }
+        pinPos: { x: 80, y: 44 }
       },
       {
         blockCode: '교산 B-3',
@@ -541,7 +541,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '2025년 하반기 본청약',
         progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
         note: '송파 접근성이 가장 뛰어나며 자족 첨단R&D 단지와 도보로 출퇴근 가능한 위치',
-        pinPos: { x: 78, y: 68 }
+        pinPos: { x: 78, y: 65 }
       }
     ]
   },
@@ -585,7 +585,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '본청약 완료/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
         note: 'GTX-A 창릉역을 걸어서 이용하는 창릉 최고 대장 블록. 삼성역 10분대 직결',
-        pinPos: { x: 75, y: 70 }
+        pinPos: { x: 74, y: 67 }
       },
       {
         blockCode: '창릉 S-6',
@@ -604,7 +604,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '본청약 완료/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
         note: '창릉천 수변공원 영구 조망과 초등학교를 동시에 품은 최고급 주거 입지',
-        pinPos: { x: 72, y: 62 }
+        pinPos: { x: 71, y: 58 }
       },
       {
         blockCode: '창릉 A-4',
@@ -623,7 +623,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '본청약 완료/착공',
         progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
         note: '2024년 말 본청약 접수 완료. 서부선과 직결되는 고양은평선 수혜 단지',
-        pinPos: { x: 38, y: 55 }
+        pinPos: { x: 35, y: 50 }
       },
       {
         blockCode: '창릉 B-1',
@@ -642,7 +642,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '부지 조성 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
         note: '민간 브랜드 시공 예정으로 중대형 평형을 선호하는 갈아타기 수요 최우선 타겟',
-        pinPos: { x: 74, y: 45 }
+        pinPos: { x: 73, y: 39 }
       }
     ]
   },
@@ -686,7 +686,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '공급 준비 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
         note: '부천대장 북서측 진입부 주거 블록',
-        pinPos: { x: 22, y: 44 }
+        pinPos: { x: 28, y: 42 }
       },
       {
         blockCode: '대장 A-2',
@@ -705,7 +705,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '공급 준비 중',
         progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
         note: '단지 인근 초등학교와 녹지축을 갖춘 신혼희망타운',
-        pinPos: { x: 24, y: 46 }
+        pinPos: { x: 31, y: 44 }
       },
       {
         blockCode: '대장 A-5',
@@ -724,7 +724,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '본청약 완료/착공',
         progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
         note: 'SK그룹 R&D 캠퍼스 도보 3분 거리로 고소득 연구원 배후 임대 및 실거주 수요 탄탄',
-        pinPos: { x: 47, y: 49 }
+        pinPos: { x: 65, y: 48 }
       },
       {
         blockCode: '대장 A-6',
@@ -743,7 +743,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '착공 순항 중',
         progressStatusColor: 'bg-purple-50 text-purple-700 border-purple-200',
         note: '유치원과 초등학교를 단지 안마당처럼 품고 있는 안심 보육 단지',
-        pinPos: { x: 46, y: 53 }
+        pinPos: { x: 64, y: 52 }
       },
       {
         blockCode: '대장 A-7',
@@ -762,7 +762,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '2025년 본청약 예정',
         progressStatusColor: 'bg-[#03c75a] text-white',
         note: '홍대입구역 20분 컷 대장홍대선 초역세권으로 마곡/상암 직주근접 최고 입지',
-        pinPos: { x: 53, y: 51 }
+        pinPos: { x: 74, y: 50 }
       },
       {
         blockCode: '대장 A-8',
@@ -781,7 +781,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '착공 및 본청약 준비',
         progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
         note: '대장신도시 중심 상업지구와 복합커뮤니티 센터가 바로 연결되는 편리한 단지',
-        pinPos: { x: 53, y: 55 }
+        pinPos: { x: 74, y: 55 }
       },
       {
         blockCode: '대장 B-1',
@@ -800,7 +800,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '공급 준비 중',
         progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
         note: '중앙 녹지축과 맞닿은 84㎡ 중심의 쾌적한 주거 단지',
-        pinPos: { x: 29, y: 46 }
+        pinPos: { x: 38, y: 44 }
       },
       {
         blockCode: '대장 B-5',
@@ -819,7 +819,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '공급 준비 중',
         progressStatusColor: 'bg-purple-50 text-purple-700 border-purple-200',
         note: 'SK R&D 캠퍼스 북측 위치, 1군 브랜드 시공 예정 민간 대단지',
-        pinPos: { x: 41, y: 48 }
+        pinPos: { x: 56, y: 46 }
       }
     ]
   },
