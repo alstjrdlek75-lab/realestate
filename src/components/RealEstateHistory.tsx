@@ -20,7 +20,12 @@ import {
   Calculator,
   X,
   ArrowRight,
-  DollarSign
+  DollarSign,
+  Newspaper,
+  Radio,
+  ExternalLink,
+  Search,
+  Compass
 } from 'lucide-react';
 
 interface RealEstateHistoryProps {
@@ -30,7 +35,7 @@ interface RealEstateHistoryProps {
 type CalcMode = 'DSR' | 'LTV' | 'GAP';
 
 export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
-  const [activeTab, setActiveTab] = useState<'REASONS' | 'TIMELINE' | 'DRIVERS' | 'LESSONS' | 'GLOSSARY'>('REASONS');
+  const [activeTab, setActiveTab] = useState<'REASONS' | 'TIMELINE' | 'DRIVERS' | 'LESSONS' | 'GLOSSARY' | 'FUTURE_NEWS'>('REASONS');
   
   // Interactive Calculator Modal State
   const [isCalcOpen, setIsCalcOpen] = useState<boolean>(false);
@@ -52,13 +57,11 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
   const [gapJeonsePrice, setGapJeonsePrice] = useState<number>(65000); // 6.5억
 
   // Calculations
-  // 1. DSR Calculation
-  const maxYearlyPaymentDsr40 = Math.round(annualIncome * 0.4); // 연간 DSR 40% 한도 (만원)
-  const availableYearlyPayment = Math.max(0, maxYearlyPaymentDsr40 - (otherMonthlyDebt * 12)); // 기타대출 차감 후 가용 연 상환액
+  const maxYearlyPaymentDsr40 = Math.round(annualIncome * 0.4);
+  const availableYearlyPayment = Math.max(0, maxYearlyPaymentDsr40 - (otherMonthlyDebt * 12));
   const availableMonthlyPayment = Math.round(availableYearlyPayment / 12);
 
-  // PMT formula to calculate principal
-  const effectiveRate = applyStressDsr ? interestRate + 1.2 : interestRate; // 스트레스 DSR 2단계 (+1.2%p)
+  const effectiveRate = applyStressDsr ? interestRate + 1.2 : interestRate;
   const monthlyRate = effectiveRate / 100 / 12;
   const numPayments = loanPeriodYears * 12;
   
@@ -73,12 +76,10 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
 
   const stressReductionAmount = Math.max(0, normalLoanPrincipal - maxLoanDsrPrincipal);
 
-  // 2. LTV Calculation
   const maxLoanLtv = Math.round(housePrice * (ltvRate / 100));
   const minRequiredCashLtv = Math.max(0, housePrice - maxLoanLtv);
-  const estAcquisitionTax = Math.round(housePrice * 0.033); // 취득세 약 3.3%
+  const estAcquisitionTax = Math.round(housePrice * 0.033);
 
-  // 3. Gap Calculation
   const gapJeonseRatio = gapBuyPrice > 0 ? ((gapJeonsePrice / gapBuyPrice) * 100).toFixed(1) : '0';
   const pureGapCash = Math.max(0, gapBuyPrice - gapJeonsePrice);
   const gapAcquisitionTax = Math.round(gapBuyPrice * 0.033);
@@ -89,6 +90,11 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
     setIsCalcOpen(true);
   };
 
+  const handleOpenNaverNews = (keyword: string) => {
+    const url = `https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(keyword)}&sort=1`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
       {/* Clean & High-Contrast Header Banner (Naver Style) */}
@@ -96,22 +102,22 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 text-xs font-black mb-3">
             <History className="w-3.5 h-3.5" />
-            <span>대한민국 부동산 50년사 & 필수 용어 총정리</span>
+            <span>대한민국 부동산 50년사 & 미래 전망 총정리</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
             대한민국 집값은 왜 올랐고, <br />
-            <span className="text-[#03c75a]">무엇이 부동산의 가치</span>를 결정하는가?
+            <span className="text-[#03c75a]">앞으로 무엇에 주목</span>해야 하는가?
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
-            1970년대 강남 개발부터 1기 신도시(분당·일산), 2000년대 버블세븐과 판교, 그리고 2026년 초양극화 시대까지 — <br className="hidden sm:inline" />
-            50년의 역사와 <strong>DSR·LTV·갭투자 등 핵심 용어 및 실시간 대출 계산기</strong>를 통해 성공적인 매수 계획을 세워보세요.
+            1970년대 강남 개발부터 1기 신도시(분당·일산), 판교, 그리고 2026년 초양극화 시대까지 — <br className="hidden sm:inline" />
+            50년의 역사와 <strong>미래 4대 핵심 변수 및 실시간 네이버 부동산 뉴스</strong>를 통해 시장 흐름을 한눈에 파악하세요.
           </p>
         </div>
       </div>
 
-      {/* Navigation Sub-Tabs (5 Tabs) */}
+      {/* Navigation Sub-Tabs (6 Tabs) */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm">
         {[
           { id: 'REASONS', label: '1. 집값이 오른 4대 이유', icon: '💸' },
@@ -119,6 +125,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
           { id: 'DRIVERS', label: '3. 4대 가치 유인 공식', icon: '🏛️' },
           { id: 'LESSONS', label: '4. 실전 5대 교훈', icon: '💡' },
           { id: 'GLOSSARY', label: '5. 필수 부동산 & 대출 용어 사전', icon: '📚' },
+          { id: 'FUTURE_NEWS', label: '6. 미래 주목 포인트 & 실시간 뉴스', icon: '📡' },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -746,6 +753,248 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
       )}
 
       {/* ========================================================================= */}
+      {/* TAB 6: 미래 핵심 주목 포인트 & 실시간 네이버 부동산 뉴스 연동 */}
+      {/* ========================================================================= */}
+      {activeTab === 'FUTURE_NEWS' && (
+        <div className="space-y-6 animate-fadeIn">
+          {/* Top Section: 4 Future Megatrends & Watchpoints */}
+          <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <div className="flex items-center gap-2">
+                <Radio className="w-6 h-6 text-[#03c75a] animate-pulse" />
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                  앞으로 우리가 반드시 주목해야 할 4대 미래 핵심 변수
+                </h2>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                2026~2030년 수도권 부동산 시장의 승패를 가를 메가트렌드와 투자 체크포인트
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Point 1: Super Polarization */}
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-[#029f45] bg-[#e8f8ee] px-2.5 py-1 rounded-md border border-[#03c75a]/20">
+                    미래 변수 ①
+                  </span>
+                  <span className="text-xs text-slate-400 font-bold">인구 감소 vs 가구 분화</span>
+                </div>
+                <h3 className="text-lg font-black text-slate-900">
+                  '초양극화'의 고착화 — 모두가 오르는 장은 끝났다
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  전국 총인구는 줄어들지만, <strong>수도권 1~2인 가구 및 고소득 3040 가구는 2040년까지 지속 증가</strong>합니다. 
+                  지방 및 외곽 비역세권 나홀로 단지는 인구 소멸 위험에 노출되는 반면, <strong>강남 직결 황금노선 역세권과 학군지 대단지</strong>는 자산 쏠림 현상이 극대화되어 시세 격차가 2배 이상 벌어집니다.
+                </p>
+                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 font-bold">
+                  🎯 <strong>전략</strong>: 입지가 애매한 2~3채 다주택보다 '확실한 수도권 똘똘한 1채'로 자산을 집중하세요.
+                </div>
+              </div>
+
+              {/* Point 2: Construction Cost & Scarcity of New Apartments */}
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-[#0066ff] bg-[#edf4ff] px-2.5 py-1 rounded-md border border-[#0066ff]/20">
+                    미래 변수 ②
+                  </span>
+                  <span className="text-xs text-slate-400 font-bold">공사비 폭등</span>
+                </div>
+                <h3 className="text-lg font-black text-slate-900">
+                  평당 공사비 1,000만 원 시대 — 신축 품귀와 분양가 급등
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  원자재와 인건비 폭등으로 아파트 평당 건축비가 900~1,000만 원을 돌파했습니다. 
+                  사업성이 떨어지는 구축 재건축은 추가분담금 부담으로 사업이 장기 중단되고 있으며, 이에 따라 <strong>향후 3~5년간 수도권 신축 아파트 입주 물량이 급감(절벽)</strong>하여 기존 신축·준신축 대단지의 몸값이 치솟고 있습니다.
+                </p>
+                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 font-bold">
+                  🎯 <strong>전략</strong>: 재건축 기대감만 있는 구축보다 '이미 지어진 5~10년 차 준신축 대단지'를 선점하세요.
+                </div>
+              </div>
+
+              {/* Point 3: 30-min Transit Revolution */}
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-purple-700 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-200">
+                    미래 변수 ③
+                  </span>
+                  <span className="text-xs text-slate-400 font-bold">철도망 혁명</span>
+                </div>
+                <h3 className="text-lg font-black text-slate-900">
+                  수도권 30분 혁명 — GTX, 8호선 연장, 신분당선 확장
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  GTX-A 부분 개통(수서~동탄, 운정~서울역)을 필두로, <strong>8호선 별내 연장(잠실 20분 직결), 신분당선 광교~호매실 연장, GTX-B/C 착공</strong>이 가시화되고 있습니다. 
+                  서울 핵심 업무지구(GBD/CBD)까지 30분 이내로 물리적 시간을 압축해 주는 역세권은 판교/분당 수준의 위상을 갖추게 됩니다.
+                </p>
+                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 font-bold">
+                  🎯 <strong>전략</strong>: 말뿐인 계획이 아니라 '실제 착공/개통 단계'에 진입한 역세권 단지만 집중 타겟팅하세요.
+                </div>
+              </div>
+
+              {/* Point 4: Interest Rate Pivot vs Loan Restrictions */}
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
+                    미래 변수 ④
+                  </span>
+                  <span className="text-xs text-slate-400 font-bold">금리 & 대출 환경</span>
+                </div>
+                <h3 className="text-lg font-black text-slate-900">
+                  기준금리 인하 유동성 vs '스트레스 DSR'의 줄다리기
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  글로벌 피벗(금리 인하)으로 유동성이 풀리더라도, 금융당국의 <strong>스트레스 DSR 2~3단계 규제</strong>로 인해 대출 한도가 엄격히 통제됩니다. 
+                  따라서 '무리한 영끌'보다는 <strong>가구 소득이 높고 순현금을 보유한 실수요자가 탄탄한 9억~15억 원대 중상급지 아파트</strong>가 가장 안정적으로 상승 랠리를 이끌게 됩니다.
+                </p>
+                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 font-bold">
+                  🎯 <strong>전략</strong>: DSR 40% 범위 내에서 감당 가능한 원리금 구조를 유지하며 장기 보유하세요.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Section: Live Naver News Feed & Interactive Search Hub */}
+          <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Newspaper className="w-6 h-6 text-[#0066ff]" />
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                    실시간 네이버 부동산 주요 뉴스 & 토픽 연동
+                  </h2>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                  버튼을 클릭하면 네이버 포털의 최신 부동산 뉴스와 실시간 속보가 새 탭에서 즉시 열립니다.
+                </p>
+              </div>
+
+              <button
+                onClick={() => window.open('https://land.naver.com/news/', '_blank', 'noopener,noreferrer')}
+                className="px-4 py-2.5 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs sm:text-sm font-black flex items-center gap-1.5 shadow-sm transition self-start sm:self-auto cursor-pointer"
+              >
+                <span>네이버 부동산 뉴스 홈 ↗</span>
+                <ExternalLink className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* 6 Core Live News Channels (Clickable Naver News Queries) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                {
+                  title: '수도권 아파트 시세 & 실거래가',
+                  desc: '서울 및 경기 주요 지역 아파트 매매·전세 실거래가 추이 및 주간 상승률',
+                  keyword: '수도권 아파트 실거래가 시세',
+                  tag: '📊 시세 동향',
+                  tagColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30'
+                },
+                {
+                  title: 'GTX & 신분당선·8호선 철도망',
+                  desc: 'GTX-A/B/C 노선 개통 및 8호선 별내선, 신분당선 연장선 최신 진행 상황',
+                  keyword: 'GTX 신분당선 8호선 연장 개통',
+                  tag: '🚇 철도망 호재',
+                  tagColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30'
+                },
+                {
+                  title: '기준금리 & 스트레스 DSR 대출',
+                  desc: '한국은행 기준금리 결정, 주택담보대출 금리 변동 및 스트레스 DSR 규제',
+                  keyword: '스트레스 DSR 주택담보대출 금리',
+                  tag: '💰 금융 & 대출',
+                  tagColor: 'bg-amber-50 text-amber-700 border-amber-200'
+                },
+                {
+                  title: '1기 신도시 재건축 선도지구',
+                  desc: '분당, 일산, 평촌, 산본, 중동 특별법 선도지구 지정 및 공사비 현황',
+                  keyword: '1기 신도시 재건축 선도지구 분당 평촌',
+                  tag: '🏗️ 재건축 & 공급',
+                  tagColor: 'bg-purple-50 text-purple-700 border-purple-200'
+                },
+                {
+                  title: '아파트 분양가 & 청약 시장',
+                  desc: '수도권 주요 단지 신규 분양가 동향, 1순위 청약 경쟁률 및 무순위 줍줍',
+                  keyword: '수도권 아파트 분양가 청약 경쟁률',
+                  tag: '📑 분양 & 청약',
+                  tagColor: 'bg-rose-50 text-rose-700 border-rose-200'
+                },
+                {
+                  title: '전세 시장 & 갭투자 동향',
+                  desc: '가을/봄 이사철 수도권 아파트 전세가율 상승세 및 매매가 하방 지지력',
+                  keyword: '수도권 아파트 전세가율 갭투자',
+                  tag: '🔑 전세 & 임대차',
+                  tagColor: 'bg-teal-50 text-teal-700 border-teal-200'
+                },
+              ].map((news) => (
+                <div
+                  key={news.title}
+                  onClick={() => handleOpenNaverNews(news.keyword)}
+                  className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-[#0066ff] hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between space-y-3"
+                  title="클릭 시 네이버에서 최신 실시간 뉴스를 검색하여 바로 열어줍니다"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className={`text-[10px] font-black px-2.5 py-0.5 rounded-full border ${news.tagColor}`}>
+                        {news.tag}
+                      </span>
+                      <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0066ff] transition-colors" />
+                    </div>
+
+                    <h3 className="text-base font-black text-slate-900 group-hover:text-[#0066ff] transition-colors leading-snug">
+                      {news.title}
+                    </h3>
+
+                    <p className="text-xs text-slate-600 mt-1.5 leading-relaxed font-medium">
+                      {news.desc}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-200/80 flex items-center justify-between text-xs font-bold text-[#0066ff]">
+                    <span>실시간 네이버 뉴스 보기</span>
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Custom Search Bar for Real Estate News */}
+            <div className="mt-6 p-4 sm:p-5 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs text-slate-700 font-bold">
+                <Search className="w-4 h-4 text-[#03c75a]" />
+                <span>내가 관심 있는 특정 아파트나 지역의 뉴스를 직접 검색해보세요:</span>
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <input
+                  id="customNewsInput"
+                  type="text"
+                  placeholder="예: 미사역 파라곤, 다산자이, 신분당선"
+                  className="bg-white text-xs px-3.5 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#03c75a] font-medium w-full sm:w-64"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      const input = (e.target as HTMLInputElement).value.trim();
+                      if (input) handleOpenNaverNews(input + ' 부동산');
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById('customNewsInput') as HTMLInputElement;
+                    if (el && el.value.trim()) {
+                      handleOpenNaverNews(el.value.trim() + ' 부동산');
+                    }
+                  }}
+                  className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold whitespace-nowrap transition cursor-pointer"
+                >
+                  검색
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
       {/* 🧮 INTERACTIVE REGULATION CALCULATOR MODAL */}
       {/* ========================================================================= */}
       {isCalcOpen && (
@@ -809,9 +1058,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
             {/* ========================================================================= */}
             {calcMode === 'DSR' && (
               <div className="space-y-5 animate-fadeIn">
-                {/* Inputs */}
                 <div className="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs">
-                  {/* Income Slider */}
                   <div>
                     <div className="flex justify-between items-center mb-1.5 font-bold">
                       <span className="text-slate-700">가구 연소득 (세전 총소득)</span>
@@ -834,7 +1081,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                     </div>
                   </div>
 
-                  {/* Interest Rate & Loan Period */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div>
                       <label className="font-bold text-slate-700 block mb-1">기본 대출 금리 (%)</label>
@@ -862,7 +1108,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                     </div>
                   </div>
 
-                  {/* Other Debt & Stress DSR Toggle */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div>
                       <label className="font-bold text-slate-700 block mb-1">기존 기타 대출 월 상환액 (만원)</label>
@@ -895,7 +1140,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                   </div>
                 </div>
 
-                {/* Calculation Result Display */}
                 <div className="p-5 rounded-2xl bg-gradient-to-br from-[#e8f8ee] to-emerald-50/50 border border-[#03c75a]/30 space-y-3">
                   <div className="flex items-center justify-between text-xs text-slate-600 font-medium">
                     <span>연간 DSR 40% 법적 원리금 상환 한도:</span>
@@ -936,7 +1180,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
             {calcMode === 'LTV' && (
               <div className="space-y-5 animate-fadeIn">
                 <div className="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs">
-                  {/* House Price Slider */}
                   <div>
                     <div className="flex justify-between items-center mb-1.5 font-bold">
                       <span className="text-slate-700">매수 희망 주택 가격 (KB시세 기준)</span>
@@ -959,7 +1202,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                     </div>
                   </div>
 
-                  {/* LTV Rate Selector */}
                   <div className="pt-2">
                     <label className="font-bold text-slate-700 block mb-1.5">적용 LTV 담보 비율</label>
                     <div className="grid grid-cols-3 gap-2">
@@ -986,7 +1228,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                   </div>
                 </div>
 
-                {/* Result */}
                 <div className="p-5 rounded-2xl bg-gradient-to-br from-[#edf4ff] to-blue-50/50 border border-[#0066ff]/30 space-y-3">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -1015,7 +1256,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
             {calcMode === 'GAP' && (
               <div className="space-y-5 animate-fadeIn">
                 <div className="space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs">
-                  {/* House Price */}
                   <div>
                     <div className="flex justify-between items-center mb-1 font-bold">
                       <span className="text-slate-700">매매 가격</span>
@@ -1036,7 +1276,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                     />
                   </div>
 
-                  {/* Jeonse Price */}
                   <div>
                     <div className="flex justify-between items-center mb-1 font-bold">
                       <span className="text-slate-700">전세 보증금</span>
@@ -1054,7 +1293,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                   </div>
                 </div>
 
-                {/* Gap Result */}
                 <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50/50 border border-amber-300 space-y-3">
                   <div className="flex items-center justify-between text-xs text-slate-700 font-medium">
                     <span>이 단지의 전세가율:</span>
