@@ -2,61 +2,43 @@ import React, { useState } from 'react';
 import { 
   BookOpen, 
   TrendingUp, 
-  Landmark, 
   Coins, 
   Train, 
   GraduationCap, 
   Building, 
-  Sparkles, 
-  ArrowRight, 
-  ShieldCheck, 
-  Layers, 
   History, 
   CheckCircle2, 
   AlertCircle,
   Clock,
-  Compass
+  Sparkles
 } from 'lucide-react';
 
 interface RealEstateHistoryProps {
-  onStartDiagnostic: () => void;
+  onStartDiagnostic?: () => void;
 }
 
-export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDiagnostic }) => {
+export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
   const [activeTab, setActiveTab] = useState<'REASONS' | 'TIMELINE' | 'DRIVERS' | 'LESSONS'>('REASONS');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
-      {/* Hero Header Banner */}
-      <div className="naver-card p-6 sm:p-10 bg-gradient-to-br from-slate-900 via-slate-850 to-slate-900 text-white rounded-3xl shadow-md relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl -z-0 pointer-events-none" />
-        
-        <div className="relative z-10 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 text-[#03c75a] border border-emerald-500/30 text-xs font-black mb-3">
+      {/* Clean & High-Contrast Header Banner (Naver Style) */}
+      <div className="naver-card p-6 sm:p-10 bg-white border border-slate-200 shadow-sm rounded-3xl relative overflow-hidden">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 text-xs font-black mb-3">
             <History className="w-3.5 h-3.5" />
             <span>대한민국 부동산 50년사 총정리</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
             대한민국 집값은 왜 올랐고, <br />
             <span className="text-[#03c75a]">무엇이 부동산의 가치</span>를 결정하는가?
           </h1>
 
-          <p className="text-slate-300 text-sm sm:text-base mt-4 leading-relaxed font-medium">
+          <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
             1970년대 강남 개발부터 1기 신도시(분당·일산), 2000년대 버블세븐과 판교, 그리고 2026년 초양극화 시대까지 — <br className="hidden sm:inline" />
             50년의 역사를 분석하면 <strong>왜 사는(Living) 곳과 사야 하는(Buying) 곳이 달라야 하는지</strong> 그 해답이 보입니다.
           </p>
-
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <button
-              onClick={onStartDiagnostic}
-              className="px-5 py-3 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs sm:text-sm font-extrabold shadow-lg shadow-emerald-500/20 transition flex items-center gap-2 cursor-pointer"
-            >
-              <Compass className="w-4 h-4" />
-              <span>나의 최적 매수 전략 진단하기</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
         </div>
       </div>
 
@@ -73,8 +55,8 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
             onClick={() => setActiveTab(tab.id as any)}
             className={`px-4 py-3 rounded-2xl whitespace-nowrap font-black transition flex items-center gap-2 cursor-pointer border ${
               activeTab === tab.id
-                ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 border-slate-200'
+                ? 'bg-[#03c75a] text-white border-[#03c75a] shadow-sm'
+                : 'bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-50 border-slate-200'
             }`}
           >
             <span>{tab.icon}</span>
@@ -116,7 +98,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
                   시중에 풀린 돈의 양이 10배 늘어나는 동안, <strong>원화(현금)의 구매력은 급격히 감소</strong>했으며, 
                   한정된 토지와 신축 아파트는 이러한 화폐 인플레이션을 온전히 흡수하며 가격이 명목상 상승했습니다.
                 </p>
-                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
+                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 font-bold">
                   💡 <strong>결론</strong>: 현금만 보유한 사람은 매년 6~8%씩 실질 자산이 증발하는 패배를 겪었습니다.
                 </div>
               </div>
@@ -136,7 +118,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
                   대한민국 전체 국토의 11.8%에 불과한 수도권에 <strong>전국 인구의 50.6%</strong>와 <strong>고소득 일자리의 75%</strong>가 집중되어 있습니다. 
                   강남(GBD), 판교 테크노밸리, 여의도(YBD), 도심(CBD)으로 출퇴근할 수 있는 지하철 역세권 아파트는 대체 불가능한 '시간 절약 자산'이 되었습니다.
                 </p>
-                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
+                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 font-bold">
                   💡 <strong>결론</strong>: 인구는 줄어도 '양질의 일자리와 연결된 수도권 핵심지'의 수요는 더 집중됩니다.
                 </div>
               </div>
@@ -144,7 +126,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
               {/* Reason 3 */}
               <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-black text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
+                  <span className="text-xs font-black text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
                     원인 ③ 금융 제도적 요인
                   </span>
                   <span className="text-xs text-slate-400 font-bold">전세 레버리지</span>
@@ -156,7 +138,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
                   한국 특유의 전세 제도는 매수자에게 <strong>이자 없는 거대한 사금융 대출(보증금)</strong>을 제공했습니다. 
                   전세가는 매매가의 강력한 하방 지지선 역할을 하며, 상승장에서는 갭투자 유동성이 폭발하여 시세를 밀어 올리고, 하락장에서는 전세가율이 바닥을 받쳐주는 완충 장치가 되었습니다.
                 </p>
-                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
+                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 font-bold">
                   💡 <strong>결론</strong>: 전세가율이 높은 우량 입지는 하락장에서도 하방 경직성이 매우 뛰어납니다.
                 </div>
               </div>
@@ -164,7 +146,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
               {/* Reason 4 */}
               <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-black text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-200">
+                  <span className="text-xs font-black text-purple-700 bg-purple-50 px-2.5 py-1 rounded-md border border-purple-200">
                     원인 ④ 공급적 요인
                   </span>
                   <span className="text-xs text-slate-400 font-bold">토지 희소성 & 규제</span>
@@ -176,7 +158,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
                   강남 3구, 마용성, 분당, 광교 등 핵심지는 <strong>더 이상 아파트를 지을 빈 땅이 없습니다.</strong> 
                   오직 '재건축·재개발'로만 신축이 공급될 수 있으나, 공사비 급등과 인허가 규제로 인해 핵심지 신축 대단지는 만성적인 공급 부족 상태에 놓여 희소 프리미엄이 극대화되었습니다.
                 </p>
-                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
+                <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 font-bold">
                   💡 <strong>결론</strong>: 누구나 살고 싶어 하는 '핵심지 신축 대단지'의 가치는 갈수록 높아집니다.
                 </div>
               </div>
@@ -324,7 +306,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
                   수도권에서 집값 상승률 1위는 예외 없이 <strong>'강남역/신논현/잠실 30분 컷'</strong> 철도망입니다.
                 </p>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1.5 font-medium">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1.5 font-medium text-slate-700">
                   <div>👑 <strong>1티어 (황금선)</strong>: 2호선(순환), 신분당선(판교·강남 15분), 9호선(급행), 3호선</div>
                   <div>💎 <strong>2티어 (직결선)</strong>: 8호선(다산·별내·구리 ➡️ 잠실 20분), 7호선(강남구청), GTX-A(수서·동탄·운정)</div>
                   <div>⚡ <strong>가치 규칙</strong>: 지하철역 개찰구까지 <strong>도보 5분 이내(초역세권)</strong>와 15분 이상은 시세가 2~4억 원 차이납니다.</div>
@@ -343,7 +325,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
                   학령기 자녀를 둔 3040 고소득 부모는 집값이 떨어져도 학군지를 떠나지 않습니다. 
                   대치동, 목동, 중계동, 평촌, 분당 수내/서현, 용인 수지구청 학원가는 <strong>하락장에서 시세 방어율 전국 1위</strong>를 기록합니다.
                 </p>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1 font-medium">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1 font-medium text-slate-700">
                   <div>🎒 <strong>초품아 프리미엄</strong>: 차도를 건너지 않고 등하교하는 초등학교를 품은 단지 필수</div>
                   <div>📚 <strong>학원가 밀집도</strong>: 도보권 내 100개 이상의 유해시설 없는 학원가 형성 여부</div>
                 </div>
@@ -351,7 +333,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
 
               {/* Driver 3 */}
               <div className="p-6 rounded-2xl bg-white border-2 border-amber-500/30 shadow-xs space-y-3">
-                <div className="flex items-center gap-2.5 text-amber-600">
+                <div className="flex items-center gap-2.5 text-amber-700">
                   <Building className="w-5 h-5 shrink-0" />
                   <h3 className="text-base font-black text-slate-900">
                     3. 1,000세대 이상 대단지 & 1군 브랜드 커뮤니티
@@ -361,7 +343,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
                   소형 나홀로 단지와 1,000세대 이상 대단지는 거주 만족도와 환금성에서 완전히 다른 세상입니다. 
                   피트니스, 실내 골프장, 수영장, 게스트하우스, 조식 서비스, 지하주차장 엘리베이터 직결 등은 신축 프리미엄의 핵심입니다.
                 </p>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1 font-medium">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1 font-medium text-slate-700">
                   <div>🏢 <strong>관리비 절감</strong>: 세대수가 많을수록 공용 관리비 분담률이 낮아짐</div>
                   <div>🔄 <strong>환금성 보장</strong>: 매수/매도 대기 수요가 연중 유지되어 급매 처분 수월</div>
                 </div>
@@ -369,7 +351,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
 
               {/* Driver 4 */}
               <div className="p-6 rounded-2xl bg-white border-2 border-purple-500/30 shadow-xs space-y-3">
-                <div className="flex items-center gap-2.5 text-purple-600">
+                <div className="flex items-center gap-2.5 text-purple-700">
                   <Sparkles className="w-5 h-5 shrink-0" />
                   <h3 className="text-base font-black text-slate-900">
                     4. 한강·호수공원 자연환경 & 슬세권 대형 복합몰
@@ -379,7 +361,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
                   소득 수준이 높아질수록 쾌적한 힐링 주거지에 대한 지불 용의가 커집니다. 
                   한강 조망, 광교호수공원, 하남 망월천 수변공원과 함께 스타필드, 롯데몰, 현대프리미엄아울렛 등 '슬세권' 상권이 시세를 견인합니다.
                 </p>
-                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1 font-medium">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1 font-medium text-slate-700">
                   <div>🌿 <strong>영구 조망권</strong>: 호수/공원/산 영구 조망 세대는 동일 단지 내에서도 1~2억 프리미엄</div>
                   <div>🛍️ <strong>몰세권</strong>: 복합 쇼핑몰 도보 이용 가능 여부가 주말 삶의 질 결정</div>
                 </div>
@@ -445,24 +427,6 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = ({ onStartDia
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Bottom Diagnostic CTA */}
-            <div className="mt-8 p-6 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
-              <div>
-                <h3 className="text-lg font-black">역사를 알았다면, 이제 나의 최적 매수 전략을 확인할 차례입니다</h3>
-                <p className="text-xs sm:text-sm text-emerald-100 mt-1">
-                  내 자본금, 가구 소득, 출퇴근 성향을 입력하고 2x2 매트릭스 진단 결과를 확인해보세요.
-                </p>
-              </div>
-
-              <button
-                onClick={onStartDiagnostic}
-                className="px-6 py-3 rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-extrabold text-sm shadow-md transition flex items-center gap-2 shrink-0 cursor-pointer"
-              >
-                <span>진단 시작하기</span>
-                <ArrowRight className="w-4 h-4 text-[#03c75a]" />
-              </button>
             </div>
           </div>
         </div>
