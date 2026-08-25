@@ -11,10 +11,11 @@ import { RegionalGuide } from './components/RegionalGuide';
 import { FinancialSimulator } from './components/FinancialSimulator';
 import { ChecklistSection } from './components/ChecklistSection';
 import { ScoreBreakdownModal } from './components/ScoreBreakdownModal';
+import { RealEstateHistory } from './components/RealEstateHistory';
 import { Footer } from './components/Footer';
-import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter } from 'lucide-react';
+import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter, History } from 'lucide-react';
 
-type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT';
+type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY';
 
 const DEFAULT_INPUTS: DiagnosticInput = {
   cash: 3.5, // 3.5억
@@ -49,6 +50,11 @@ export function App() {
 
   const handleStartDiagnostic = () => {
     setViewMode('DIAGNOSTIC');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleGoToHistory = () => {
+    setViewMode('HISTORY');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -91,18 +97,61 @@ export function App() {
           setViewMode('DIAGNOSTIC');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
+        onGoToHistory={handleGoToHistory}
         onGoToRegionalExplorer={handleScrollToRegionalExplorer}
-        isResultView={viewMode === 'RESULT'}
+        currentView={viewMode}
       />
 
       {/* Main Content Area */}
       <main className="flex-grow">
+        {/* VIEW 1: HERO / HOME */}
         {viewMode === 'HERO' && (
           <div className="animate-fadeIn">
             <Hero onStart={handleStartDiagnostic} />
+            
+            {/* Quick Teaser to History Section */}
+            <div className="max-w-5xl mx-auto px-4 pb-14">
+              <div 
+                onClick={handleGoToHistory}
+                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-sm cursor-pointer transition flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+              >
+                <div className="flex items-center gap-3.5">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
+                    <History className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
+                      필독 칼럼
+                    </span>
+                    <h3 className="text-base sm:text-lg font-black text-slate-900 mt-1">
+                      📜 대한민국 부동산 50년 역사 & 집값 상승 원동력 총정리
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      강남 개발부터 1기 신도시, 판교, 2026 초양극화까지 — 집값이 오른 진짜 이유와 불변의 가치 공식
+                    </p>
+                  </div>
+                </div>
+
+                <button 
+                  type="button"
+                  className="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold shrink-0 self-start sm:self-auto flex items-center gap-1.5 group-hover:bg-[#03c75a] transition-colors"
+                >
+                  <span>역사 탭 읽어보기</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
+        {/* VIEW 2: HISTORY TAB */}
+        {viewMode === 'HISTORY' && (
+          <div className="animate-fadeIn">
+            <RealEstateHistory onStartDiagnostic={handleStartDiagnostic} />
+          </div>
+        )}
+
+        {/* VIEW 3: DIAGNOSTIC FORM */}
         {viewMode === 'DIAGNOSTIC' && (
           <div className="animate-fadeIn">
             <DiagnosticForm
@@ -115,6 +164,7 @@ export function App() {
           </div>
         )}
 
+        {/* VIEW 4: DIAGNOSTIC RESULT REPORT */}
         {viewMode === 'RESULT' && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
             {/* Result Header Hero Banner */}
@@ -147,7 +197,7 @@ export function App() {
                   <div className="mt-5 flex flex-wrap items-center gap-3">
                     <button
                       onClick={handleScrollToRegionalExplorer}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold border border-slate-200 transition"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold border border-slate-200 transition cursor-pointer"
                     >
                       <MapPin className="w-4 h-4 text-[#03c75a]" />
                       <span>경기도 전역 26개 권역 & 서울 분석 바로보기</span>
@@ -156,10 +206,18 @@ export function App() {
 
                     <button
                       onClick={() => handleOpenScoreBreakdown('living')}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#e8f8ee] hover:bg-[#d8f3e2] text-[#029f45] text-xs sm:text-sm font-bold border border-[#03c75a]/30 transition"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#e8f8ee] hover:bg-[#d8f3e2] text-[#029f45] text-xs sm:text-sm font-bold border border-[#03c75a]/30 transition cursor-pointer"
                     >
                       <HelpCircle className="w-4 h-4" />
                       <span>점수 산출 근거 보기</span>
+                    </button>
+
+                    <button
+                      onClick={handleGoToHistory}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs sm:text-sm font-bold border border-indigo-200 transition cursor-pointer"
+                    >
+                      <History className="w-4 h-4" />
+                      <span>부동산 역사 & 가치 원동력 칼럼</span>
                     </button>
                   </div>
                 </div>
@@ -251,7 +309,7 @@ export function App() {
                   setViewMode('DIAGNOSTIC');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-slate-700 text-sm font-bold flex items-center justify-center gap-2 border border-slate-300 shadow-sm transition"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-slate-700 text-sm font-bold flex items-center justify-center gap-2 border border-slate-300 shadow-sm transition cursor-pointer"
               >
                 <RefreshCw className="w-4 h-4" />
                 <span>진단 조건 수정 및 재진단</span>
@@ -259,7 +317,7 @@ export function App() {
 
               <button
                 onClick={() => window.print()}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-sm font-black flex items-center justify-center gap-2 shadow-md transition"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-sm font-black flex items-center justify-center gap-2 shadow-md transition cursor-pointer"
               >
                 <Download className="w-4 h-4" />
                 <span>진단 리포트 PDF 저장 / 인쇄</span>
