@@ -115,7 +115,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     naverNewsQuery: '남양주 왕숙 3기 신도시 본청약 9호선',
     officialBlueprintUrl: '/maps/wangsook_master_plan.png',
     namuWikiUrl: 'https://namu.wiki/w/%EC%99%95%EC%88%99%EC%8B%A0%EB%8F%84%EC%8B%9C#s-3.1',
-    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
+    lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/Contents/Contents.do?mCode=MN030',
     mapCoords: { x: 670, y: 170, gangnamTime: '강남 25분 (9호선)', seoulTime: '서울역 15분 (GTX-B)' },
     blocks: [
       {
@@ -464,7 +464,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     naverNewsQuery: '하남 교산 3기 신도시 3호선 송파하남선',
     officialBlueprintUrl: '/maps/hanam_gyosan_namu_dual.jpg',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B5%90%EC%82%B0%EC%8B%A0%EB%8F%84%EC%8B%9C#s-2',
-    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
+    lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/Contents/Contents.do?mCode=MN050',
     mapCoords: { x: 670, y: 400, gangnamTime: '수서 15분 / 양재 22분', seoulTime: '잠실 15분' },
     blocks: [
       {
@@ -565,7 +565,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     naverNewsQuery: '고양 창릉 3기 신도시 GTX 창릉역',
     officialBlueprintUrl: '/maps/goyang_changreung_namu.jpg',
     namuWikiUrl: 'https://namu.wiki/w/%EC%B0%BD%EB%A6%89%EC%8B%A0%EB%8F%84%EC%8B%9C#s-4',
-    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
+    lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/Contents/Contents.do?mCode=MN074',
     mapCoords: { x: 340, y: 190, gangnamTime: '삼성역 13분 (GTX-A)', seoulTime: '서울역 8분' },
     blocks: [
       {
@@ -666,7 +666,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     naverNewsQuery: '부천 대장 3기 신도시 SK 대장홍대선',
     officialBlueprintUrl: '/maps/bucheon_daejang_namu.png',
     namuWikiUrl: 'https://namu.wiki/w/%EB%8C%80%EC%9E%A5%EC%8B%A0%EB%8F%84%EC%8B%9C#s-1',
-    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
+    lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/Contents/Contents.do?mCode=MN068',
     mapCoords: { x: 230, y: 350, gangnamTime: '여의도 20분 / 강남 40분', seoulTime: '홍대입구 20분 (대장홍대선)' },
     blocks: [
       {
@@ -843,7 +843,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     naverNewsQuery: '인천 계양 3기 신도시 본청약 입주',
     officialBlueprintUrl: '/maps/incheon_gyeyang_plan.jpg',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B3%84%EC%96%91%EC%8B%A0%EB%8F%84%EC%8B%9C#s-2.1',
-    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
+    lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/Contents/Contents.do?mCode=MN056',
     mapCoords: { x: 170, y: 340, gangnamTime: '여의도 25분 / 마곡 10분', seoulTime: '서울역 30분 (공항철도)' },
     blocks: [
       {
@@ -1210,7 +1210,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     naverNewsQuery: '과천 과천지구 3기 신도시 분양 4호선',
     officialBlueprintUrl: '/maps/gwacheon_gwacheon_plan.jpg',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B3%BC%EC%B2%9C%EA%B3%BC%EC%B2%9C%EC%A7%80%EA%B5%AC#s-3.1',
-    lhOfficialUrl: 'https://3rd-newtown.lh.or.kr',
+    lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/Main.do',
     mapCoords: { x: 470, y: 470, gangnamTime: '양재 8분 / 강남역 15분', seoulTime: '사당 7분 (4호선)' },
     blocks: [
       {
@@ -1379,15 +1379,15 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
             나무위키 및 LH 청약플러스의 <strong>'3.1. 공동주택'</strong> 전수 데이터(A1~A25, B1~B17, S1~S20 등)를 도표와 공식 도면으로 완벽 구현하여, <strong>시공사(대광건영, 계룡건설, 대우건설, 금호건설 등)와 청약·입주 시기</strong>를 즉시 확인할 수 있습니다.
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-slate-600">
+          <div className="flex flex-wrap items-center gap-2.5 mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-slate-600">
             <a 
-              href={selectedTown.namuWikiUrl} 
+              href="https://www.xn--3-3u6ey6lv7rsa.kr/kor/Main.do" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 transition"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#03c75a] hover:bg-[#02b14f] text-white shadow-xs transition"
             >
-              <BookOpen className="w-3.5 h-3.5 text-[#0066ff]" />
-              <span>나무위키 {selectedTown.shortName} '3.1. 공동주택' 원문 ↗</span>
+              <Building2 className="w-3.5 h-3.5" />
+              <span>3기신도시.kr 공식 메인 포털 ↗</span>
             </a>
             <a 
               href={selectedTown.lhOfficialUrl} 
@@ -1395,8 +1395,26 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#e8f8ee] hover:bg-[#03c75a] text-[#029f45] hover:text-white transition"
             >
-              <Building2 className="w-3.5 h-3.5" />
-              <span>LH 3기 신도시 공식 포털 ↗</span>
+              <FileText className="w-3.5 h-3.5" />
+              <span>{selectedTown.shortName} 공식 지구 현황관 ↗</span>
+            </a>
+            <a 
+              href="https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/AreanoticeMgr/list.do?mCode=MN123" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#edf4ff] hover:bg-[#0066ff] text-[#0066ff] hover:text-white transition"
+            >
+              <Radio className="w-3.5 h-3.5" />
+              <span>3기 신도시 청약일정 알리미 ↗</span>
+            </a>
+            <a 
+              href={selectedTown.namuWikiUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 transition"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-[#0066ff]" />
+              <span>나무위키 {selectedTown.shortName} 백과 원문 ↗</span>
             </a>
           </div>
         </div>
