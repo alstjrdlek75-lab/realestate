@@ -10,7 +10,13 @@ import {
   CheckCircle2, 
   AlertCircle,
   Clock,
-  Sparkles
+  Sparkles,
+  HelpCircle,
+  Scale,
+  ShieldCheck,
+  Percent,
+  Home,
+  Tag
 } from 'lucide-react';
 
 interface RealEstateHistoryProps {
@@ -18,7 +24,7 @@ interface RealEstateHistoryProps {
 }
 
 export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
-  const [activeTab, setActiveTab] = useState<'REASONS' | 'TIMELINE' | 'DRIVERS' | 'LESSONS'>('REASONS');
+  const [activeTab, setActiveTab] = useState<'REASONS' | 'TIMELINE' | 'DRIVERS' | 'LESSONS' | 'GLOSSARY'>('REASONS');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
@@ -27,7 +33,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 text-xs font-black mb-3">
             <History className="w-3.5 h-3.5" />
-            <span>대한민국 부동산 50년사 총정리</span>
+            <span>대한민국 부동산 50년사 & 필수 용어 총정리</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
@@ -37,18 +43,19 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
 
           <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
             1970년대 강남 개발부터 1기 신도시(분당·일산), 2000년대 버블세븐과 판교, 그리고 2026년 초양극화 시대까지 — <br className="hidden sm:inline" />
-            50년의 역사를 분석하면 <strong>왜 사는(Living) 곳과 사야 하는(Buying) 곳이 달라야 하는지</strong> 그 해답이 보입니다.
+            50년의 역사와 <strong>DSR·LTV·갭투자 등 핵심 용어의 본질</strong>을 알면 부동산 성공 방정식이 보입니다.
           </p>
         </div>
       </div>
 
-      {/* Navigation Sub-Tabs */}
+      {/* Navigation Sub-Tabs (5 Tabs) */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm">
         {[
-          { id: 'REASONS', label: '1. 집값이 오른 4대 구조적 이유', icon: '💸' },
-          { id: 'TIMELINE', label: '2. 대한민국 부동산 50년 연표 (6대 변곡점)', icon: '📜' },
-          { id: 'DRIVERS', label: '3. 불변의 4대 부동산 가치 유인 공식', icon: '🏛️' },
-          { id: 'LESSONS', label: '4. 실전 매수자를 위한 5대 역사적 교훈', icon: '💡' },
+          { id: 'REASONS', label: '1. 집값이 오른 4대 이유', icon: '💸' },
+          { id: 'TIMELINE', label: '2. 50년 연표 (6대 변곡점)', icon: '📜' },
+          { id: 'DRIVERS', label: '3. 4대 가치 유인 공식', icon: '🏛️' },
+          { id: 'LESSONS', label: '4. 실전 5대 교훈', icon: '💡' },
+          { id: 'GLOSSARY', label: '5. 필수 부동산 & 대출 용어 사전', icon: '📚' },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -428,6 +435,179 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* TAB 5: 필수 부동산 & 대출 핵심 용어 사전 (Glossary) */}
+      {/* ========================================================================= */}
+      {activeTab === 'GLOSSARY' && (
+        <div className="space-y-6 animate-fadeIn">
+          <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm">
+            <div className="border-b border-slate-100 pb-4 mb-6">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
+                <BookOpen className="w-6 h-6 text-[#03c75a]" />
+                <span>알아두면 돈이 되는 필수 부동산 & 대출 용어 사전</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                어렵고 헷갈리는 DSR, LTV, 갭투자, 초품아, RR 등의 개념을 알기 쉽게 총정리해 드립니다.
+              </p>
+            </div>
+
+            {/* Category 1: 대출 및 금융 규제 용어 */}
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center gap-2 text-sm font-black text-[#0066ff]">
+                <Scale className="w-4 h-4" />
+                <span>1. 대출 & 금융 규제 용어 (얼마까지 빌릴 수 있는가?)</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* DSR */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-black text-slate-900 text-base">DSR (총부채원리금상환비율)</span>
+                    <span className="text-[10px] font-black text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                      가장 엄격한 규제
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    내 <strong>1년 연봉 중 모든 빚의 '원금+이자'를 갚는 데 쓸 수 있는 최대 한도 비율(보통 40%)</strong>입니다. 주택담보대출뿐만 아니라 신용대출, 마이너스통장, 자동차 할부까지 전부 합산하여 계산합니다.
+                  </p>
+                  <div className="p-2.5 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
+                    💡 <strong>예시</strong>: 연봉 6,000만 원이면 1년에 원리금 상환액이 2,400만 원(월 200만 원)을 넘을 수 없습니다.
+                  </div>
+                </div>
+
+                {/* LTV */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-black text-slate-900 text-base">LTV (주택담보인정비율)</span>
+                    <span className="text-[10px] font-black text-[#0066ff] bg-[#edf4ff] px-2 py-0.5 rounded border border-[#0066ff]/20">
+                      담보 가치 기준
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    <strong>집값 대비 최대로 빌릴 수 있는 대출 금액의 비율</strong>입니다. 예를 들어 10억 원짜리 아파트의 LTV가 70%라면 최대 7억 원까지 대출이 가능합니다. (단, DSR 소득 한도를 초과할 수는 없습니다.)
+                  </p>
+                  <div className="p-2.5 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
+                    💡 <strong>공식</strong>: 대출 가능 한도 = 집값(KB시세) × LTV 비율
+                  </div>
+                </div>
+
+                {/* 스트레스 DSR */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-black text-slate-900 text-base">스트레스 DSR (Stress DSR)</span>
+                    <span className="text-[10px] font-black text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
+                      최신 대출 규제
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    향후 금리가 오를 위험에 대비하여, <strong>대출 한도를 계산할 때 실제 금리에 '가산 금리(스트레스 금리)'를 얹어서 한도를 줄이는 제도</strong>입니다. 결과적으로 대출받을 수 있는 총액이 수천만 원 줄어듭니다.
+                  </p>
+                  <div className="p-2.5 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-bold">
+                    💡 <strong>영향</strong>: 기존 DSR 40%보다 실질 대출 한도가 5~10% 더 축소됩니다.
+                  </div>
+                </div>
+
+                {/* DTI */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-black text-slate-900 text-base">DTI (총부채상환비율)</span>
+                    <span className="text-[10px] font-black text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                      기존 전통 규제
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    주택담보대출 원리금 + '기타 대출의 이자만' 연소득과 비교하던 과거의 지표입니다. 현재는 기타 대출의 원금까지 전부 합산하는 더 강력한 DSR로 대체되어 적용됩니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Category 2: 투자 및 매수 전략 용어 */}
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center gap-2 text-sm font-black text-[#029f45]">
+                <Coins className="w-4 h-4" />
+                <span>2. 매수 & 투자 실전 용어 (어떻게 사는가?)</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* 갭투자 */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                  <span className="font-black text-slate-900 text-base block">갭투자 (Gap Investment)</span>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    매매가와 전세가의 차액(Gap)만큼만 순수 현금을 넣고, 세입자의 전세보증금을 안고 소유권을 확보하는 매수 방식입니다.
+                  </p>
+                  <div className="p-2 bg-white rounded-lg border border-slate-200 text-[11px] text-[#029f45] font-bold">
+                    예: 매매 10억 - 전세 6억 = 실투자금 4억
+                  </div>
+                </div>
+
+                {/* 전세가율 */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                  <span className="font-black text-slate-900 text-base block">전세가율 (Jeonse Ratio)</span>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    매매가 대비 전세가의 비율입니다. 전세가율이 65~70%로 높을수록 실거주 수요가 탄탄하여 하락장 방어력이 강하고 갭투자금이 적게 듭니다.
+                  </p>
+                  <div className="p-2 bg-white rounded-lg border border-slate-200 text-[11px] text-slate-700 font-bold">
+                    공식: (전세가 ÷ 매매가) × 100
+                  </div>
+                </div>
+
+                {/* 환금성 */}
+                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                  <span className="font-black text-slate-900 text-base block">환금성 (Liquidity)</span>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    내가 집을 팔고 싶을 때 얼마나 제값에 빠르게 현금화할 수 있는가의 척도입니다. 1,000세대 이상 대단지일수록 환금성이 극상입니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Category 3: 아파트 입지 & 시세 은어 */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm font-black text-amber-700">
+                <Home className="w-4 h-4" />
+                <span>3. 아파트 입지 & 시장 은어 (무엇을 봐야 하는가?)</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* 국평 */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                  <span className="font-black text-slate-900 text-sm block">🏢 국평 (국민평형 / 84㎡)</span>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    전용면적 84㎡(공급 약 33~34평형), 방 3개 화장실 2개의 대한민국 3~4인 가족 표준 선호 평형입니다.
+                  </p>
+                </div>
+
+                {/* 초품아 */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                  <span className="font-black text-slate-900 text-sm block">🎒 초품아</span>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    '초등학교를 품은 아파트'의 줄임말로, 아이들이 큰 도로를 건너지 않고 단지와 바로 연결되어 등하교 가능한 초안전 단지입니다.
+                  </p>
+                </div>
+
+                {/* RR */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                  <span className="font-black text-slate-900 text-sm block">👑 RR (로열동·로열층)</span>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    단지 내에서 조망, 일조권, 소음 차단, 역 접근성이 가장 뛰어난 최고의 동과 중고층 매물로, 시세가 5~10% 더 비싸고 가장 먼저 거래됩니다.
+                  </p>
+                </div>
+
+                {/* 1주택 비과세 */}
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                  <span className="font-black text-slate-900 text-sm block">💰 1주택 양도세 비과세</span>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    1주택자가 2년 이상 보유(취득 당시 조정지역은 2년 실거주) 후 매도 시, 양도가액 12억 원까지 양도소득세를 전액 면제받는 혜택입니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       )}
