@@ -21,7 +21,9 @@ import {
   TrendingUp,
   Flame,
   Home,
-  Compass
+  Compass,
+  Layers,
+  Check
 } from 'lucide-react';
 
 interface RealEstateFutureProps {
@@ -30,6 +32,19 @@ interface RealEstateFutureProps {
 
 type FutureTab = 'NEW_TOWNS' | 'FUTURE_NEWS' | 'GLOSSARY';
 type CalcMode = 'DSR' | 'LTV' | 'GAP';
+
+interface BlockDetail {
+  blockCode: string;
+  supplyType: '공공분양' | '신혼희망타운' | '민간분양';
+  units: number;
+  sizes: string;
+  priceEstimate: string;
+  stationDistance: string;
+  featureBadge: string;
+  progressStatus: string;
+  progressStatusColor: string;
+  note: string;
+}
 
 interface NewTownDetail {
   id: string;
@@ -46,6 +61,7 @@ interface NewTownDetail {
   currentStatus: string;
   proTip: string;
   naverNewsQuery: string;
+  blocks: BlockDetail[];
 }
 
 const NEW_TOWNS_DATA: NewTownDetail[] = [
@@ -58,12 +74,86 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     statusTag: '조성공사 & 본청약 진행',
     statusTagColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
     transitSummary: 'GTX-B(왕숙역), 9호선 연장(강동하남남양주선), 8호선 별내선 환승 연계, 경춘선·4호선',
-    transitLines: ['GTX-B', '지하철 9호선', '지하철 8호선', '경춘선', '수도권제1순환고속도로'],
+    transitLines: ['GTX-B', '지하철 9호선', '지하철 8호선', '경춘선', '수도권제1순환'],
     anchorCompanies: '카카오·판교급 IT·소프트웨어 R&D 기업, 바이오·메디컬 클러스터, 데이터센터 및 첨단 제조 융복합 단지',
     selfSufficientLand: '판교테크노밸리의 약 2배 규모 (약 140만㎡ 도시첨단산업단지 조성)',
     currentStatus: '부지 조성 공사 본격 진행 중이며 2024~2025년 주요 블록 본청약 진행. 9호선 연장선 기본계획 승인 완료.',
     proTip: '왕숙1은 GTX-B와 9호선이 교차하는 자족 첨단도시, 왕숙2는 경의중앙선과 문화예술 특화 주거단지로 조성됩니다.',
-    naverNewsQuery: '남양주 왕숙 3기 신도시 분양 9호선'
+    naverNewsQuery: '남양주 왕숙 3기 신도시 분양 9호선',
+    blocks: [
+      {
+        blockCode: '왕숙1 B-1 블록',
+        supplyType: '공공분양',
+        units: 569,
+        sizes: '전용 74㎡, 84㎡',
+        priceEstimate: '74㎡ 약 4.5억 / 84㎡ 약 5.2억',
+        stationDistance: 'GTX-B / 9호선 왕숙역 도보 5분 (초역세권)',
+        featureBadge: '🏆 핵심 대장 블록',
+        progressStatus: '본청약 진행/착공',
+        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
+        note: 'GTX-B와 9호선 신설역 바로 앞 초역세권으로 왕숙지구 내 최고 선호도 1위'
+      },
+      {
+        blockCode: '왕숙1 B-2 블록',
+        supplyType: '공공분양',
+        units: 587,
+        sizes: '전용 74㎡, 84㎡',
+        priceEstimate: '74㎡ 약 4.4억 / 84㎡ 약 5.1억',
+        stationDistance: '9호선 신설역 도보 7분 (초품아)',
+        featureBadge: '🎒 초등학교 인접',
+        progressStatus: '2025년 본청약',
+        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
+        note: '단지 바로 옆 초등학교와 근린공원을 품은 쾌적한 84㎡ 중형 위주 단지'
+      },
+      {
+        blockCode: '왕숙1 A-1 블록',
+        supplyType: '공공분양',
+        units: 583,
+        sizes: '전용 59㎡',
+        priceEstimate: '59㎡ 약 3.8억~4.0억',
+        stationDistance: '9호선 신설역 도보 6분',
+        featureBadge: '💰 실속 소형 평형',
+        progressStatus: '본청약 준비 중',
+        progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
+        note: '가성비가 가장 뛰어나며 사회초년생 및 신혼부부에게 최적화된 59㎡ 단지'
+      },
+      {
+        blockCode: '왕숙1 A-24 블록',
+        supplyType: '신혼희망타운',
+        units: 602,
+        sizes: '전용 55㎡',
+        priceEstimate: '55㎡ 약 3.4억~3.6억',
+        stationDistance: '유치원·초등학교 인접',
+        featureBadge: '👶 보육 특화',
+        progressStatus: '착공 및 본청약',
+        progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
+        note: '단지 내 어린이집, 실내놀이터 완비된 신혼부부 전용 저금리 모기지 지원 단지'
+      },
+      {
+        blockCode: '왕숙2 A-4 블록',
+        supplyType: '공공분양',
+        units: 520,
+        sizes: '전용 59㎡, 74㎡, 84㎡',
+        priceEstimate: '59㎡ 약 4.1억 / 84㎡ 약 5.5억',
+        stationDistance: '경의중앙선 신설역 도보 5분',
+        featureBadge: '🎨 문화예술 복합축',
+        progressStatus: '본청약 진행 중',
+        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
+        note: '왕숙2지구의 시세 리딩 단지로 다산신도시 생활권을 바로 공유하는 입지'
+      },
+      {
+        blockCode: '왕숙2 A-1 블록',
+        supplyType: '신혼희망타운',
+        units: 762,
+        sizes: '전용 55㎡',
+        priceEstimate: '55㎡ 약 3.7억',
+        stationDistance: '경의중앙선 도보 8분',
+        featureBadge: '🏫 초·중학교 인접',
+        progressStatus: '착공 진행 중',
+        progressStatusColor: 'bg-purple-50 text-purple-700 border-purple-200',
+        note: '대단지 신혼희망타운으로 초등학교와 중학교가 나란히 붙어있어 통학 안심'
+      }
+    ]
   },
   {
     id: 'hanam_gyosan',
@@ -79,7 +169,57 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     selfSufficientLand: '판교테크노밸리 1.4배 규모 (약 92만㎡ 자족용지)',
     currentStatus: '토지 보상 100% 완료 후 지장물 철거 및 단지 조성 공사 순항 중. 3호선 송파하남선 기본계획 확정.',
     proTip: '강남(GBD) 및 송파와 가장 가까운 입지로 3기 신도시 중 실수요자 선호도 1위. 3호선 개통 시 수서·양재 20분대 진입.',
-    naverNewsQuery: '하남 교산 3기 신도시 3호선 송파하남선'
+    naverNewsQuery: '하남 교산 3기 신도시 3호선 송파하남선',
+    blocks: [
+      {
+        blockCode: '교산 A-2 블록',
+        supplyType: '공공분양',
+        units: 1115,
+        sizes: '전용 51㎡, 59㎡, 74㎡, 84㎡',
+        priceEstimate: '59㎡ 약 4.8억 / 84㎡ 약 6.4억',
+        stationDistance: '지하철 3호선 신설역 도보 4분',
+        featureBadge: '🏆 교산 1호 대단지',
+        progressStatus: '2025년 본청약 예정',
+        progressStatusColor: 'bg-[#0066ff] text-white',
+        note: '1,115세대 랜드마크 대단지로 3호선 초역세권과 상업지구를 모두 갖춘 최고 핵심 블록'
+      },
+      {
+        blockCode: '교산 B-1 블록',
+        supplyType: '민간분양',
+        units: 840,
+        sizes: '전용 74㎡, 84㎡',
+        priceEstimate: '84㎡ 약 6.8억~7.2억',
+        stationDistance: '중앙호수공원 및 수변상가 인접',
+        featureBadge: '🌿 호수공원 조망',
+        progressStatus: '지구조성 중',
+        progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
+        note: '민간 1군 브랜드가 시공 예정인 84㎡ 중심 하이엔드 공원 조망 단지'
+      },
+      {
+        blockCode: '교산 A-1 블록',
+        supplyType: '신혼희망타운',
+        units: 450,
+        sizes: '전용 55㎡',
+        priceEstimate: '55㎡ 약 4.1억',
+        stationDistance: '초등학교 바로 앞 (초품아)',
+        featureBadge: '🎒 안심 통학권',
+        progressStatus: '착공 준비 중',
+        progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
+        note: '도로를 건너지 않는 초품아 단지로 신혼부부 사전청약 당시 높은 경쟁률 기록'
+      },
+      {
+        blockCode: '교산 B-3 블록',
+        supplyType: '공공분양',
+        units: 750,
+        sizes: '전용 74㎡, 84㎡',
+        priceEstimate: '84㎡ 약 6.5억',
+        stationDistance: '3호선 연장역 도보 6분',
+        featureBadge: '🏢 중대형 위주',
+        progressStatus: '2025년 하반기 본청약',
+        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
+        note: '송파 접근성이 가장 뛰어나며 자족 첨단R&D 단지와 도보로 출퇴근 가능한 위치'
+      }
+    ]
   },
   {
     id: 'goyang_changreung',
@@ -95,7 +235,57 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     selfSufficientLand: '약 130만㎡ 자족용지 (판교 1.5배 규모 테크노밸리)',
     currentStatus: '2024년 말 첫 본청약(A4, S5, S6블록) 진행 시작. GTX-A 창릉역 신설 확정 및 공사진행.',
     proTip: 'GTX-A 개통 시 서울역 8분, 삼성역 13분 컷. 상암DMC 직주근접 수요와 일산·은평 거주민의 최고 선호지.',
-    naverNewsQuery: '고양 창릉 3기 신도시 GTX 창릉역'
+    naverNewsQuery: '고양 창릉 3기 신도시 GTX 창릉역',
+    blocks: [
+      {
+        blockCode: '창릉 S-5 블록',
+        supplyType: '공공분양',
+        units: 718,
+        sizes: '전용 51㎡, 59㎡, 74㎡, 84㎡',
+        priceEstimate: '59㎡ 약 4.9억 / 84㎡ 약 6.7억',
+        stationDistance: 'GTX-A 창릉역 도보 5분 (초역세권)',
+        featureBadge: '🏆 3기 신도시 최고 경쟁률',
+        progressStatus: '본청약 완료/착공',
+        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
+        note: 'GTX-A 창릉역을 걸어서 이용하는 창릉 최고 대장 블록. 삼성역 10분대 직결'
+      },
+      {
+        blockCode: '창릉 S-6 블록',
+        supplyType: '공공분양',
+        units: 407,
+        sizes: '전용 59㎡, 74㎡, 84㎡',
+        priceEstimate: '59㎡ 약 4.8억 / 84㎡ 약 6.6억',
+        stationDistance: 'GTX-A 창릉역 도보 8분 & 수변공원',
+        featureBadge: '🌿 창릉천 수변 조망',
+        progressStatus: '본청약 완료/착공',
+        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
+        note: '창릉천 수변공원 영구 조망과 초등학교를 동시에 품은 최고급 주거 입지'
+      },
+      {
+        blockCode: '창릉 A-4 블록',
+        supplyType: '공공분양',
+        units: 573,
+        sizes: '전용 55㎡, 59㎡',
+        priceEstimate: '55㎡ 약 4.3억 / 59㎡ 약 4.7억',
+        stationDistance: '고양은평선 신설역 도보 6분',
+        featureBadge: '💰 실속 중소형',
+        progressStatus: '본청약 완료',
+        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
+        note: '2024년 말 본청약 접수 완료. 서부선과 직결되는 고양은평선 수혜 단지'
+      },
+      {
+        blockCode: '창릉 B-1 블록',
+        supplyType: '민간분양',
+        units: 680,
+        sizes: '전용 84㎡, 101㎡',
+        priceEstimate: '84㎡ 약 7.2억 예상',
+        stationDistance: '창릉 중심상업지구 인접',
+        featureBadge: '🏢 대형 평형 구성',
+        progressStatus: '부지 조성 중',
+        progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
+        note: '민간 브랜드 시공 예정으로 중대형 평형을 선호하는 갈아타기 수요 최우선 타겟'
+      }
+    ]
   },
   {
     id: 'bucheon_daejang',
@@ -111,7 +301,57 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     selfSufficientLand: '약 68만㎡ 도시첨단산업단지 (SK 앵커기업 중심 클러스터)',
     currentStatus: '3기 신도시 중 가장 빠른 2024년 상반기 단지 착공 완료. 대장홍대선 민자적격성 통과 및 연내 조기 착공 추진.',
     proTip: '3기 신도시 중 유일하게 대기업(SK그룹) 대규모 입주가 확정되어 자족 기능이 가장 확실한 앵커 단지.',
-    naverNewsQuery: '부천 대장 3기 신도시 SK 대장홍대선'
+    naverNewsQuery: '부천 대장 3기 신도시 SK 대장홍대선',
+    blocks: [
+      {
+        blockCode: '대장 A-7 블록',
+        supplyType: '공공분양',
+        units: 449,
+        sizes: '전용 59㎡',
+        priceEstimate: '59㎡ 약 4.2억~4.4억',
+        stationDistance: '대장홍대선 신설역 도보 5분',
+        featureBadge: '🏆 대장지구 대장 블록',
+        progressStatus: '2025년 본청약 예정',
+        progressStatusColor: 'bg-[#03c75a] text-white',
+        note: '홍대입구역 20분 컷 대장홍대선 초역세권으로 마곡/상암 직주근접 최고 입지'
+      },
+      {
+        blockCode: '대장 A-8 블록',
+        supplyType: '공공분양',
+        units: 560,
+        sizes: '전용 59㎡, 74㎡, 84㎡',
+        priceEstimate: '59㎡ 약 4.3억 / 84㎡ 약 5.8억',
+        stationDistance: '중심상업지구 도보 3분',
+        featureBadge: '🛍️ 슬세권 상권',
+        progressStatus: '착공 및 본청약 준비',
+        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
+        note: '대장신도시 중심 상업지구와 복합커뮤니티 센터가 바로 연결되는 편리한 단지'
+      },
+      {
+        blockCode: '대장 A-5 블록',
+        supplyType: '신혼희망타운',
+        units: 591,
+        sizes: '전용 46㎡, 55㎡',
+        priceEstimate: '55㎡ 약 3.8억',
+        stationDistance: 'SK 그린테크노캠퍼스 바로 앞',
+        featureBadge: '🏢 SK 직주일치',
+        progressStatus: '본청약 완료/착공',
+        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
+        note: 'SK그룹 R&D 캠퍼스 도보 3분 거리로 고소득 연구원 배후 임대 및 실거주 수요 탄탄'
+      },
+      {
+        blockCode: '대장 A-6 블록',
+        supplyType: '신혼희망타운',
+        units: 430,
+        sizes: '전용 55㎡',
+        priceEstimate: '55㎡ 약 3.7억',
+        stationDistance: '초등학교 바로 앞 (초품아)',
+        featureBadge: '🎒 안심 교육특화',
+        progressStatus: '착공 순항 중',
+        progressStatusColor: 'bg-purple-50 text-purple-700 border-purple-200',
+        note: '유치원과 초등학교를 단지 안마당처럼 품고 있는 안심 보육 단지'
+      }
+    ]
   },
   {
     id: 'incheon_gyeyang',
@@ -127,7 +367,45 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     selfSufficientLand: '약 75만㎡ 자족시설용지 (계양테크노밸리)',
     currentStatus: '3기 신도시 전체 중 최초로 2024년 9월 본청약(A2, A3블록) 완료. 2026년 하반기 최초 입주 예정.',
     proTip: '3기 신도시 중 입주시기가 가장 빠르며 김포공항역을 통한 마곡/여의도 출퇴근 실수요자에게 실속형 대안.',
-    naverNewsQuery: '인천 계양 3기 신도시 본청약 입주'
+    naverNewsQuery: '인천 계양 3기 신도시 본청약 입주',
+    blocks: [
+      {
+        blockCode: '계양 A-2 블록',
+        supplyType: '공공분양',
+        units: 813,
+        sizes: '전용 59㎡, 74㎡, 84㎡',
+        priceEstimate: '59㎡ 약 4.1억 / 84㎡ 약 5.8억',
+        stationDistance: 'S-BRT 신설역 도보 3분',
+        featureBadge: '🏆 3기 최초 본청약 단지',
+        progressStatus: '본청약 완료 / 2026 입주',
+        progressStatusColor: 'bg-[#03c75a] text-white',
+        note: '3기 신도시 전체 중 가장 먼저 2024년 9월 본청약 완료. 2026년 12월 첫 입주 개시'
+      },
+      {
+        blockCode: '계양 A-3 블록',
+        supplyType: '신혼희망타운',
+        units: 359,
+        sizes: '전용 55㎡',
+        priceEstimate: '55㎡ 약 3.9억',
+        stationDistance: '유치원·초등학교 인접',
+        featureBadge: '👶 3기 1호 신희타',
+        progressStatus: '본청약 완료 / 2026 입주',
+        progressStatusColor: 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30',
+        note: '가장 빠른 입주 시기를 자랑하며 1.3% 고정금리 수익공유형 모기지 혜택 적용'
+      },
+      {
+        blockCode: '계양 A-1 블록',
+        supplyType: '공공분양',
+        units: 612,
+        sizes: '전용 59㎡, 74㎡, 84㎡',
+        priceEstimate: '84㎡ 약 5.9억 예상',
+        stationDistance: '인천 1호선 박촌역 환승 연계',
+        featureBadge: '🚇 지하철 환승권',
+        progressStatus: '착공 및 분양 준비',
+        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
+        note: '기존 박촌역 인프라와 신도시 테크노밸리 자족기능을 동시에 누리는 입지'
+      }
+    ]
   },
   {
     id: 'gwacheon_gwacheon',
@@ -143,11 +421,49 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     selfSufficientLand: '약 36만㎡ 자족용지 (서초 양재 R&CD 혁신지구 연계)',
     currentStatus: '2024년 8월 국토부 지구계획 승인 완료. 2025~2026년 주택 분양 착수 예정.',
     proTip: '서초구 양재동과 맞닿아 사실상 강남 생활권. 3기 신도시 중 시세 상승 잠재력과 평당 분양가가 가장 높은 최상급지.',
-    naverNewsQuery: '과천 과천지구 3기 신도시 분양 4호선'
+    naverNewsQuery: '과천 과천지구 3기 신도시 분양 4호선',
+    blocks: [
+      {
+        blockCode: '과천 A-1 블록',
+        supplyType: '공공분양',
+        units: 650,
+        sizes: '전용 59㎡, 84㎡',
+        priceEstimate: '59㎡ 약 6.8억 / 84㎡ 약 9.2억 예상',
+        stationDistance: '지하철 4호선 선바위역 도보 4분 (초역세권)',
+        featureBadge: '👑 3기 신도시 원탑 황금 입지',
+        progressStatus: '2025~2026년 분양 예정',
+        progressStatusColor: 'bg-[#0066ff] text-white',
+        note: '서초구 양재동 바로 옆! 사당·강남 10분대 진입 가능한 3기 신도시 최고의 로또 블록'
+      },
+      {
+        blockCode: '과천 A-2 블록',
+        supplyType: '신혼희망타운',
+        units: 480,
+        sizes: '전용 55㎡, 59㎡',
+        priceEstimate: '55㎡ 약 5.8억 예상',
+        stationDistance: '양재천 수변공원 조망',
+        featureBadge: '🌿 양재천 에코라이프',
+        progressStatus: '지구조성 준비 중',
+        progressStatusColor: 'bg-emerald-50 text-[#029f45] border-[#03c75a]/30',
+        note: '양재천 자전거 도로와 직결되며 서초구 우면산 R&CD 배후단지로 신혼부부 청약 1순위'
+      },
+      {
+        blockCode: '과천 B-1 블록',
+        supplyType: '민간분양',
+        units: 850,
+        sizes: '전용 84㎡, 105㎡, 120㎡',
+        priceEstimate: '84㎡ 약 10억~11억 예상',
+        stationDistance: '위례과천선 / 4호선 환승역세권',
+        featureBadge: '🏢 하이엔드 대단지',
+        progressStatus: '지구계획 승인 완료',
+        progressStatusColor: 'bg-purple-50 text-purple-700 border-purple-200',
+        note: '1군 메이저 브랜드가 들어설 대형 평형 단지로 준공 후 20억 클럽 진입 유력'
+      }
+    ]
   }
 ];
 
-export const RealEstateFuture: React.FC<RealEstateFutureProps> = ({ onStartDiagnostic }) => {
+export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
   const [activeTab, setActiveTab] = useState<FutureTab>('NEW_TOWNS');
   const [selectedTownId, setSelectedTownId] = useState<string>(NEW_TOWNS_DATA[0].id);
 
@@ -213,17 +529,17 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = ({ onStartDiagn
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 text-xs font-black mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>수도권 미래 핵심 분석 & 신도시 전망</span>
+            <span>수도권 미래 핵심 분석 & 신도시 블록별 공급 도감</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            3기 신도시 총정리와 <br />
+            3기 신도시 블록별 총정리와 <br />
             <span className="text-[#03c75a]">부동산 미래 핵심 변수</span>
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
-            왕숙·교산·창릉·대장·계양·과천 등 <strong>3기 신도시의 실시간 진행 상황과 유치 확정 기업</strong>부터 <br className="hidden sm:inline" />
-            미래 주목 4대 핵심 변수, 실시간 네이버 부동산 뉴스, 필수 대출 규제 계산기까지 한눈에 확인하세요.
+            왕숙·교산·창릉·대장·계양·과천 등 <strong>각 지구별 주요 블록(A-1, B-1, S-5 등) 공급 계획과 분양가, 앵커 기업</strong>부터 <br className="hidden sm:inline" />
+            미래 주목 4대 변수, 실시간 네이버 부동산 뉴스, 대출 규제 계산기까지 완벽 정리했습니다.
           </p>
         </div>
       </div>
@@ -231,7 +547,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = ({ onStartDiagn
       {/* Main 3 Sub-Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm">
         {[
-          { id: 'NEW_TOWNS', label: '1. 3기 신도시 심층 분석 (진행상황 & 앵커기업)', icon: '🏗️' },
+          { id: 'NEW_TOWNS', label: '1. 3기 신도시 & 블록별(A-1, B-1) 공급 도감', icon: '🏗️' },
           { id: 'FUTURE_NEWS', label: '2. 미래 주목 변수 & 실시간 네이버 뉴스', icon: '📡' },
           { id: 'GLOSSARY', label: '3. 필수 부동산·대출 용어 & 실시간 계산기', icon: '📚' },
         ].map((tab) => (
@@ -251,7 +567,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = ({ onStartDiagn
       </div>
 
       {/* ========================================================================= */}
-      {/* SUB-TAB 1: 3기 신도시 심층 분석 (진행상황 & 앵커기업) */}
+      {/* SUB-TAB 1: 3기 신도시 심층 분석 & 블록별(A-1, B-1) 공급 도감 */}
       {/* ========================================================================= */}
       {activeTab === 'NEW_TOWNS' && (
         <div className="space-y-6 animate-fadeIn">
@@ -370,6 +686,98 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = ({ onStartDiagn
                 </p>
               </div>
             </div>
+
+            {/* ========================================================================= */}
+            {/* 🏢 [NEW] 지구별 구체적인 블록(A-1, B-1, S-5 등) 공급 도감 */}
+            {/* ========================================================================= */}
+            <div className="pt-4 border-t border-slate-100 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-[#e8f8ee] text-[#029f45] flex items-center justify-center font-bold">
+                    <Layers className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+                      <span>{selectedTown.name} 주요 분양 블록별(A·B·S) 상세 현황</span>
+                      <span className="text-[10px] text-[#029f45] bg-[#e8f8ee] px-2 py-0.5 rounded font-black border border-[#03c75a]/20">
+                        총 {selectedTown.blocks.length}개 핵심 블록
+                      </span>
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      블록별 공급 유형, 세대수, 평형(59·84㎡), 추정/본청약 분양가 및 역세권 도보거리 분석
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Blocks Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {selectedTown.blocks.map((block) => (
+                  <div
+                    key={block.blockCode}
+                    className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#03c75a] hover:shadow-md transition-all flex flex-col justify-between space-y-3 relative group"
+                  >
+                    <div>
+                      {/* Badge & Status Header */}
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <span className="text-[11px] font-black text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                          {block.featureBadge}
+                        </span>
+                        <span className={`text-[10px] font-black px-2 py-0.5 rounded-full border ${block.progressStatusColor}`}>
+                          {block.progressStatus}
+                        </span>
+                      </div>
+
+                      {/* Block Name & Supply Type */}
+                      <div className="flex items-baseline justify-between gap-2">
+                        <h4 className="text-lg font-black text-slate-900 group-hover:text-[#029f45] transition-colors">
+                          {block.blockCode}
+                        </h4>
+                        <span className="text-xs font-bold text-[#0066ff]">
+                          {block.supplyType} ({block.units}세대)
+                        </span>
+                      </div>
+
+                      {/* Station Distance */}
+                      <div className="mt-2 p-2 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-1.5 text-xs text-slate-700 font-bold">
+                        <Train className="w-3.5 h-3.5 text-[#03c75a] shrink-0" />
+                        <span>{block.stationDistance}</span>
+                      </div>
+
+                      {/* Price & Size Box */}
+                      <div className="mt-3 p-3 bg-gradient-to-br from-slate-50 to-white rounded-xl border border-slate-200 text-xs space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500 font-medium">공급 평형:</span>
+                          <span className="font-black text-slate-900">{block.sizes}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-500 font-medium">분양가(추정/확정):</span>
+                          <span className="font-black text-[#029f45] text-sm">{block.priceEstimate}</span>
+                        </div>
+                      </div>
+
+                      {/* Note */}
+                      <p className="text-xs text-slate-600 mt-2.5 leading-relaxed font-medium">
+                        💡 {block.note}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-500">
+                      <span>LH 청약플러스 / 본청약 대상</span>
+                      <button
+                        type="button"
+                        onClick={() => handleOpenNaverNews(`${selectedTown.name} ${block.blockCode} 분양`)}
+                        className="text-[#0066ff] hover:underline flex items-center gap-0.5 cursor-pointer"
+                      >
+                        <span>블록 뉴스 보기</span>
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
 
           {/* All 6 New Towns Summary Comparison Table */}
@@ -390,6 +798,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = ({ onStartDiagn
                   <tr className="border-b border-slate-200 text-slate-500 font-bold bg-slate-50">
                     <th className="py-3 px-3.5">지구명</th>
                     <th className="py-3 px-3.5">공급 규모</th>
+                    <th className="py-3 px-3.5">주요 분양 블록</th>
                     <th className="py-3 px-3.5">핵심 교통망</th>
                     <th className="py-3 px-3.5">약속된 기업 / 자족 특화</th>
                     <th className="py-3 px-3.5">입주 목표</th>
@@ -411,10 +820,13 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = ({ onStartDiagn
                       <td className="py-3 px-3.5 text-slate-600">
                         {town.units.split(' ')[1] || town.units}
                       </td>
+                      <td className="py-3 px-3.5 text-[#029f45] font-black">
+                        {town.blocks.map(b => b.blockCode.replace(/.*지구\s*|\s*블록/g, '').trim()).slice(0, 3).join(', ')} 등
+                      </td>
                       <td className="py-3 px-3.5 text-slate-700">
                         {town.transitLines.slice(0, 2).join(', ')}
                       </td>
-                      <td className="py-3 px-3.5 text-slate-600 max-w-[200px] truncate" title={town.anchorCompanies}>
+                      <td className="py-3 px-3.5 text-slate-600 max-w-[180px] truncate" title={town.anchorCompanies}>
                         {town.anchorCompanies}
                       </td>
                       <td className="py-3 px-3.5 text-[#029f45] font-black">
@@ -650,7 +1062,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = ({ onStartDiagn
                 <input
                   id="futureNewsInput"
                   type="text"
-                  placeholder="예: 왕숙 9호선, 교산 3호선, 대장 SK"
+                  placeholder="예: 왕숙 B-1, 창릉 S-5, 교산 A-2"
                   className="bg-white text-xs px-3.5 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#03c75a] font-medium w-full sm:w-64"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
