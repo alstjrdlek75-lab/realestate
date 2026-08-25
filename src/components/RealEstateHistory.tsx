@@ -607,7 +607,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-black text-slate-900 text-base group-hover:text-purple-700 transition-colors flex items-center gap-1.5">
-                      <span>스트레스 DSR (Stress DSR)</span>
+                      <span>스트레스 DSR</span>
                       <Calculator className="w-4 h-4 text-slate-400 group-hover:text-purple-600" />
                     </span>
                     <span className="text-[10px] font-black text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
@@ -644,11 +644,11 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
               </div>
             </div>
 
-            {/* Category 2: 매수 & 투자 실전 용어 (Clickable with Gap Calc) */}
+            {/* Category 2: 매수 & 투자 실전 용어 (Cleaned Korean titles) */}
             <div className="space-y-4 pt-4 border-t border-slate-100">
               <div className="flex items-center gap-2 text-sm font-black text-[#029f45]">
                 <Coins className="w-4 h-4" />
-                <span>2. 매수 & 투자 실전 용어</span>
+                <span>2. 매수 & 투자 실전 용어 (어떻게 사는가?)</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -659,7 +659,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-black text-slate-900 text-base group-hover:text-[#029f45] transition-colors">
-                      갭투자 (Gap Investment)
+                      갭투자
                     </span>
                     <Calculator className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#03c75a]" />
                   </div>
@@ -677,7 +677,10 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                   onClick={() => handleOpenCalculator('GAP')}
                   className="p-5 rounded-2xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 transition-all cursor-pointer group space-y-2"
                 >
-                  <span className="font-black text-slate-900 text-base block">전세가율 (Jeonse Ratio)</span>
+                  <div className="flex items-center justify-between">
+                    <span className="font-black text-slate-900 text-base block">전세가율</span>
+                    <Calculator className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#03c75a]" />
+                  </div>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
                     매매가 대비 전세가의 비율입니다. 전세가율이 65~70%로 높을수록 실거주 수요가 탄탄하여 하락장 방어력이 강하고 갭투자금이 적게 듭니다.
                   </p>
@@ -688,7 +691,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
 
                 {/* 환금성 */}
                 <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                  <span className="font-black text-slate-900 text-base block">환금성 (Liquidity)</span>
+                  <span className="font-black text-slate-900 text-base block">환금성</span>
                   <p className="text-xs text-slate-600 leading-relaxed font-medium">
                     내가 집을 팔고 싶을 때 얼마나 제값에 빠르게 현금화할 수 있는가의 척도입니다. 1,000세대 이상 대단지일수록 환금성이 극상입니다.
                   </p>
@@ -700,7 +703,7 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
             <div className="space-y-4 pt-4 border-t border-slate-100">
               <div className="flex items-center gap-2 text-sm font-black text-amber-700">
                 <Home className="w-4 h-4" />
-                <span>3. 아파트 입지 & 시장 은어</span>
+                <span>3. 아파트 입지 & 시장 은어 (무엇을 봐야 하는가?)</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
