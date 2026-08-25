@@ -90,6 +90,7 @@ export interface NewTownDetail {
   officialBlueprintUrl: string;
   namuWikiUrl: string;
   lhOfficialUrl: string;
+  discoUrl?: string;
   mapCoords: { x: number; y: number; gangnamTime: string; seoulTime: string };
   blocks: BlockDetail[];
 }
@@ -1271,6 +1272,108 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         pinPos: { x: 52, y: 65 }
       }
     ]
+  },
+  {
+    id: 'guri_topyeong',
+    name: '구리 토평 (구리토평2)',
+    shortName: '구리 토평',
+    location: '경기도 구리시 교문동·수택동·토평동·아천동 일원',
+    units: '약 18,500~22,000호',
+    areaSize: '약 275만㎡ (약 83만 평)',
+    plannedPopulation: '약 5만 3천 명',
+    expectedMoveIn: '2029~2034년 순차 공급/입주 목표',
+    statusTag: '지구지정 고시 완료 & 한강변 리버프론트',
+    statusTagColor: 'bg-cyan-50 text-cyan-800 border-cyan-300',
+    transitSummary: '지하철 8호선(장자호수공원역), 경의중앙선(구리역), GTX-B(갈매 연계), 강변북로 지하화/확장, 세종포천고속도로(남구리IC), 수도권제1순환(토평IC)',
+    transitLines: ['지하철 8호선 (장자호수공원역)', '경의중앙선', '강변북로', '세종포천고속도로', '수도권제1순환'],
+    anchorCompanies: 'AI·빅데이터·SW 혁신 산업, 디지털 헬스케어, MICE·수변 레저 문화 복합 클러스터, 첨단 스타트업 밸리',
+    selfSufficientLand: '약 55만㎡ 자족시설용지 (한강변 워터프론트 복합 자족도시)',
+    currentStatus: '2023년 11월 신규택지 발표 후 2025년 12월 지구지정 및 지형도면 고시 완료. 2026년 지구계획 수립 승인 신청 및 2027년 최초 청약/보상 본격화 추진.',
+    proTip: '한강 영구 조망권과 8호선 장자호수공원역을 품은 3.5기 신도시 최대어. 잠실 15분, 강남 25분대 진입 가능한 준강남급 한강변 최상급 입지.',
+    naverNewsQuery: '구리 토평2 공공주택지구 분양 8호선',
+    officialBlueprintUrl: '/maps/guri_topyeong_plan.png',
+    namuWikiUrl: 'https://namu.wiki/w/%EA%B5%AC%EB%A6%AC%ED%86%A0%ED%8F%892%EC%A7%80%EA%B5%AC',
+    lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/Main.do',
+    discoUrl: 'https://disco.re/b/sgd9n6tv/',
+    mapCoords: { x: 630, y: 310, gangnamTime: '잠실 15분 / 강남 25분 (8호선)', seoulTime: '을지로 25분' },
+    blocks: [
+      {
+        blockCode: '토평 리버프론트 1블록',
+        shortCode: '리버1',
+        complexName: '구리토평 한강 리버프론트 대장',
+        unitsTotal: '1,250세대',
+        units: 1250,
+        supplyType: '공공분양',
+        subscriptionDate: '2027년 사전청약 예정',
+        moveInDate: '2031년',
+        builder: '미정 (1군 랜드마크 브랜드 예정)',
+        sizes: '전용 59㎡, 84㎡, 102㎡',
+        priceEstimate: '59㎡ 약 5.5억 / 84㎡ 약 7.5억 예상',
+        stationDistance: '한강 수변공원 바로 앞 (영구 한강 조망)',
+        featureBadge: '🌊 한강 영구조망 대장',
+        progressStatus: '지구계획 수립 중',
+        progressStatusColor: 'bg-cyan-100 text-cyan-800 border-cyan-300',
+        note: '한강 수변을 바로 내려다보는 최고급 조망 특화 랜드마크 대단지',
+        pinPos: { x: 55, y: 65 }
+      },
+      {
+        blockCode: '토평 장자호수 2블록',
+        shortCode: '장자2',
+        complexName: '토평2 장자호수공원 역세권',
+        unitsTotal: '980세대',
+        units: 980,
+        supplyType: '공공분양',
+        subscriptionDate: '2027년',
+        moveInDate: '2031년',
+        builder: '미정',
+        sizes: '전용 59㎡, 74㎡, 84㎡',
+        priceEstimate: '84㎡ 약 7.2억 예상',
+        stationDistance: '8호선 장자호수공원역 도보 7분 (잠실 15분)',
+        featureBadge: '🚇 8호선 잠실 15분',
+        progressStatus: '지구계획 수립 중',
+        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
+        note: '8호선 장자호수공원역 접근성이 가장 우수하여 잠실·강남 출퇴근 최적',
+        pinPos: { x: 45, y: 35 }
+      },
+      {
+        blockCode: '토평 혁신MICE 3블록',
+        shortCode: 'MICE3',
+        complexName: '토평2 스마트 MICE 복합단지',
+        unitsTotal: '820세대',
+        units: 820,
+        supplyType: '민간분양',
+        subscriptionDate: '2028년',
+        moveInDate: '2032년',
+        builder: '미정 (하이엔드 브랜드)',
+        sizes: '전용 84㎡, 115㎡',
+        priceEstimate: '84㎡ 약 7.8억 예상',
+        stationDistance: '스마트 테크노밸리 & MICE 앵커 인접',
+        featureBadge: '🏢 스마트 MICE 직주일치',
+        progressStatus: '사업계획 구상 중',
+        progressStatusColor: 'bg-purple-100 text-purple-800 border-purple-200',
+        note: 'AI·바이오 연구단지 및 상업 문화 융복합 지구와 맞닿은 하이엔드 주거 단지',
+        pinPos: { x: 70, y: 45 }
+      },
+      {
+        blockCode: '토평 아이돌봄 4블록',
+        shortCode: '에듀4',
+        complexName: '토평2 아이돌봄 에듀타운',
+        unitsTotal: '650세대',
+        units: 650,
+        supplyType: '신혼희망타운',
+        subscriptionDate: '2027년',
+        moveInDate: '2031년',
+        builder: '미정',
+        sizes: '전용 55㎡, 59㎡',
+        priceEstimate: '55㎡ 약 4.5억',
+        stationDistance: '초·중·고 통합캠퍼스 및 공원 인접',
+        featureBadge: '👶 아이돌봄 클러스터',
+        progressStatus: '지구계획 수립 중',
+        progressStatusColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+        note: '보육센터, 유치원, 초등학교가 단지 내 완비된 아이 키우기 가장 좋은 에듀 블록',
+        pinPos: { x: 35, y: 55 }
+      }
+    ]
   }
 ];
 
@@ -1416,6 +1519,17 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
               <BookOpen className="w-3.5 h-3.5 text-[#0066ff]" />
               <span>나무위키 {selectedTown.shortName} 백과 원문 ↗</span>
             </a>
+            {selectedTown.discoUrl && (
+              <a 
+                href={selectedTown.discoUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-[#0066ff] text-[#0066ff] hover:text-white transition shadow-xs"
+              >
+                <Compass className="w-3.5 h-3.5" />
+                <span>디스코 {selectedTown.shortName} 분석 리포트 원문 ↗</span>
+              </a>
+            )}
           </div>
         </div>
       </div>
