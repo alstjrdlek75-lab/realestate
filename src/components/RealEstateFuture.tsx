@@ -91,6 +91,7 @@ export interface NewTownDetail {
   namuWikiUrl: string;
   lhOfficialUrl: string;
   discoUrl?: string;
+  hdecNewsUrl?: string;
   mapCoords: { x: number; y: number; gangnamTime: string; seoulTime: string };
   blocks: BlockDetail[];
 }
@@ -1275,28 +1276,67 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'guri_topyeong',
-    name: '구리 토평 (구리토평2)',
-    shortName: '구리 토평',
+    name: '구리 토평·수택 (구리토평2 & 수택재개발)',
+    shortName: '구리 토평·수택',
     location: '경기도 구리시 교문동·수택동·토평동·아천동 일원',
-    units: '약 18,500~22,000호',
-    areaSize: '약 275만㎡ (약 83만 평)',
-    plannedPopulation: '약 5만 3천 명',
-    expectedMoveIn: '2029~2034년 순차 공급/입주 목표',
-    statusTag: '지구지정 고시 완료 & 한강변 리버프론트',
-    statusTagColor: 'bg-cyan-50 text-cyan-800 border-cyan-300',
-    transitSummary: '지하철 8호선(장자호수공원역), 경의중앙선(구리역), GTX-B(갈매 연계), 강변북로 지하화/확장, 세종포천고속도로(남구리IC), 수도권제1순환(토평IC)',
-    transitLines: ['지하철 8호선 (장자호수공원역)', '경의중앙선', '강변북로', '세종포천고속도로', '수도권제1순환'],
-    anchorCompanies: 'AI·빅데이터·SW 혁신 산업, 디지털 헬스케어, MICE·수변 레저 문화 복합 클러스터, 첨단 스타트업 밸리',
+    units: '약 32,000호 (구리토평2 2.2만호 + 현대건설 수택 7,007세대 + 수택E 3,022세대)',
+    areaSize: '총 350만㎡+ (구리토평2 275만㎡ + 수택재개발 일원)',
+    plannedPopulation: '약 8만 명 (수도권 한강변 최대 메가타운)',
+    expectedMoveIn: '2028~2034년 순차 공급/입주 목표',
+    statusTag: '현대건설 7,007세대 수주 & 토평2 고시',
+    statusTagColor: 'bg-indigo-50 text-indigo-900 border-indigo-300',
+    transitSummary: '지하철 8호선(장자호수공원역·구리역), 경의중앙선(구리역), GTX-B(갈매 연계), 강변북로 지하화/확장, 세종포천고속도로(남구리IC), 수도권제1순환(토평IC)',
+    transitLines: ['지하철 8호선 (장자호수공원역·구리역)', '경의중앙선', '강변북로', '세종포천고속도로', '수도권제1순환'],
+    anchorCompanies: '현대건설(힐스테이트)·포스코이앤씨 2.8조 수택재개발(7,007세대), DL이앤씨·GS·SK 수택E(3,022세대), AI·빅데이터·SW 혁신 산업, 스마트 MICE 복합 클러스터',
     selfSufficientLand: '약 55만㎡ 자족시설용지 (한강변 워터프론트 복합 자족도시)',
-    currentStatus: '2023년 11월 신규택지 발표 후 2025년 12월 지구지정 및 지형도면 고시 완료. 2026년 지구계획 수립 승인 신청 및 2027년 최초 청약/보상 본격화 추진.',
-    proTip: '한강 영구 조망권과 8호선 장자호수공원역을 품은 3.5기 신도시 최대어. 잠실 15분, 강남 25분대 진입 가능한 준강남급 한강변 최상급 입지.',
-    naverNewsQuery: '구리 토평2 공공주택지구 분양 8호선',
+    currentStatus: '현대건설 컨소시엄의 국내 최대 수택동 7,007세대 재개발(공사비 2.8조) 시공사 선정 완료 + 구리토평2(2.2만호) 지구지정 고시 완료로 총 3.2만세대 한강변 메가 주거타운 형성.',
+    proTip: '대한민국 재개발 최대어 현대건설 7,007세대와 한강 영구조망 구리토평2(2.2만호)가 결합되는 수도권 동북부의 대장 입지. 8호선으로 잠실 15분대 진입!',
+    naverNewsQuery: '구리 수택동 재개발 현대건설 토평2',
     officialBlueprintUrl: '/maps/guri_topyeong_plan.png',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B5%AC%EB%A6%AC%ED%86%A0%ED%8F%892%EC%A7%80%EA%B5%AC',
     lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/Main.do',
     discoUrl: 'https://disco.re/b/sgd9n6tv/',
+    hdecNewsUrl: 'https://www.hdec.kr/kr/newsroom/news_view.aspx?NewsSeq=1282&NewsType=SOCIAL&NewsListType=news_list',
     mapCoords: { x: 630, y: 310, gangnamTime: '잠실 15분 / 강남 25분 (8호선)', seoulTime: '을지로 25분' },
     blocks: [
+      {
+        blockCode: '수택 재개발 메가블록',
+        shortCode: '수택7007',
+        complexName: '구리 수택동 재개발 (현대건설·포스코)',
+        unitsTotal: '7,007세대 (국내 최대 재개발)',
+        units: 7007,
+        supplyType: '민간재개발',
+        subscriptionDate: '2026~2027년 예정',
+        moveInDate: '2030년',
+        builder: '현대건설 | 포스코이앤씨',
+        sizes: '전용 39㎡ ~ 120㎡ (최고 49층 27개 동)',
+        priceEstimate: '84㎡ 약 8.5억 ~ 9.8억 원 예상',
+        stationDistance: '8호선 장자호수공원역·구리역 생활권 (잠실 15분)',
+        featureBadge: '🏆 7,007세대 수도권 최대 재개발',
+        progressStatus: '시공사 선정 완료 (공사비 2.8조)',
+        progressStatusColor: 'bg-indigo-100 text-indigo-900 border-indigo-300',
+        note: '현대건설·포스코 컨소시엄 2조 8,069억 수주! 최고 49층 27개 동, 해외 JERDE 특화설계 및 스카이 커뮤니티 6개소를 품은 초대형 랜드마크',
+        pinPos: { x: 40, y: 25 }
+      },
+      {
+        blockCode: '수택E구역 하이니티',
+        shortCode: '수택E',
+        complexName: '구리역 하이니티 리버파크 (수택E구역)',
+        unitsTotal: '3,022세대',
+        units: 3022,
+        supplyType: '민간재개발',
+        subscriptionDate: '2025~2026년 일반분양',
+        moveInDate: '2028년 12월',
+        builder: 'DL이앤씨 | GS건설 | SK에코플랜트',
+        sizes: '전용 29㎡ ~ 110㎡ (최고 35층 26개 동)',
+        priceEstimate: '84㎡ 약 8.8억 ~ 9.6억 원',
+        stationDistance: '8호선·경의중앙선 구리역 도보 5분 (더블역세권)',
+        featureBadge: '🚇 8호선 구리역 더블역세권 3,022세대',
+        progressStatus: '착공 및 분양 준비',
+        progressStatusColor: 'bg-blue-100 text-blue-800 border-blue-300',
+        note: '8호선 잠실 직결 구리역 초역세권 3,022세대 메이저 3사 컨소시엄 대단지',
+        pinPos: { x: 50, y: 20 }
+      },
       {
         blockCode: '토평 리버프론트 1블록',
         shortCode: '리버1',
@@ -1527,7 +1567,18 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-[#0066ff] text-[#0066ff] hover:text-white transition shadow-xs"
               >
                 <Compass className="w-3.5 h-3.5" />
-                <span>디스코 {selectedTown.shortName} 분석 리포트 원문 ↗</span>
+                <span>디스코 구리토평2 분석 리포트 원문 ↗</span>
+              </a>
+            )}
+            {selectedTown.hdecNewsUrl && (
+              <a 
+                href={selectedTown.hdecNewsUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-700 text-indigo-700 hover:text-white transition shadow-xs font-black"
+              >
+                <HardHat className="w-3.5 h-3.5" />
+                <span>현대건설 구리 수택 7,007세대 수주 공식 뉴스룸 ↗</span>
               </a>
             )}
           </div>
