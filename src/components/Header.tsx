@@ -55,11 +55,11 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="text-[#03c75a]">부동산</span>
               </span>
               <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 hidden sm:inline-block">
-                PRO 2.0
+                맞춤 진단
               </span>
             </div>
             <p className="text-[11px] text-slate-500 font-medium hidden md:block">
-              살기 좋은 집(Living) vs 사야 하는 집(Buying) 맞춤 진단기
+              살기 좋은 집(실거주) vs 사야 하는 집(자산가치) 맞춤 판별기
             </p>
           </div>
         </div>
@@ -101,7 +101,7 @@ export const Header: React.FC<HeaderProps> = ({
               isNewsView ? 'bg-[#03c75a] text-white shadow-2xs font-black' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <span className="px-1 py-0.2 rounded bg-white/20 text-[10px] font-black">Npay</span>
+            <span className="px-1.5 py-0.5 rounded bg-white/20 text-[10px] font-black">실시간</span>
             <span>부동산 뉴스</span>
           </button>
 
@@ -112,7 +112,7 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <Lightbulb className="w-3.5 h-3.5 text-[#03c75a]" />
-            <span>내 생각</span>
+            <span>읽어볼만한 생각들</span>
           </button>
         </div>
 
@@ -142,7 +142,7 @@ export const Header: React.FC<HeaderProps> = ({
                 isThoughtsView ? 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30 font-black' : 'bg-slate-100 text-slate-700 border-slate-200'
               }`}
             >
-              내생각
+              생각들
             </button>
           </div>
 

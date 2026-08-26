@@ -230,13 +230,13 @@ export function App() {
                       필독 칼럼
                     </span>
                     <h3 className="text-base font-black text-slate-900 mt-0.5">
-                      💡 내 생각
+                      💡 읽어볼만한 생각들
                     </h3>
                   </div>
                 </div>
 
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  "오피스텔은 왜 살기(Live)만 하고 사지(Buy) 말라는가?" 등 시장 본질을 꿰뚫는 실전 칼럼
+                  "오피스텔은 왜 살기(거주)만 하고 사지(매수) 말라는가?" 등 시장 본질을 꿰뚫는 실전 칼럼
                 </p>
 
                 <div className="pt-2 flex items-center text-xs font-bold text-[#029f45] group-hover:translate-x-1 transition-transform">
