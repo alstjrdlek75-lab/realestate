@@ -18,7 +18,11 @@ import {
   ChevronRight,
   Eye,
   Check,
-  X
+  X,
+  ZoomIn,
+  ZoomOut,
+  Maximize2,
+  Scan
 } from "lucide-react";
 
 export type RegionType = "SEOUL" | "GYEONGGI";
@@ -172,9 +176,60 @@ export const DistrictMemorizer: React.FC = () => {
     );
   }, [currentList, searchTerm]);
 
+  // Zoom & Smart Focus State
+  const [zoomLevel, setZoomLevel] = useState<number>(1.0);
+  const [focusPoint, setFocusPoint] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
+  const [isDenseFocus, setIsDenseFocus] = useState<boolean>(false);
+
+  const handleZoomIn = () => {
+    setZoomLevel(prev => Math.min(Math.round((prev + 0.3) * 10) / 10, 2.8));
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel(prev => {
+      const next = Math.max(Math.round((prev - 0.3) * 10) / 10, 1.0);
+      if (next === 1.0) {
+        setFocusPoint({ x: 50, y: 50 });
+        setIsDenseFocus(false);
+      }
+      return next;
+    });
+  };
+
+  const handleResetZoom = () => {
+    setZoomLevel(1.0);
+    setFocusPoint({ x: 50, y: 50 });
+    setIsDenseFocus(false);
+  };
+
+  const handleFocusDenseCentral = () => {
+    if (activeRegion === "GYEONGGI") {
+      // Focus strictly on Gwacheon, Anyang, Gunpo, Uiwang, Suwon, Seongnam, Gwangmyeong
+      setZoomLevel(2.2);
+      setFocusPoint({ x: 38, y: 66 });
+      setIsDenseFocus(true);
+    } else {
+      // Focus on Mapo, Yongsan, Seongdong, Gangnam, Yeongdeungpo
+      setZoomLevel(2.0);
+      setFocusPoint({ x: 50, y: 60 });
+      setIsDenseFocus(true);
+    }
+  };
+
+  const handleSelectDistrict = (item: DistrictItem) => {
+    setSelectedDistrict(item);
+    const denseGyeonggi = ["gwacheon", "seongnam", "anyang", "uiwang", "gunpo", "suwon", "gwangmyeong", "bucheon"];
+    if (activeRegion === "GYEONGGI" && denseGyeonggi.includes(item.id)) {
+      if (zoomLevel > 1.0) {
+        setFocusPoint({ x: item.pin.x, y: item.pin.y });
+      }
+    }
+  };
+
   const handleSelectRegion = (region: RegionType) => {
     setActiveRegion(region);
     setSelectedDistrict(region === "SEOUL" ? SEOUL_DISTRICTS[0] : GYEONGGI_DISTRICTS[0]);
+    handleResetZoom();
   };
 
   const handleAnswerSelect = (idx: number) => {
@@ -330,14 +385,83 @@ export const DistrictMemorizer: React.FC = () => {
               </span>
             </div>
 
+            {/* Quick Smart Focus Mode Bar & Manual Zoom Controls */}
+            <div className="flex flex-wrap items-center justify-between gap-2 bg-slate-50 p-2.5 rounded-2xl border border-slate-200 text-xs">
+              <div className="flex flex-wrap items-center gap-1.5 font-bold">
+                <span className="text-slate-500 font-black">보기 모드:</span>
+                <button
+                  onClick={handleResetZoom}
+                  className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs ${
+                    zoomLevel === 1.0 && !isDenseFocus
+                      ? "bg-white text-slate-900 border border-slate-300 shadow-xs font-black"
+                      : "text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  <span>전체 지도 (1.0x)</span>
+                </button>
+                <button
+                  onClick={handleFocusDenseCentral}
+                  className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 text-xs ${
+                    isDenseFocus
+                      ? "bg-[#03c75a] text-white shadow-xs font-black"
+                      : "bg-emerald-50 text-[#029f45] hover:bg-emerald-100 border border-emerald-200"
+                  }`}
+                  title="면적이 좁고 밀집된 중심 권역을 2.2배 크게 확대하여 핀이 겹치지 않고 여유롭게 보이도록 합니다."
+                >
+                  <Scan className="w-3.5 h-3.5" />
+                  <span>
+                    {activeRegion === "GYEONGGI"
+                      ? "🔍 경기 중남부 밀집권 집중 확대 (의왕·수원·성남·군포·과천·안양·광명) (2.2x)"
+                      : "🔍 서울 도심·한강변 밀집권 집중 확대 (마용성·강남3구·영등포) (2.0x)"
+                    }
+                  </span>
+                </button>
+              </div>
+
+              {/* Floating Zoom Step Buttons */}
+              <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 shadow-xs shrink-0">
+                <button
+                  onClick={handleZoomIn}
+                  className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-700 font-bold transition cursor-pointer"
+                  title="확대 (Zoom In)"
+                >
+                  <ZoomIn className="w-3.5 h-3.5" />
+                </button>
+                <span className="text-[11px] font-black px-1 text-slate-800">
+                  {Math.round(zoomLevel * 10) / 10}x
+                </span>
+                <button
+                  onClick={handleZoomOut}
+                  className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-700 font-bold transition cursor-pointer"
+                  title="축소 (Zoom Out)"
+                >
+                  <ZoomOut className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={handleResetZoom}
+                  className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-700 font-bold transition cursor-pointer"
+                  title="기본 크기 초기화"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
             {/* Interactive Map Canvas Container */}
-            <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 flex items-center justify-center p-2 sm:p-4 min-h-[520px] select-none">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 flex items-center justify-center p-2 sm:p-4 min-h-[520px] max-h-[620px] select-none">
               {/* Strict Bounding Box hugging the exact rendered image width and height */}
-              <div className="relative inline-block max-w-full">
+              <div 
+                className="relative inline-block max-w-full transition-transform duration-500 ease-out"
+                style={{
+                  transform: `scale(${zoomLevel})`,
+                  transformOrigin: `${focusPoint.x}% ${focusPoint.y}%`
+                }}
+              >
                 <img
                   src={activeRegion === "SEOUL" ? "/maps/seoul_districts_map.png" : "/maps/gyeonggi_districts_map.png"}
                   alt={activeRegion === "SEOUL" ? "서울 25개 자치구 지도" : "경기도 31개 시·군 지도"}
-                  className="block max-h-[560px] w-auto object-contain transition-all duration-300 pointer-events-none"
+                  className="block max-h-[540px] w-auto object-contain transition-all duration-300 pointer-events-none"
                 />
 
                 {/* Pin Overlay Layer strictly hugging the image */}
@@ -351,7 +475,7 @@ export const DistrictMemorizer: React.FC = () => {
                         key={item.id}
                         style={{ left: `${item.pin.x}%`, top: `${item.pin.y}%` }}
                         className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto cursor-pointer group"
-                        onClick={() => setSelectedDistrict(item)}
+                        onClick={() => handleSelectDistrict(item)}
                       >
                         {isSelected ? (
                           /* Selected Pin Badge & Ripple Pulse */
@@ -388,7 +512,7 @@ export const DistrictMemorizer: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-500 text-center font-medium">
-              💡 지도 위나 하단 버튼에서 원하는 지역구(예: <strong>양천구, 마포구, 성남시</strong>)를 클릭하면 <strong>지도 상의 정확한 위치에 핀 📍</strong>이 즉시 찍힙니다!
+              💡 <strong>과천·성남·안양·군포·의왕·수원</strong> 등 면적이 작은 지역은 상단의 <strong>[🔍 경기 중남부 밀집권 집중 확대 (2.2x)]</strong> 버튼을 누르면 핀이 겹치지 않고 넓고 시원하게 표시됩니다!
             </p>
           </div>
 
@@ -463,7 +587,7 @@ export const DistrictMemorizer: React.FC = () => {
                   return (
                     <button
                       key={item.id}
-                      onClick={() => setSelectedDistrict(item)}
+                      onClick={() => handleSelectDistrict(item)}
                       className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border flex items-center gap-1 ${
                         isSelected
                           ? "bg-[#03c75a] text-white border-[#03c75a] shadow-xs font-black scale-105"
