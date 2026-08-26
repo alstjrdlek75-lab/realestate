@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { RealEstateGeographicMap } from './RealEstateGeographicMap';
 import { 
   Building2, 
   Sparkles, 
@@ -95,6 +96,8 @@ export interface NewTownDetail {
   hdecNewsUrl?: string;
   category: 'NEW_TOWN' | 'REDEVELOPMENT';
   categoryLabel: string;
+  lat: number;
+  lng: number;
   mapCoords: { x: number; y: number; gangnamTime: string; seoulTime: string };
   blocks: BlockDetail[];
 }
@@ -102,6 +105,8 @@ export interface NewTownDetail {
 const NEW_TOWNS_DATA: NewTownDetail[] = [
   {
     id: 'namyangju_wangsook',
+    lat: 37.6625,
+    lng: 127.168,
     name: '남양주 왕숙 (1·2지구)',
     shortName: '남양주 왕숙',
     category: 'NEW_TOWN',
@@ -453,6 +458,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'hanam_gyosan',
+    lat: 37.5255,
+    lng: 127.2085,
     name: '하남 교산',
     shortName: '하남 교산',
     category: 'NEW_TOWN',
@@ -556,6 +563,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'goyang_changreung',
+    lat: 37.632,
+    lng: 126.885,
     name: '고양 창릉',
     shortName: '고양 창릉',
     category: 'NEW_TOWN',
@@ -659,6 +668,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'bucheon_daejang',
+    lat: 37.5385,
+    lng: 126.7725,
     name: '부천 대장',
     shortName: '부천 대장',
     category: 'NEW_TOWN',
@@ -838,6 +849,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'incheon_gyeyang',
+    lat: 37.5585,
+    lng: 126.746,
     name: '인천 계양',
     shortName: '인천 계양',
     category: 'NEW_TOWN',
@@ -1207,6 +1220,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'gwacheon_gwacheon',
+    lat: 37.442,
+    lng: 127.009,
     name: '과천 과천지구',
     shortName: '과천 과천',
     category: 'NEW_TOWN',
@@ -1291,6 +1306,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'guri_topyeong',
+    lat: 37.585,
+    lng: 127.135,
     name: '구리 토평 (구리토평2 1.85만호)',
     shortName: '구리 토평 (신규택지)',
     category: 'NEW_TOWN',
@@ -1402,6 +1419,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   // =========================================================================
   {
     id: 'guri_sutaek_redev',
+    lat: 37.5985,
+    lng: 127.139,
     name: '구리 수택·인창 메가 재개발 (1.1만세대)',
     shortName: '구리 수택·인창',
     category: 'REDEVELOPMENT',
@@ -1487,6 +1506,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'hannam_newtown',
+    lat: 37.532,
+    lng: 127.001,
     name: '한남 뉴타운 (한남2·3·4·5구역)',
     shortName: '한남 뉴타운',
     category: 'REDEVELOPMENT',
@@ -1590,6 +1611,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'seongsu_strategic',
+    lat: 37.538,
+    lng: 127.043,
     name: '성수 전략정비구역 (성수1~4지구)',
     shortName: '성수 전략정비',
     category: 'REDEVELOPMENT',
@@ -1693,6 +1716,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'noryangjin_newtown',
+    lat: 37.511,
+    lng: 126.9385,
     name: '노량진 뉴타운 (노량진 1~8구역)',
     shortName: '노량진 뉴타운',
     category: 'REDEVELOPMENT',
@@ -1796,6 +1821,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'gwangmyeong_newtown',
+    lat: 37.48,
+    lng: 126.8625,
     name: '광명 뉴타운 (광명 1~16구역 2.5만세대)',
     shortName: '광명 뉴타운',
     category: 'REDEVELOPMENT',
@@ -1899,6 +1926,8 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'imun_huigyeong_newtown',
+    lat: 37.596,
+    lng: 127.063,
     name: '이문·휘경 뉴타운 (1.4만세대 메가타운)',
     shortName: '이문·휘경',
     category: 'REDEVELOPMENT',
@@ -2539,7 +2568,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
           )}
 
           {/* ===================================================================== */}
-          {/* 🗺️ MAP VIEW 2: 수도권 광역 교통 노선망 & 3기 신도시 인터랙티브 철도망 */}
+          {/* 🗺️ MAP VIEW 2: 구글/네이버맵 기반 수도권 광역 교통 노선망 & 인터랙티브 지도 */}
           {/* ===================================================================== */}
           {mapViewType === 'METRO' && (
             <div className="naver-card p-5 sm:p-7 bg-white border border-slate-200 shadow-sm space-y-5 animate-fadeIn">
@@ -2548,13 +2577,13 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-[#0066ff] text-[11px] font-black mb-1">
                     <Compass className="w-3 h-3" />
-                    <span>수도권 광역 철도망 & 3기 신도시 광역교통개선대책 인터랙티브 노선도</span>
+                    <span>네이버/카카오/구글 지도 스타일 수도권 광역 교통망 & 미래개발 인터랙티브 맵</span>
                   </div>
                   <h3 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
-                    <span>수도권 광역 노선망 & 3기 신도시 직결 교통망</span>
+                    <span>수도권 광역 실물 지도 & 3기 신도시·메가 재개발 교통망</span>
                   </h3>
                   <p className="text-xs text-slate-500 font-medium">
-                    노선도의 <strong>신도시 노드(초록색 핀)</strong>를 클릭하면 해당 신도시의 상세 교통 대책과 강남·서울역 소요시간이 표시됩니다.
+                    실제 지리 좌표 기반 지도에서 <strong>신도시/재개발 마커 핀</strong>을 클릭하여 위치와 세부 스펙을 확인하고, <strong>네이버/위성 항공사진</strong>으로 자유롭게 전환할 수 있습니다.
                   </p>
                 </div>
 
@@ -2564,390 +2593,18 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                     className="px-3 py-2 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition cursor-pointer"
                   >
                     <Layers className="w-3.5 h-3.5" />
-                    <span>{selectedTown.shortName} 토지이용계획도로 전환 ↗</span>
+                    <span>{selectedTown.shortName} 공식 토지이용계획도로 전환 ↗</span>
                   </button>
                 </div>
               </div>
 
-              {/* Grid: Metro SVG Map (Left 8 Cols) vs Selected Town Transit Info (Right 4 Cols) */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                
-                {/* Metro SVG Interactive Canvas */}
-                <div className="lg:col-span-8 bg-slate-950 rounded-2xl border border-slate-800 p-4 relative overflow-hidden shadow-md">
-                  <div className="w-full overflow-x-auto">
-                    <svg viewBox="0 0 850 620" className="w-full min-w-[700px] h-auto select-none">
-                      <defs>
-                        {/* Gradients */}
-                        <linearGradient id="gtxA-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#c084fc" />
-                          <stop offset="100%" stopColor="#7c3aed" />
-                        </linearGradient>
-                        <linearGradient id="gtxB-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#60a5fa" />
-                          <stop offset="100%" stopColor="#2563eb" />
-                        </linearGradient>
-                        <linearGradient id="gtxC-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#fb923c" />
-                          <stop offset="100%" stopColor="#ea580c" />
-                        </linearGradient>
-                        {/* Glow Filter */}
-                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                          <feGaussianBlur stdDeviation="4" result="blur" />
-                          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                        </filter>
-                      </defs>
-
-                      {/* Map Background Grid Lines */}
-                      <rect width="850" height="620" fill="#090d16" rx="16" />
-                      <g opacity="0.12" stroke="#475569" strokeWidth="1">
-                        {[100, 200, 300, 400, 500, 600, 700, 800].map(x => (
-                          <line key={`gx-${x}`} x1={x} y1="0" x2={x} y2="620" />
-                        ))}
-                        {[100, 200, 300, 400, 500, 600].map(y => (
-                          <line key={`gy-${y}`} x1="0" y1={y} x2="850" y2={y} />
-                        ))}
-                      </g>
-
-                      {/* Han River (Blue S-Curve) */}
-                      <path 
-                        d="M 50 380 Q 200 400 320 370 T 520 370 T 680 340 T 800 360" 
-                        fill="none" 
-                        stroke="#0ea5e9" 
-                        strokeWidth="14" 
-                        opacity="0.25" 
-                        strokeLinecap="round"
-                      />
-                      <text x="760" y="380" fill="#38bdf8" fontSize="11" fontWeight="bold" opacity="0.7">한강</text>
-
-                      {/* ================================================= */}
-                      {/* RAILWAY LINES */}
-                      {/* ================================================= */}
-
-                      {/* 1. GTX-A (운정 - 킨텍스 - 대곡 - 창릉 - 연신내 - 서울역 - 삼성 - 수서 - 성남 - 동탄) */}
-                      <path 
-                        d="M 120 100 L 220 140 L 320 180 L 390 220 L 440 280 L 490 380 L 530 440 L 570 520 L 610 590" 
-                        fill="none" 
-                        stroke="url(#gtxA-grad)" 
-                        strokeWidth="5" 
-                        strokeLinecap="round"
-                        filter="url(#glow)"
-                      />
-
-                      {/* 2. GTX-B (송도 - 인천시청 - 부평 - 부천대장/종합운동장 - 여의도 - 용산 - 서울역 - 청량리 - 별내 - 왕숙 - 마석) */}
-                      <path 
-                        d="M 100 480 L 170 430 L 240 370 L 350 370 L 410 330 L 440 280 L 530 250 L 630 210 L 710 170 L 800 130" 
-                        fill="none" 
-                        stroke="url(#gtxB-grad)" 
-                        strokeWidth="5" 
-                        strokeLinecap="round"
-                        filter="url(#glow)"
-                      />
-
-                      {/* 3. GTX-C (덕정 - 의정부 - 창동 - 청량리 - 삼성 - 양재 - 과천 - 금정 - 수원) */}
-                      <path 
-                        d="M 520 60 L 520 130 L 530 250 L 490 380 L 470 430 L 440 480 L 420 540 L 400 590" 
-                        fill="none" 
-                        stroke="url(#gtxC-grad)" 
-                        strokeWidth="5" 
-                        strokeLinecap="round"
-                        filter="url(#glow)"
-                      />
-
-                      {/* 4. 지하철 3호선 송파하남선 (오금 - 감일 - 교산 - 하남시청) */}
-                      <path 
-                        d="M 550 410 L 620 400 L 680 400 L 740 400" 
-                        fill="none" 
-                        stroke="#f97316" 
-                        strokeWidth="4" 
-                        strokeDasharray="6 3" 
-                        strokeLinecap="round"
-                      />
-
-                      {/* 5. 지하철 8호선 별내선 (잠실 - 암사 - 장자호수/토평 - 구리 - 다산 - 별내) */}
-                      <path 
-                        d="M 540 380 L 580 350 L 630 310 L 650 270 L 680 230 L 690 190" 
-                        fill="none" 
-                        stroke="#ec4899" 
-                        strokeWidth="4" 
-                        strokeLinecap="round"
-                      />
-
-                      {/* 6. 지하철 9호선 강동하남남양주선 (강남/신논현 - 잠실종운 - 고덕강일 - 미사 - 왕숙) */}
-                      <path 
-                        d="M 460 380 L 540 380 L 620 360 L 680 340 L 710 240 L 710 170" 
-                        fill="none" 
-                        stroke="#eab308" 
-                        strokeWidth="4" 
-                        strokeDasharray="6 3" 
-                        strokeLinecap="round"
-                      />
-
-                      {/* 7. 대장홍대선 (부천 대장 - 원종 - 화곡 - 가양 - 상암DMC - 홍대입구) */}
-                      <path 
-                        d="M 230 350 L 260 330 L 300 300 L 340 280 L 380 270" 
-                        fill="none" 
-                        stroke="#10b981" 
-                        strokeWidth="4" 
-                        strokeDasharray="6 3" 
-                        strokeLinecap="round"
-                      />
-
-                      {/* 8. 고양은평선 (새절 - 향동 - 창릉 - 화정 - 고양시청) */}
-                      <path 
-                        d="M 380 270 L 350 230 L 320 180 L 290 150 L 260 120" 
-                        fill="none" 
-                        stroke="#06b6d4" 
-                        strokeWidth="4" 
-                        strokeDasharray="6 3" 
-                        strokeLinecap="round"
-                      />
-
-                      {/* 9. S-BRT (인천 계양 - 부천 대장 - 김포공항 환승역) */}
-                      <path 
-                        d="M 170 340 L 230 350 L 270 320" 
-                        fill="none" 
-                        stroke="#14b8a6" 
-                        strokeWidth="3.5" 
-                        strokeDasharray="4 3" 
-                      />
-
-                      {/* ================================================= */}
-                      {/* MAJOR SEOUL HUB STATIONS */}
-                      {/* ================================================= */}
-                      {[
-                        { name: '서울역', x: 440, y: 280, tag: '1·4·공항·GTX-A/B' },
-                        { name: '삼성역', x: 490, y: 380, tag: '2·GTX-A/C' },
-                        { name: '잠실역', x: 540, y: 380, tag: '2·8호선' },
-                        { name: '여의도', x: 350, y: 370, tag: '5·9·신안산·GTX-B' },
-                        { name: '용산역', x: 410, y: 330, tag: '1·경의·GTX-B' },
-                        { name: '청량리', x: 530, y: 250, tag: '1·수인분당·GTX-B/C' },
-                        { name: '김포공항', x: 270, y: 320, tag: '5·9·공항·서해·김포' },
-                        { name: '수서역', x: 530, y: 440, tag: '3·수인·SRT·GTX-A' },
-                        { name: '양재역', x: 470, y: 430, tag: '3·신분당·GTX-C' },
-                        { name: '홍대입구', x: 380, y: 270, tag: '2·경의·공항·대장홍대' },
-                      ].map((hub) => (
-                        <g key={hub.name} transform={`translate(${hub.x}, ${hub.y})`}>
-                          <circle r="7" fill="#1e293b" stroke="#94a3b8" strokeWidth="2.5" />
-                          <circle r="3" fill="#ffffff" />
-                          <text 
-                            x="0" 
-                            y="-12" 
-                            textAnchor="middle" 
-                            fill="#f8fafc" 
-                            fontSize="11" 
-                            fontWeight="900"
-                            className="drop-shadow"
-                          >
-                            {hub.name}
-                          </text>
-                        </g>
-                      ))}
-
-                      {/* ================================================= */}
-                      {/* 3기 신도시 & 핵심 택지 노드 (클릭 가능) */}
-                      {/* ================================================= */}
-                      {NEW_TOWNS_DATA.map((town) => {
-                        const isSelected = selectedTownId === town.id;
-                        const { x, y } = town.mapCoords;
-
-                        return (
-                          <g 
-                            key={town.id} 
-                            transform={`translate(${x}, ${y})`}
-                            onClick={() => handleSelectTown(town.id)}
-                            className="cursor-pointer transition-transform hover:scale-110"
-                          >
-                            {/* Selected Pulsing Aura */}
-                            {isSelected && (
-                              <>
-                                <circle r="26" fill="#03c75a" opacity="0.2" className="animate-ping" />
-                                <circle r="18" fill="#03c75a" opacity="0.35" />
-                              </>
-                            )}
-
-                            {/* Node Outer & Core */}
-                            <circle 
-                              r="13" 
-                              fill={isSelected ? "#03c75a" : "#0f172a"} 
-                              stroke={isSelected ? "#ffffff" : "#4ade80"} 
-                              strokeWidth="3" 
-                              className="drop-shadow-lg"
-                            />
-                            <circle r="5" fill="#ffffff" />
-
-                            {/* Name Badge */}
-                            <rect 
-                              x="-50" 
-                              y="16" 
-                              width="100" 
-                              height="22" 
-                              rx="6" 
-                              fill={isSelected ? "#03c75a" : "rgba(15, 23, 42, 0.95)"} 
-                              stroke={isSelected ? "#ffffff" : "#334155"} 
-                              strokeWidth="1.5"
-                            />
-                            <text 
-                              x="0" 
-                              y="31" 
-                              textAnchor="middle" 
-                              fill="#ffffff" 
-                              fontSize="11" 
-                              fontWeight="900"
-                            >
-                              {town.shortName}
-                            </text>
-
-                            {/* Travel Time Floating Bubble */}
-                            <rect 
-                              x="-55" 
-                              y="-34" 
-                              width="110" 
-                              height="18" 
-                              rx="5" 
-                              fill="#dc2626" 
-                              stroke="#fecaca" 
-                              strokeWidth="1"
-                            />
-                            <text 
-                              x="0" 
-                              y="-21" 
-                              textAnchor="middle" 
-                              fill="#ffffff" 
-                              fontSize="9.5" 
-                              fontWeight="900"
-                            >
-                              ⚡ {town.mapCoords.gangnamTime.split('(')[0].trim()}
-                            </text>
-                          </g>
-                        );
-                      })}
-                    </svg>
-                  </div>
-
-                  {/* Route Legend Box (Bottom Left inside SVG Card) */}
-                  <div className="mt-3 pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-4 h-1.5 rounded-full bg-[#8b5cf6]" />
-                        <span className="text-slate-300 font-bold text-[11px]">GTX-A</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-4 h-1.5 rounded-full bg-[#3b82f6]" />
-                        <span className="text-slate-300 font-bold text-[11px]">GTX-B</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-4 h-1.5 rounded-full bg-[#f97316]" />
-                        <span className="text-slate-300 font-bold text-[11px]">GTX-C</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-4 h-1.5 rounded-full bg-[#ec4899]" />
-                        <span className="text-slate-300 font-bold text-[11px]">8호선 별내선</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-4 h-1.5 rounded-full bg-[#eab308]" />
-                        <span className="text-slate-300 font-bold text-[11px]">9호선 연장</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-4 h-1.5 rounded-full bg-[#10b981]" />
-                        <span className="text-slate-300 font-bold text-[11px]">대장홍대선</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-4 h-1.5 rounded-full bg-[#06b6d4]" />
-                        <span className="text-slate-300 font-bold text-[11px]">고양은평선</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-4 h-1.5 rounded-full bg-[#ea580c]" />
-                        <span className="text-slate-300 font-bold text-[11px]">3호선 송파하남선</span>
-                      </div>
-                    </div>
-                    <span className="text-[10px] text-slate-500 font-bold">국토교통부 광역교통 2030 계획</span>
-                  </div>
-                </div>
-
-                {/* Selected Town Transit Deep-Dive Card (Right 4 Cols) */}
-                <div className="lg:col-span-4 space-y-4">
-                  <div className="p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl space-y-4 relative overflow-hidden border border-slate-700">
-                    <div className="flex items-center justify-between border-b border-slate-700/80 pb-3">
-                      <div>
-                        <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#03c75a] text-white">
-                          선택 신도시 광역교통망
-                        </span>
-                        <h4 className="text-2xl font-black text-white mt-1">
-                          {selectedTown.name}
-                        </h4>
-                      </div>
-                      <span className={`text-xs font-black px-2.5 py-1 rounded-full border ${selectedTown.statusTagColor}`}>
-                        {selectedTown.statusTag}
-                      </span>
-                    </div>
-
-                    {/* Travel Times */}
-                    <div className="space-y-2 text-xs">
-                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/90 border border-slate-700">
-                        <span className="text-slate-400 font-medium">강남·잠실 소요시간:</span>
-                        <span className="font-black text-[#4ade80] text-xs">
-                          {selectedTown.mapCoords.gangnamTime}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/90 border border-slate-700">
-                        <span className="text-slate-400 font-medium">서울 도심(서울역/을지로):</span>
-                        <span className="font-black text-amber-300 text-xs">
-                          {selectedTown.mapCoords.seoulTime}
-                        </span>
-                      </div>
-
-                      <div className="p-3 rounded-xl bg-slate-800/90 border border-slate-700 space-y-1.5">
-                        <span className="text-slate-400 font-medium block">직결 및 연계 광역철도망:</span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {selectedTown.transitLines.map((line, idx) => (
-                            <span 
-                              key={idx}
-                              className="px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800 text-[11px] font-bold"
-                            >
-                              {line}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <p className="text-xs text-slate-300 leading-relaxed font-medium bg-slate-800/60 p-3 rounded-xl border border-slate-700/80">
-                      💡 {selectedTown.transitSummary}
-                    </p>
-
-                    <button
-                      onClick={() => setMapViewType('DISTRICT_BLOCKS')}
-                      className="w-full py-2.5 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs font-black flex items-center justify-center gap-1.5 transition cursor-pointer shadow-sm"
-                    >
-                      <Layers className="w-3.5 h-3.5" />
-                      <span>{selectedTown.shortName} 공식 도면 & 블록별 핀 보기</span>
-                    </button>
-                  </div>
-
-                  {/* Town Quick Switcher */}
-                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                    <span className="text-xs font-black text-slate-700 block">다른 신도시 교통망 확인하기</span>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      {NEW_TOWNS_DATA.map(t => (
-                        <button
-                          key={t.id}
-                          onClick={() => handleSelectTown(t.id)}
-                          className={`p-2 rounded-xl text-xs font-bold transition cursor-pointer text-left truncate border ${
-                            selectedTownId === t.id
-                              ? 'bg-[#03c75a] text-white border-[#03c75a]'
-                              : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-200'
-                          }`}
-                        >
-                          {t.shortName}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
+              {/* Real Leaflet Geographic Map Component */}
+              <RealEstateGeographicMap
+                towns={NEW_TOWNS_DATA}
+                selectedTownId={selectedTownId}
+                onSelectTown={handleSelectTown}
+                selectedCategory={selectedZoneCategory}
+              />
             </div>
           )}
 
