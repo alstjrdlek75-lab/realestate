@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { 
   Newspaper, 
   Sparkles, 
@@ -366,6 +367,18 @@ export const NaverLandNews: React.FC = () => {
   const [selectedArticle, setSelectedArticle] = useState<NaverArticle | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [likedArticles, setLikedArticles] = useState<string[]>([]);
+
+  // Body scroll lock on modal open
+  useEffect(() => {
+    if (selectedArticle) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedArticle]);
 
   // Filtered Articles
   const filteredArticles = useMemo(() => {
@@ -752,15 +765,16 @@ export const NaverLandNews: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 5. Interactive Full News Reader Modal (네이버 뉴스 전문 리더 모달) */}
+      {/* 5. Interactive Full News Reader Modal (네이버 뉴스 전문 리더 모달 - createPortal) */}
       {/* ========================================================================= */}
-      {selectedArticle && (
+      {selectedArticle && typeof document !== "undefined" && createPortal(
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm animate-fadeIn"
+          className="fixed inset-0 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn"
           onClick={() => setSelectedArticle(null)}
+          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999 }}
         >
           <div 
-            className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200 animate-scaleUp"
+            className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[88vh] sm:max-h-[90vh] flex flex-col overflow-hidden border border-slate-200 animate-scaleUp my-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Top Navigation Bar */}
@@ -804,7 +818,7 @@ export const NaverLandNews: React.FC = () => {
             </div>
 
             {/* Modal Body Content (Scrollable) */}
-            <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-slate-800">
+            <div className="p-5 sm:p-8 overflow-y-auto space-y-6 text-slate-800">
               {/* Press & Date Header */}
               <div className="space-y-3 border-b border-slate-100 pb-5">
                 <h2 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
@@ -916,7 +930,8 @@ export const NaverLandNews: React.FC = () => {
             </div>
 
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
     </div>

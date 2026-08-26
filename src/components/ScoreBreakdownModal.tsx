@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { DiagnosticResult, FactorScoreDetail } from '../types';
 import { X, Sparkles, Home, TrendingUp, CheckCircle2, Lightbulb, PieChart, ArrowRight } from 'lucide-react';
 
@@ -17,7 +18,18 @@ export const ScoreBreakdownModal: React.FC<ScoreBreakdownModalProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'living' | 'buying'>(initialTab);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  if (!isOpen || typeof document === 'undefined') return null;
 
   const isLiving = activeTab === 'living';
   const currentScore = isLiving ? result.livingScore : result.buyingScore;
@@ -25,9 +37,12 @@ export const ScoreBreakdownModal: React.FC<ScoreBreakdownModalProps> = ({
   const currentSummary = isLiving ? result.livingAnalysisSummary : result.buyingAnalysisSummary;
   const currentFactors: FactorScoreDetail[] = isLiving ? result.livingFactors : result.buyingFactors;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fadeIn">
-      <div className="bg-white border border-slate-200 rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl p-6 sm:p-8 relative">
+  return createPortal(
+    <div 
+      className="fixed inset-0 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn"
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999 }}
+    >
+      <div className="bg-white border border-slate-200 rounded-3xl w-full max-w-3xl max-h-[88vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl p-5 sm:p-8 relative my-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -174,6 +189,7 @@ export const ScoreBreakdownModal: React.FC<ScoreBreakdownModalProps> = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
