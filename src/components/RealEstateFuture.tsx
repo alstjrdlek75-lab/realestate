@@ -1439,7 +1439,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '대한민국 재개발 사상 단일 최대 규모 현대건설 컨소시엄 7,007세대(공사비 2조 8,069억) 시공사 선정 완료 + 수택E구역 3,022세대 착공 및 인창C구역(롯데캐슬) 완판.',
     proTip: '잠실 15분 8호선 직결 생활권에 1.1만 세대급 메이저 1군 브랜드 신축 밭이 들어서며 구리 도심 천지개벽!',
     naverNewsQuery: '구리 수택동 재개발 현대건설 7007세대',
-    officialBlueprintUrl: '/maps/guri_topyeong_plan.png',
+    officialBlueprintUrl: '/maps/guri_sutaek_redev_plan.svg',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B5%AC%EB%A6%AC%EC%8B%9C/%EC%9E%AC%EA%B0%9C%EB%B0%9C',
     lhOfficialUrl: 'https://www.guri.go.kr',
     hdecNewsUrl: 'https://www.hdec.kr/kr/newsroom/news_view.aspx?NewsSeq=1282&NewsType=SOCIAL&NewsListType=news_list',
@@ -1462,7 +1462,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '시공사 선정 완료 (공사비 2.8조)',
         progressStatusColor: 'bg-indigo-100 text-indigo-900 border-indigo-300',
         note: '현대건설·포스코 컨소시엄 2조 8,069억 수주! 최고 49층 27개 동, 해외 JERDE 특화설계 및 스카이 커뮤니티 6개소를 품은 초대형 랜드마크',
-        pinPos: { x: 40, y: 25 }
+        pinPos: { x: 37, y: 68 }
       },
       {
         blockCode: '수택E구역 하이니티',
@@ -1481,7 +1481,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '착공 및 분양 준비',
         progressStatusColor: 'bg-blue-100 text-blue-800 border-blue-300',
         note: '8호선 잠실 직결 구리역 초역세권 3,022세대 메이저 3사 컨소시엄 대단지',
-        pinPos: { x: 50, y: 20 }
+        pinPos: { x: 80, y: 68 }
       },
       {
         blockCode: '인창C구역 롯데캐슬',
@@ -1500,7 +1500,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '골조 공사 및 준공 임박',
         progressStatusColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
         note: '8호선 구리역 개통 수혜를 가장 직접적으로 받는 최고 42층 초역세권 랜드마크 신축',
-        pinPos: { x: 55, y: 15 }
+        pinPos: { x: 28, y: 28 }
       }
     ]
   },
@@ -1526,7 +1526,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '한남3구역(디에이치한남 5,816세대) 이주 완료 및 철거 착공. 한남2구역(대우 써밋 1,537세대) 사업시행인가, 한남4구역(2,331세대) 및 한남5구역(2,560세대) 시공사 선정 및 건축심의 완료.',
     proTip: '배산임수(남산-한강) 천혜의 명당. 용산국제업무지구와 한남대교 강남 직결로 대한민국 부촌 서열 1위 등극 유력.',
     naverNewsQuery: '한남뉴타운 디에이치한남 한남3구역 한남4구역',
-    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    officialBlueprintUrl: '/maps/hannam_newtown_plan.svg',
     namuWikiUrl: 'https://namu.wiki/w/%ED%95%9C%EB%82%A8%EB%89%B4%ED%83%80%EC%9A%B4',
     lhOfficialUrl: 'https://www.yongsan.go.kr',
     mapCoords: { x: 440, y: 340, gangnamTime: '강남 5~10분 (한남대교)', seoulTime: '광화문 15분' },
@@ -1548,7 +1548,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '사업시행인가 완료',
         progressStatusColor: 'bg-amber-100 text-amber-900 border-amber-300',
         note: '이태원역 초역세권 입지. 118블록 특화설계 및 호텔식 하이엔드 커뮤니티 조성',
-        pinPos: { x: 38, y: 40 }
+        pinPos: { x: 38, y: 30 }
       },
       {
         blockCode: '한남 3구역',
@@ -1567,7 +1567,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '철거 완료 및 착공',
         progressStatusColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
         note: '한강 조망과 남산 뷰를 동시에 누리는 5,816세대 현대건설 디에이치 최대 역작. 대한민국 재개발 최대어',
-        pinPos: { x: 45, y: 55 }
+        pinPos: { x: 47, y: 52 }
       },
       {
         blockCode: '한남 4구역',
@@ -1586,7 +1586,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '사업시행인가 완료 (시공사 선정)',
         progressStatusColor: 'bg-blue-100 text-blue-800 border-blue-300',
         note: '한남뉴타운 중 평지 비율이 가장 높고 한강 영구 조망권이 가장 넓은 최고 알짜 구역',
-        pinPos: { x: 55, y: 65 }
+        pinPos: { x: 55, y: 69 }
       },
       {
         blockCode: '한남 5구역',
@@ -1605,7 +1605,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '건축심의 통과 & 시공사 선정',
         progressStatusColor: 'bg-purple-100 text-purple-900 border-purple-300',
         note: '신분당선 동빙고역 역세권이자 한강변과 가장 넓게 맞닿은 배산임수 최고 입지',
-        pinPos: { x: 65, y: 60 }
+        pinPos: { x: 79, y: 55 }
       }
     ]
   },
@@ -1631,7 +1631,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '서울시 한강변 50층 이상 층수 제한 완화 적용으로 성수 1·2·3·4지구 전체 정비계획 변경 결정 고시 완료. 4개 지구 통합 수변 문화공원 및 초고층 스카이라인 구축.',
     proTip: '압구정 맞은편 한강 남향 조망 + 서울숲 + IT 유니콘 기업들이 결합된 한국의 브루클린·맨해튼 주거지.',
     naverNewsQuery: '성수전략정비구역 50층 서울숲 한강',
-    officialBlueprintUrl: '/maps/hanam_gyosan_namu_dual.jpg',
+    officialBlueprintUrl: '/maps/seongsu_strategic_plan.svg',
     namuWikiUrl: 'https://namu.wiki/w/%EC%84%B1%EC%88%98%EC%A0%84%EB%9E%B5%EC%A0%95%EB%B9%84%EA%B5%AC%EC%97%AD',
     lhOfficialUrl: 'https://www.sd.go.kr',
     mapCoords: { x: 490, y: 330, gangnamTime: '압구정/청담 3~5분 (성수대교)', seoulTime: '을지로 15분' },
@@ -1653,7 +1653,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '건축심의 및 시공사 선정 준비',
         progressStatusColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
         note: '서울숲과 한강을 동시에 남향으로 조망하는 성수 전략정비구역 최고의 대장 지구',
-        pinPos: { x: 35, y: 45 }
+        pinPos: { x: 32, y: 40 }
       },
       {
         blockCode: '성수 2지구',
@@ -1672,7 +1672,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '조합설립 및 건축심의',
         progressStatusColor: 'bg-blue-100 text-blue-800 border-blue-300',
         note: '강변북로 지하화 상부 공원과 직결되어 한강 접근성이 가장 우수한 힐링 단지',
-        pinPos: { x: 45, y: 50 }
+        pinPos: { x: 50, y: 40 }
       },
       {
         blockCode: '성수 3지구',
@@ -1691,7 +1691,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '정비계획 변경 고시 완료',
         progressStatusColor: 'bg-purple-100 text-purple-800 border-purple-200',
         note: '성수동 카페거리 및 첨단 IT 벤처 밸리와 맞닿은 직주일치형 한강변 대단지',
-        pinPos: { x: 55, y: 55 }
+        pinPos: { x: 68, y: 40 }
       },
       {
         blockCode: '성수 4지구',
@@ -1710,7 +1710,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '시공사 선정 및 건축심의',
         progressStatusColor: 'bg-cyan-100 text-cyan-800 border-cyan-300',
         note: '영동대교를 건너면 바로 청담동·압구정동! 영구 파노라마 한강 조망권 보유',
-        pinPos: { x: 65, y: 60 }
+        pinPos: { x: 86, y: 40 }
       }
     ]
   },
@@ -1736,7 +1736,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '노량진 1~8구역 전체가 시공사 선정을 완료하고 관리처분인가 및 이주·철거 단계에 돌입. 노량진1구역(포스코 오티에르 2,992세대) 대장주 확정.',
     proTip: '9호선 급행으로 여의도 3분, 강남 14분 컷! 여의도 금융권 고소득 전문직의 1순위 배후 주거지로 급부상.',
     naverNewsQuery: '노량진뉴타운 노량진1구역 오티에르 분양',
-    officialBlueprintUrl: '/maps/bucheon_daejang_namu.png',
+    officialBlueprintUrl: '/maps/noryangjin_newtown_plan.svg',
     namuWikiUrl: 'https://namu.wiki/w/%EB%85%B8%EB%9F%89%EC%A7%84%EB%89%B4%ED%83%80%EC%9A%B4',
     lhOfficialUrl: 'https://www.dongjak.go.kr',
     mapCoords: { x: 410, y: 360, gangnamTime: '강남 14분 (9호선 급행) / 여의도 3분', seoulTime: '종로 15분' },
@@ -1758,7 +1758,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '사업시행인가 및 시공사 선정 완료',
         progressStatusColor: 'bg-blue-100 text-blue-900 border-blue-300',
         note: '포스코이앤씨 하이엔드 브랜드 오티에르 적용! 노량진뉴타운의 33%를 차지하는 초대형 대장 단지',
-        pinPos: { x: 40, y: 45 }
+        pinPos: { x: 50, y: 35 }
       },
       {
         blockCode: '노량진 2구역',
@@ -1777,7 +1777,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '이주 완료 및 철거 착공',
         progressStatusColor: 'bg-purple-100 text-purple-900 border-purple-300',
         note: 'SK에코플랜트 프리미엄 브랜드 드파인 적용. 가장 빠른 사업 속도로 장승배기역 초역세권 입지',
-        pinPos: { x: 55, y: 55 }
+        pinPos: { x: 83, y: 68 }
       },
       {
         blockCode: '노량진 3구역',
@@ -1796,7 +1796,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '관리처분인가 준비',
         progressStatusColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
         note: '노량진역과 가장 가까운 알짜 입지로 고층 세대에서 한강 조망이 가능한 핵심 단지',
-        pinPos: { x: 45, y: 35 }
+        pinPos: { x: 16, y: 33 }
       },
       {
         blockCode: '노량진 6구역',
@@ -1815,7 +1815,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '철거 완료 및 착공',
         progressStatusColor: 'bg-amber-100 text-amber-900 border-amber-300',
         note: '노량진뉴타운 중 가장 빠른 일반분양 예정 단지로 7호선 장승배기역 생활권',
-        pinPos: { x: 60, y: 50 }
+        pinPos: { x: 50, y: 70 }
       }
     ]
   },
@@ -1841,7 +1841,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '광명 1·2·4·5구역(트리우스, 센트럴아이파크 등) 일반분양 완판 및 순차 입주 진행 중. 광명11구역(4,291세대) 및 12구역(2,097세대) 대장주 착공 준비.',
     proTip: '서울 구로·금천과 맞닿은 02 국번 생활권. 7호선 강남 직결 및 2.5만 세대 신축 밭으로 환골탈태.',
     naverNewsQuery: '광명뉴타운 분양가 입주 7호선',
-    officialBlueprintUrl: '/maps/bucheon_daejang_namu.png',
+    officialBlueprintUrl: '/maps/gwangmyeong_newtown_plan.svg',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B4%91%EB%AA%85%EB%89%B4%ED%83%80%EC%9A%B4',
     lhOfficialUrl: 'https://www.gm.go.kr',
     mapCoords: { x: 320, y: 400, gangnamTime: '강남 30분 (7호선) / 여의도 20분', seoulTime: '종로 30분' },
@@ -1863,7 +1863,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '이주 및 철거 준비',
         progressStatusColor: 'bg-purple-100 text-purple-900 border-purple-300',
         note: '7호선 광명사거리역을 품은 4,291세대 초대형 단지. 광명뉴타운의 시세를 리딩하는 절대 대장주',
-        pinPos: { x: 50, y: 45 }
+        pinPos: { x: 53, y: 56 }
       },
       {
         blockCode: '광명 1구역',
@@ -1882,7 +1882,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '준공 및 입주 중',
         progressStatusColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
         note: '목감천 수변공원을 품은 3,585세대 1군 컨소시엄 대단지',
-        pinPos: { x: 45, y: 30 }
+        pinPos: { x: 28, y: 26 }
       },
       {
         blockCode: '광명 4구역',
@@ -1901,7 +1901,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '골조 공사 진행 중',
         progressStatusColor: 'bg-blue-100 text-blue-800 border-blue-300',
         note: '광명사거리역 초역세권 입지로 평당 분양가 신기록을 세운 중심 입지 단지',
-        pinPos: { x: 52, y: 40 }
+        pinPos: { x: 24, y: 47 }
       },
       {
         blockCode: '광명 12구역',
@@ -1920,7 +1920,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '관리처분인가 완료 & 이주 중',
         progressStatusColor: 'bg-amber-100 text-amber-900 border-amber-300',
         note: '철산역 역세권이자 철산 로데오 상권과 명문 학원가를 도보로 이용 가능한 특급 입지',
-        pinPos: { x: 60, y: 55 }
+        pinPos: { x: 83, y: 56 }
       }
     ]
   },
@@ -1946,7 +1946,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     currentStatus: '휘경자이디센시아(1,806세대), 래미안라그란데(3,069세대), 이문아이파크자이(4,321세대) 전 구역 완판 후 골조 공사 및 순차 입주 진행.',
     proTip: '청량리역 1정거장으로 GTX-B·C 및 강남·도심 20분대 진입! 1.4만 세대 대단지 신축 브랜드 밭으로 동대문구 대장 입지 등극.',
     naverNewsQuery: '이문아이파크자이 래미안라그란데 휘경자이',
-    officialBlueprintUrl: '/maps/wangsook_master_plan.png',
+    officialBlueprintUrl: '/maps/imun_huigyeong_plan.svg',
     namuWikiUrl: 'https://namu.wiki/w/%EC%9D%B4%EB%AC%B8%ED%9C%98%EA%B2%BD%EB%89%B4%ED%83%80%EC%9A%B4',
     lhOfficialUrl: 'https://www.ddm.go.kr',
     mapCoords: { x: 510, y: 260, gangnamTime: '강남 25분 (분당선 환승) / 종로 15분', seoulTime: '청량리 3분 / 광화문 20분' },
@@ -1968,7 +1968,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '골조 공사 및 2025 입주',
         progressStatusColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
         note: '외대앞역과 브릿지로 직결되는 4,321세대 초대형 랜드마크. 이문·휘경 뉴타운의 최대 대장주',
-        pinPos: { x: 45, y: 40 }
+        pinPos: { x: 43, y: 33 }
       },
       {
         blockCode: '이문 1구역',
@@ -1987,7 +1987,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '준공 및 입주 중',
         progressStatusColor: 'bg-blue-100 text-blue-800 border-blue-300',
         note: '삼성물산 래미안 3,069세대 대단지로 천장산 숲세권과 명문 대학가를 품은 쾌적 주거단지',
-        pinPos: { x: 55, y: 35 }
+        pinPos: { x: 77, y: 33 }
       },
       {
         blockCode: '휘경 3구역',
@@ -2006,7 +2006,7 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
         progressStatus: '준공 및 2025 입주',
         progressStatusColor: 'bg-purple-100 text-purple-900 border-purple-300',
         note: '회기역 더블역세권으로 청량리역 1정거장 접근성이 가장 우수한 자이 브랜드 대단지',
-        pinPos: { x: 60, y: 55 }
+        pinPos: { x: 50, y: 73 }
       }
     ]
   }
@@ -2342,7 +2342,12 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] text-[11px] font-black mb-1">
                     <FileText className="w-3 h-3" />
-                    <span>{selectedTown.name} 공공주택지구 공식 토지이용계획도 원본</span>
+                    <span>
+                      {selectedTown.category === 'REDEVELOPMENT' 
+                        ? `${selectedTown.name} 공식 재정비촉진지구 정비계획도 원본` 
+                        : `${selectedTown.name} 공공주택지구 공식 토지이용계획도 원본`
+                      }
+                    </span>
                   </div>
                   <h3 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
                     <span>{selectedTown.name} 공식 마스터플랜 도면 뷰어</span>

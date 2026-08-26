@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" style="background:#f8fafc; font-family: Pretendard, sans-serif;">
+    <rect width="1000" height="800" fill="#fcfdfd"/>
+    <rect x="20" y="20" width="960" height="760" fill="none" stroke="#0f172a" stroke-width="3"/>
+
+    <!-- 1 Line Railway Axis -->
+    <path d="M 250 30 L 250 770" stroke="#1d4ed8" stroke-width="10"/>
+    <text x="235" y="200" fill="#1e3a8a" font-size="15" font-weight="black" text-anchor="middle" transform="rotate(-90 235 200)">🚇 1호선 신이문역 - 외대앞역 - 회기역 (청량리 1정거장)</text>
+
+    <!-- Imun 3 District (West Center Station Linked Mammoth) -->
+    <path d="M 270 120 L 600 120 L 580 420 L 270 420 Z" fill="#facc15" stroke="#ca8a04" stroke-width="3.5"/>
+    <text x="430" y="240" fill="#713f12" font-size="24" font-weight="900" text-anchor="middle">이문 3구역 (이문 아이파크자이)</text>
+    <text x="430" y="275" fill="#854d0e" font-size="16" font-weight="bold" text-anchor="middle">HDC현산·GS건설 4,321세대</text>
+    <text x="430" y="305" fill="#a16207" font-size="13" font-weight="bold" text-anchor="middle">1호선 외대앞역 브릿지 직결 대장주</text>
+
+    <!-- Imun 1 District (North East Forest View) -->
+    <path d="M 620 120 L 940 120 L 920 420 L 620 420 Z" fill="#fde047" stroke="#eab308" stroke-width="2.5"/>
+    <text x="770" y="240" fill="#713f12" font-size="22" font-weight="900" text-anchor="middle">이문 1구역 (래미안 라그란데)</text>
+    <text x="770" y="275" fill="#854d0e" font-size="15" font-weight="bold" text-anchor="middle">삼성물산 래미안 3,069세대</text>
+    <text x="770" y="305" fill="#a16207" font-size="13" font-weight="bold" text-anchor="middle">천장산 숲세권 & 외대·경희대 배후</text>
+
+    <!-- Huigyeong 3 District (South Double Station) -->
+    <path d="M 270 450 L 750 450 L 720 720 L 270 720 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="2.5"/>
+    <text x="500" y="560" fill="#713f12" font-size="22" font-weight="900" text-anchor="middle">휘경 3구역 (휘경자이 디센시아)</text>
+    <text x="500" y="595" fill="#854d0e" font-size="15" font-weight="bold" text-anchor="middle">GS건설 자이 1,806세대</text>
+    <text x="500" y="625" fill="#a16207" font-size="13" font-weight="bold" text-anchor="middle">1호선·경의중앙선 회기역 더블역세권</text>
+
+    <!-- Jungnangcheon River East -->
+    <path d="M 960 30 L 960 770" stroke="#0284c7" stroke-width="14"/>
+    <text x="945" y="400" fill="#0369a1" font-size="16" font-weight="black" text-anchor="middle" transform="rotate(-90 945 400)">중랑천 수변공원 (동부간선 지하화)</text>
+
+    <!-- Title Block -->
+    <g transform="translate(680, 35)">
+      <rect width="280" height="95" fill="#ffffff" stroke="#0f172a" stroke-width="2" rx="8"/>
+      <text x="140" y="26" fill="#0f172a" font-size="16" font-weight="900" text-anchor="middle">이문·휘경 재정비촉진지구</text>
+      <text x="140" y="48" fill="#059669" font-size="14" font-weight="bold" text-anchor="middle">토지이용계획 및 구역배치도</text>
+      <text x="140" y="70" fill="#64748b" font-size="11" text-anchor="middle">동대문구 14,000세대 브랜드 신축 타운</text>
+    </g>
+  </svg>

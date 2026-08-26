@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="1000" height="900" style="background:#f8fafc; font-family: Pretendard, sans-serif;">
+    <defs>
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" stroke-width="0.8"/>
+      </pattern>
+    </defs>
+    
+    <!-- Background Grid -->
+    <rect width="1000" height="900" fill="#fcfdfd"/>
+    <rect width="1000" height="900" fill="url(#grid)"/>
+
+    <!-- Map Frame Outer Border -->
+    <rect x="20" y="20" width="960" height="860" fill="none" stroke="#0f172a" stroke-width="3"/>
+    <rect x="25" y="25" width="950" height="850" fill="none" stroke="#64748b" stroke-width="1"/>
+
+    <!-- River (Han River) at Bottom -->
+    <path d="M 30 720 Q 250 680 500 710 T 970 690 L 970 870 L 30 870 Z" fill="#bae6fd" stroke="#0284c7" stroke-width="2"/>
+    <text x="500" y="790" fill="#0369a1" font-size="28" font-weight="900" letter-spacing="8" text-anchor="middle">한 강 (Han River)</text>
+
+    <!-- Namsan Mountain Ridge (Top) -->
+    <path d="M 30 30 L 970 30 L 970 160 Q 600 200 30 140 Z" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="350" y="100" fill="#15803d" font-size="20" font-weight="900">⛰️ 남산 (Namsan Mountain Park)</text>
+
+    <!-- Hannam 1 District (Unregulated / Sinsok-Tonghab) -->
+    <path d="M 80 160 L 280 180 L 250 320 L 70 300 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="2"/>
+    <text x="160" y="240" fill="#854d0e" font-size="16" font-weight="900" text-anchor="middle">한남 1구역</text>
+    <text x="160" y="265" fill="#a16207" font-size="11" font-weight="bold" text-anchor="middle">(신속통합기획 추진)</text>
+
+    <!-- Hannam 2 District (Daewoo Summit - Top Center) -->
+    <path d="M 290 180 L 520 190 L 490 380 L 260 360 L 280 280 Z" fill="#fde047" stroke="#eab308" stroke-width="2.5"/>
+    <text x="380" y="270" fill="#713f12" font-size="22" font-weight="900" text-anchor="middle">한남 2구역</text>
+    <text x="380" y="300" fill="#854d0e" font-size="14" font-weight="bold" text-anchor="middle">대우건설 (한남 써밋) 1,537세대</text>
+    <text x="380" y="325" fill="#ca8a04" font-size="12" font-weight="bold" text-anchor="middle">6호선 이태원역 역세권</text>
+
+    <!-- Hannam 3 District (Hyundai The H - Center Vast) -->
+    <path d="M 270 370 L 500 390 L 540 370 L 720 380 L 680 640 L 420 650 L 320 620 L 270 480 Z" fill="#facc15" stroke="#ca8a04" stroke-width="3"/>
+    <text x="470" y="490" fill="#713f12" font-size="26" font-weight="900" text-anchor="middle">한남 3구역 (대장주)</text>
+    <text x="470" y="525" fill="#854d0e" font-size="16" font-weight="bold" text-anchor="middle">디에이치 한남 (현대건설) 5,816세대</text>
+    <text x="470" y="555" fill="#a16207" font-size="13" font-weight="bold" text-anchor="middle">국내 단일 최대 하이엔드 | 철거 및 착공</text>
+
+    <!-- Hannam 4 District (Samsung/Hyundai - South Center Flat) -->
+    <path d="M 430 660 L 680 650 L 650 710 L 450 710 Z" fill="#fde047" stroke="#eab308" stroke-width="2.5"/>
+    <text x="550" y="685" fill="#713f12" font-size="18" font-weight="900" text-anchor="middle">한남 4구역 (2,331세대)</text>
+    <text x="550" y="705" fill="#854d0e" font-size="12" font-weight="bold" text-anchor="middle">평지 한강조망 | 삼성 vs 현대</text>
+
+    <!-- Hannam 5 District (DL Acro - South East Riverfront) -->
+    <path d="M 690 400 L 920 420 L 890 700 L 690 700 L 690 640 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="2.5"/>
+    <text x="790" y="530" fill="#713f12" font-size="22" font-weight="900" text-anchor="middle">한남 5구역</text>
+    <text x="790" y="560" fill="#854d0e" font-size="14" font-weight="bold" text-anchor="middle">아크로 한남 (DL이앤씨) 2,560세대</text>
+    <text x="790" y="585" fill="#ca8a04" font-size="12" font-weight="bold" text-anchor="middle">신분당선 동빙고역 | 한강 영구조망</text>
+
+    <!-- Major Roads -->
+    <path d="M 30 330 L 970 350" stroke="#94a3b8" stroke-width="8" stroke-dasharray="16 4"/>
+    <text x="140" y="320" fill="#475569" font-size="12" font-weight="bold">이태원로</text>
+    <path d="M 60 705 L 940 705" stroke="#ef4444" stroke-width="7"/>
+    <text x="250" y="725" fill="#b91c1c" font-size="13" font-weight="black">강변북로 (Riverside Highway)</text>
+
+    <!-- Hannam Bridge Axis -->
+    <path d="M 520 705 L 520 870" stroke="#3b82f6" stroke-width="12"/>
+    <text x="540" y="820" fill="#1e3a8a" font-size="15" font-weight="black">한남대교 (강남 직결)</text>
+
+    <!-- Title Block (Top Right) -->
+    <g transform="translate(680, 45)">
+      <rect width="280" height="110" fill="#ffffff" stroke="#0f172a" stroke-width="2" rx="8"/>
+      <text x="140" y="30" fill="#0f172a" font-size="16" font-weight="900" text-anchor="middle">한남재정비촉진지구</text>
+      <text x="140" y="55" fill="#2563eb" font-size="14" font-weight="bold" text-anchor="middle">토지이용계획 및 구역 결정도</text>
+      <text x="140" y="80" fill="#64748b" font-size="11" text-anchor="middle">총 12,500세대 한강변 하이엔드 타운</text>
+      <text x="140" y="98" fill="#94a3b8" font-size="10" text-anchor="middle">서울특별시 용산구 고시 도면</text>
+    </g>
+
+    <!-- North Arrow -->
+    <g transform="translate(60, 60)">
+      <circle r="22" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
+      <path d="M 0 -18 L 6 8 L 0 4 L -6 8 Z" fill="#ef4444"/>
+      <text x="0" y="-22" fill="#0f172a" font-size="12" font-weight="black" text-anchor="middle">N</text>
+    </g>
+  </svg>

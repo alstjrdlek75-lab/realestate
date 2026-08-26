@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" style="background:#f8fafc; font-family: Pretendard, sans-serif;">
+    <rect width="1000" height="800" fill="#fcfdfd"/>
+    <rect x="20" y="20" width="960" height="760" fill="none" stroke="#0f172a" stroke-width="3"/>
+
+    <!-- 8 Line Subway Axis -->
+    <path d="M 30 350 L 970 350" stroke="#ec4899" stroke-width="12"/>
+    <text x="350" y="340" fill="#9d174d" font-size="16" font-weight="black">🚇 8호선·경의중앙선 구리역 (잠실 15분, 강남 25분 직결)</text>
+    <text x="780" y="340" fill="#9d174d" font-size="16" font-weight="black">🚇 8호선 장자호수공원역</text>
+
+    <!-- Guri Sutaek Mega Redevelopment (7,007 Units - Hyundai/Posco) -->
+    <path d="M 100 380 L 650 380 L 620 720 L 100 720 Z" fill="#facc15" stroke="#ca8a04" stroke-width="3.5"/>
+    <text x="370" y="500" fill="#713f12" font-size="26" font-weight="900" text-anchor="middle">구리 수택동 메가 재개발 (단일 최대)</text>
+    <text x="370" y="540" fill="#854d0e" font-size="17" font-weight="bold" text-anchor="middle">현대건설·포스코이앤씨 7,007세대 (공사비 2.8조 수주)</text>
+    <text x="370" y="575" fill="#a16207" font-size="14" font-weight="bold" text-anchor="middle">최고 49층 27개 동 | 171m 스카이 커뮤니티 6개소</text>
+    <text x="370" y="605" fill="#b45309" font-size="13" font-weight="bold" text-anchor="middle">8호선 구리역·장자호수공원역 더블생활권</text>
+
+    <!-- Sutaek E District (3,022 Units) -->
+    <path d="M 670 380 L 940 380 L 920 720 L 670 720 Z" fill="#fde047" stroke="#eab308" stroke-width="2.5"/>
+    <text x="800" y="500" fill="#713f12" font-size="20" font-weight="900" text-anchor="middle">수택E구역 하이니티</text>
+    <text x="800" y="535" fill="#854d0e" font-size="14" font-weight="bold" text-anchor="middle">DL·GS·SK 3,022세대</text>
+    <text x="800" y="565" fill="#a16207" font-size="12" font-weight="bold" text-anchor="middle">8호선 구리역 도보 5분</text>
+    <text x="800" y="590" fill="#ca8a04" font-size="12" font-weight="bold" text-anchor="middle">착공 및 일반분양</text>
+
+    <!-- Inchang C District (1,180 Units) -->
+    <path d="M 100 120 L 450 120 L 450 320 L 100 320 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="2"/>
+    <text x="275" y="200" fill="#713f12" font-size="20" font-weight="900" text-anchor="middle">인창C구역 (롯데캐슬 시그니처)</text>
+    <text x="275" y="230" fill="#854d0e" font-size="14" font-weight="bold" text-anchor="middle">롯데건설 1,180세대 (최고 42층)</text>
+    <text x="275" y="255" fill="#ca8a04" font-size="12" font-weight="bold" text-anchor="middle">8호선 구리역 도보 3분 초역세권</text>
+
+    <!-- Title Block -->
+    <g transform="translate(680, 35)">
+      <rect width="280" height="95" fill="#ffffff" stroke="#0f172a" stroke-width="2" rx="8"/>
+      <text x="140" y="26" fill="#0f172a" font-size="16" font-weight="900" text-anchor="middle">구리 원도심 정비계획도</text>
+      <text x="140" y="48" fill="#4338ca" font-size="14" font-weight="bold" text-anchor="middle">수택·인창 재개발 마스터플랜</text>
+      <text x="140" y="70" fill="#64748b" font-size="11" text-anchor="middle">총 11,209세대 잠실 15분 신축 브랜드 타운</text>
+    </g>
+  </svg>
