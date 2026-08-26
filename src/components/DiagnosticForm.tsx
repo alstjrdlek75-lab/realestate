@@ -223,9 +223,9 @@ export const DiagnosticForm: React.FC<DiagnosticFormProps> = ({ initialValues, o
                 <div className="flex items-center gap-1.5">
                   <input
                     type="number"
-                    min="0.1"
+                    min="0"
                     max="50"
-                    step="0.1"
+                    step="0.5"
                     value={formData.cash}
                     onChange={(e) => {
                       const val = parseFloat(e.target.value);
@@ -240,7 +240,7 @@ export const DiagnosticForm: React.FC<DiagnosticFormProps> = ({ initialValues, o
               </div>
               <input
                 type="range"
-                min="0.5"
+                min="0"
                 max="20"
                 step="0.5"
                 value={formData.cash}
@@ -248,7 +248,7 @@ export const DiagnosticForm: React.FC<DiagnosticFormProps> = ({ initialValues, o
                 className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#03c75a]"
               />
               <div className="flex justify-between text-[11px] text-slate-400 font-medium">
-                <span>5천만</span>
+                <span>0원</span>
                 <span>5억</span>
                 <span>10억</span>
                 <span>15억</span>
@@ -265,7 +265,7 @@ export const DiagnosticForm: React.FC<DiagnosticFormProps> = ({ initialValues, o
                 <div className="flex items-center gap-1.5">
                   <input
                     type="number"
-                    min="1000"
+                    min="0"
                     max="50000"
                     step="500"
                     value={formData.annualIncome}
@@ -282,19 +282,19 @@ export const DiagnosticForm: React.FC<DiagnosticFormProps> = ({ initialValues, o
               </div>
               <input
                 type="range"
-                min="3000"
-                max="30000"
+                min="0"
+                max="20000"
                 step="500"
                 value={formData.annualIncome}
                 onChange={(e) => setFormData({ ...formData, annualIncome: parseInt(e.target.value) })}
                 className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#0066ff]"
               />
               <div className="flex justify-between text-[11px] text-slate-400 font-medium">
-                <span>3,000만</span>
-                <span>8,000만</span>
+                <span>0원</span>
+                <span>5,000만</span>
+                <span>1억</span>
                 <span>1.5억</span>
-                <span>2.2억</span>
-                <span>3억+</span>
+                <span>2억+</span>
               </div>
             </div>
 
@@ -331,6 +331,14 @@ export const DiagnosticForm: React.FC<DiagnosticFormProps> = ({ initialValues, o
                 onChange={(e) => setFormData({ ...formData, existingDebt: parseFloat(e.target.value) })}
                 className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-500"
               />
+              <div className="flex justify-between text-[11px] text-slate-400 font-medium">
+                <span>0원</span>
+                <span>1억</span>
+                <span>2억</span>
+                <span>3억</span>
+                <span>4억</span>
+                <span>5억+</span>
+              </div>
             </div>
 
             {/* Monthly Payment Tolerance */}
@@ -342,7 +350,7 @@ export const DiagnosticForm: React.FC<DiagnosticFormProps> = ({ initialValues, o
                 <div className="flex items-center gap-1.5">
                   <input
                     type="number"
-                    min="30"
+                    min="0"
                     max="1000"
                     step="10"
                     value={formData.targetMonthlyPayment}
@@ -359,13 +367,21 @@ export const DiagnosticForm: React.FC<DiagnosticFormProps> = ({ initialValues, o
               </div>
               <input
                 type="range"
-                min="50"
-                max="600"
+                min="0"
+                max="500"
                 step="10"
                 value={formData.targetMonthlyPayment}
                 onChange={(e) => setFormData({ ...formData, targetMonthlyPayment: parseInt(e.target.value) })}
                 className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-teal-600"
               />
+              <div className="flex justify-between text-[11px] text-slate-400 font-medium">
+                <span>0원</span>
+                <span>100만</span>
+                <span>200만</span>
+                <span>300만</span>
+                <span>400만</span>
+                <span>500만+</span>
+              </div>
             </div>
 
             {/* Quick Helper Banner */}
