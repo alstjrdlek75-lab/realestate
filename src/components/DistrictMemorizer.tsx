@@ -75,37 +75,37 @@ export const SEOUL_DISTRICTS: DistrictItem[] = [
 ];
 
 export const GYEONGGI_DISTRICTS: DistrictItem[] = [
-  { id: "seongnam", name: "성남시", subRegion: "경부축 (1급지)", tier: "준서울 / 강남급 (판교·분당)", tierColor: "bg-amber-100 text-amber-900 border-amber-300", leadComplex: "판교푸르지오그랑블, 분당 시범단지, 산성역자이푸르지오", keyTransit: "신분당선(판교 강남 14분), 수인분당선, 8호선, GTX-A(성남역)", memorizeTrick: "IT 수도 판교테크노밸리 + 1기 신도시 대장 분당", description: "판교 IT 10만 고소득 일자리와 분당 명문 학군 보유", pin: { x: 46, y: 60 } },
-  { id: "gwacheon", name: "과천시", subRegion: "경부축 (1급지)", tier: "준강남 0.8티어", tierColor: "bg-amber-100 text-amber-900 border-amber-300", leadComplex: "과천푸르지오써밋, 과천위버필드, 과천자이, 과천지식정보타운", keyTransit: "4호선, GTX-C(과천정부청사역 착공), 위례과천선", memorizeTrick: "서울 02 국번. 관악산·청계산 품은 준강남 최고 부촌", description: "과천지정타 IT 자족도시 및 GTX-C 삼성역 10분 직결", pin: { x: 39, y: 58 } },
-  { id: "hanam", name: "하남시", subRegion: "동부축 (1.5급지)", tier: "준강남 / 강동 배후", tierColor: "bg-emerald-100 text-emerald-900 border-emerald-300", leadComplex: "미사강변루나리움, 감일 에코앤e편한세상, 하남교산 신도시", keyTransit: "5호선(미사·하남검단산), 3호선 연장(송파하남선 교산), 9호선 연장", memorizeTrick: "미사 수변 + 감일 강남 10분 + 3기 신도시 교산", description: "한강변 쾌적 미사강변도시 및 3기 신도시 교산 3호선 연장", pin: { x: 53, y: 53 } },
-  { id: "guri", name: "구리시", subRegion: "동북축 (1.5급지)", tier: "잠실 15분 생활권", tierColor: "bg-emerald-100 text-emerald-900 border-emerald-300", leadComplex: "수택동 메가재개발(7,007세대), 구리역롯데캐슬, 구리토평2", keyTransit: "8호선 별내선(구리역·장자호수공원역 잠실 15분), 경의중앙선", memorizeTrick: "8호선 개통으로 잠실 15분 강남 직결! 수택 7천세대", description: "8호선 별내선 개통 잠실 초근접 및 구리토평2 한강 신도시", pin: { x: 48, y: 49 } },
-  { id: "suwon", name: "수원시", subRegion: "경부축 (2급지)", tier: "경기 남부 최대 거점 (120만)", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "광교중흥S클래스, 화서역파크푸르지오(스타필드), 매교역푸르지오SK", keyTransit: "신분당선(광교중앙역), 1호선, 수인분당선, KTX, GTX-C(수원역)", memorizeTrick: "광교 호수공원 랜드마크 + 삼성전자 본사 본진", description: "삼성전자 영통 본사와 신분당선 광교 신도시의 높은 위계", pin: { x: 38, y: 68 } },
-  { id: "yongin", name: "용인시", subRegion: "경부축 (2급지)", tier: "반도체 메가 클러스터", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "기흥역센트럴푸르지오, 수지 래미안이스트파크, 처인 반도체클러스터", keyTransit: "신분당선(수지), 수인분당선, GTX-A(구성역), 용인경전철", memorizeTrick: "수지 학군 + GTX-A 구성역 + 삼성전자 300조 반도체 클러스터", description: "수지구 강남 접근성과 처인구 남사·원삼 세계 최대 반도체 메가밸리", pin: { x: 52, y: 71 } },
-  { id: "anyang", name: "안양시", subRegion: "경부축 (2급지)", tier: "평촌 1기 신도시 학군", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "평촌 목련마을 재건축, 평촌 더샵센트럴시티, 비산자이아이파크", keyTransit: "1·4호선(범계·평촌역), 월곶판교선(월판선 착공), 인동선", memorizeTrick: "수도권 3대 학군 평촌 학원가 + 월판선 판교 10분", description: "평촌 명문 학원가와 월곶판교선 판교 직결 교통 호재", pin: { x: 34, y: 60 } },
-  { id: "gwangmyeong", name: "광명시", subRegion: "서남축 (2급지)", tier: "서울 02 국번 생활권", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "철산자이더헤리티지, 광명 11구역, 트리우스광명, KTX광명역파크자이", keyTransit: "7호선(철산·광명사거리 가산 5분), 1호선, KTX, 신안산선", memorizeTrick: "서울 02 국번. 7호선 강남 직통 + 광명뉴타운 2.5만가구", description: "가산디지털단지 맞닿은 02국번 및 KTX 복합 상권", pin: { x: 28, y: 57 } },
-  { id: "uiwang", name: "의왕시", subRegion: "경부축", tier: "인덕원·백운호수 생활권", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "인덕원센트럴자이(포일자이), 백운밸리 효성해링턴", keyTransit: "4호선 인덕원역(GTX-C, 월판선, 인동선 쿼드러플), 1호선 의왕역", memorizeTrick: "인덕원 4중 환승역세권 + 백운호수 롯데타임빌라스", description: "GTX-C 및 월곶판교선 환승 허브 인덕원 연계 주거", pin: { x: 38, y: 62 } },
-  { id: "gunpo", name: "군포시", subRegion: "경부축 (산본)", tier: "1기 신도시 산본", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "산본주공 재건축, 래미안수리산채원", keyTransit: "1·4호선 금정역, GTX-C(금정역)", memorizeTrick: "1기 신도시 산본 + 1·4호선 GTX-C 금정역", description: "수리산 쾌적 주거 및 GTX-C 금정역 삼성역 15분", pin: { x: 33, y: 64 } },
-  { id: "bucheon", name: "부천시", subRegion: "서남축 (중동·대장)", tier: "3기 신도시 대장지구", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "중동 센트럴파크푸르지오, 부천대장 3기 신도시", keyTransit: "1·7호선, 서해선(소사대곡선), 대장홍대선(홍대입구 25분)", memorizeTrick: "1기 신도시 중동 + 3기 신도시 대장 + 대장홍대선", description: "대장홍대선으로 홍대·상암 직결 및 SK R&D 그린테크노캠퍼스", pin: { x: 23, y: 54 } },
-  { id: "siheung", name: "시흥시", subRegion: "서남축 (은계·배곧·목감)", tier: "서해안 신흥 주거타운", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "배곧 C1·C2 호반써밋, 시흥은계 센트럴타운, 장현지구", keyTransit: "서해선, 신안산선(착공), 월곶판교선(월판선)", memorizeTrick: "배곧 서울대병원 + 신안산선 여의도 직결", description: "배곧 바이오 특화단지와 월판선·신안산선 트리플 철도망", pin: { x: 24, y: 61 } },
-  { id: "ansan", name: "안산시", subRegion: "서남축 (고잔·그랑시티)", tier: "서해안 산업 거점", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "그랑시티자이 1·2차(7,600세대), 안산센트럴푸르지오", keyTransit: "4호선, 수인분당선, 서해선, 신안산선(한양대 에리카역)", memorizeTrick: "7,600세대 초대형 그랑시티자이 + 신안산선 여의도 25분", description: "신안산선 개통으로 여의도 25분대 진입하는 서남부 중심", pin: { x: 27, y: 65 } },
-  { id: "hwaseong", name: "화성시", subRegion: "남부축 (동탄1·2 / 100만)", tier: "인구 100만 대도시 (동탄)", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "동탄역 롯데캐슬, 동탄 린스트라우스, 송산그린시티", keyTransit: "GTX-A(동탄역 수서 20분 개통), SRT, 동탄트램", memorizeTrick: "GTX-A 개통 수서 20분! 동탄테크노밸리 + 삼성전자 화성캠퍼스", description: "인구 100만 특례시 진입, GTX-A 수서역 20분 및 삼성전자 배후", pin: { x: 31, y: 75 } },
-  { id: "pyeongtaek", name: "평택시", subRegion: "남부축 (고덕 반도체)", tier: "반도체 세계 최대 팹", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "고덕국제신도시 파라곤, 지제역 더샵센트럴파크", keyTransit: "1호선 평택지제역, SRT, KTX 직결(예정), GTX-A/C 연장 추진", memorizeTrick: "삼성전자 평택 캠퍼스 세계 최대 팹 + 지제역 SRT", description: "삼성전자 평택캠퍼스 및 지제역 광역교통 복합환승 허브", pin: { x: 36, y: 85 } },
-  { id: "osan", name: "오산시", subRegion: "남부축 (세교)", tier: "세교 신도시", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "오산세교 더샵라포르테, 운암주공", keyTransit: "1호선 오산역, 분당선 연장(예정)", memorizeTrick: "동탄 옆 세교 신도시 + 1호선", description: "동탄2 신도시 인접 생활권 및 세교 2·3지구 공급", pin: { x: 42, y: 75 } },
-  { id: "anseong", name: "안성시", subRegion: "남부축", tier: "동탄-청주 철도 연계", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "안성공도 우방아이유쉘, 스타필드 안성", keyTransit: "경부고속도로 안성IC, 수도권내륙선 철도 추진", memorizeTrick: "스타필드 안성 + 반도체 소부장 특화단지", description: "스타필드 안성 및 반도체 소부장 특화단지 육성", pin: { x: 55, y: 83 } },
-  { id: "goyang", name: "고양시", subRegion: "경의축 (일산·창릉 / 108만)", tier: "1기 일산 + 3기 창릉 신도시", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "킨텍스 원시티, 일산 요진와이시티, 고양창릉 3기 신도시", keyTransit: "3호선, 경의중앙선, 서해선(대곡소사), GTX-A(킨텍스·대곡·창릉 개통)", memorizeTrick: "GTX-A 개통 삼성 18분! 킨텍스 + 3기 신도시 창릉", description: "GTX-A 개통으로 강남권 20분대 주파, 일산 재건축 선도지구", pin: { x: 26, y: 44 } },
-  { id: "paju", name: "파주시", subRegion: "경의축 (운정 신도시)", tier: "GTX-A 기점 도시", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "운정신도시 아이파크, 힐스테이트 운정, 센트럴푸르지오(운정 3대장)", keyTransit: "GTX-A(운정역 기점), 경의중앙선(야당·운정역)", memorizeTrick: "GTX-A 운정역 기점! 서울역 20분 직통 운정신도시", description: "GTX-A 개통으로 서울역 20분 도달, 운정 3지구 자족도시", pin: { x: 24, y: 32 } },
-  { id: "gimpo", name: "김포시", subRegion: "서북축 (한강 신도시)", tier: "5호선 연장 추진 도시", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "한강메트로자이, 힐스테이트 리버시티, 김포 풍무푸르지오", keyTransit: "김포골드라인, 지하철 5호선 연장(검단-김포 추진)", memorizeTrick: "마곡 직주근접 + 5호선 연장선 추진 한강신도시", description: "마곡지구 15분 생활권 및 한강2 콤팩트시티 신규 지정", pin: { x: 10, y: 43 } },
-  { id: "namyangju", name: "남양주시", subRegion: "경춘·경원축 (왕숙 6.6만)", tier: "3기 신도시 최대 거점 (왕숙)", tierColor: "bg-emerald-100 text-emerald-900 border-emerald-300", leadComplex: "다산 e편한세상자이, 별내 아이파크, 남양주 왕숙 1·2지구", keyTransit: "8호선 별내선, 4호선 진접선, 9호선 연장(풍양역), GTX-B(왕숙역)", memorizeTrick: "3기 신도시 최대어 6.6만세대 왕숙! 8호선 별내 + GTX-B", description: "다산·별내 인프라 및 3기 신도시 왕숙 6.6만호 매머드 공급", pin: { x: 55, y: 45 } },
-  { id: "uijeongbu", name: "의정부시", subRegion: "경원축", tier: "경기 북부 행정 중심", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "탑석센트럴자이, 의정부역 센트럴자이앤위브캐슬", keyTransit: "1호선, 7호선 연장(탑석역), GTX-C(의정부역 착공)", memorizeTrick: "GTX-C 의정부역 삼성역 15분 + 7호선 탑석역 연장", description: "경기도 북부청사 소재지 및 GTX-C 의정부역 강남 직결", pin: { x: 43, y: 39 } },
-  { id: "yangju", name: "양주시", subRegion: "경원축 (옥정·회천)", tier: "GTX-C 기점 (덕정역)", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "양주옥정 더원파크빌리지, 회천 디에트르", keyTransit: "1호선(덕정·덕계역), 7호선 옥정 연장(착공), GTX-C(덕정역)", memorizeTrick: "GTX-C 기점 덕정역 + 옥정 신도시 대단지", description: "GTX-C 덕정역과 7호선 옥정 연장선 착공", pin: { x: 40, y: 34 } },
-  { id: "dongducheon", name: "동두천시", subRegion: "경원축", tier: "수도권 북부 관문", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "지행역 센트레빌, 동두천송내주공", keyTransit: "1호선(지행·동두천역), GTX-C 연장 검토", memorizeTrick: "1호선 지행역 생활권 + 소요산", description: "1호선 급행 운행 및 미군 반환 공여지 개발", pin: { x: 43, y: 28 } },
-  { id: "pocheon", name: "포천시", subRegion: "동북축", tier: "7호선 옥정-포천 연장", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "포천 포레스트자이", keyTransit: "7호선 옥정~포천 광역철도 추진, 세종포천고속도로", memorizeTrick: "세종포천고속도로 + 7호선 포천 연장선", description: "세종포천고속도로 개통 및 7호선 포천 연장 추진", pin: { x: 55, y: 24 } },
-  { id: "yeoncheon", name: "연천군", subRegion: "북부 청정축", tier: "1호선 전철 연장 개통", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "연천 e편한세상", keyTransit: "1호선 연천역 전철 개통", memorizeTrick: "1호선 수도권 전철 종점 연천역", description: "1호선 복선전철 개통으로 서울 접근성 개선", pin: { x: 39, y: 16 } },
-  { id: "gwangju_si", name: "광주시", subRegion: "동남축 (태전·고산)", tier: "판교·강남 20분 생활권", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "태전 힐스테이트, 고산 더샵오포센트리체", keyTransit: "경강선(경기광주역 판교 13분), 수서광주선(수광선 착공)", memorizeTrick: "경강선 판교 13분 + 수서광주선 수서 12분 직결", description: "수서광주선 착공으로 강남 수서역 12분대 직결", pin: { x: 58, y: 60 } },
-  { id: "icheon", name: "이천시", subRegion: "동남축 (SK하이닉스)", tier: "반도체 D램 글로벌 본진", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "이천자이 더파크, 이천롯데캐슬골드스카이", keyTransit: "경강선(이천·부발역), 중부내륙선 KTX-이음", memorizeTrick: "SK하이닉스 본사 글로벌 반도체 10만 고소득", description: "SK하이닉스 본진 위치로 탄탄한 자족 소비력 보유", pin: { x: 70, y: 72 } },
-  { id: "yeoju", name: "여주시", subRegion: "동남축", tier: "경강선 종점 + 수변 힐링", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "여주역 금호어울림베르티스, 여주 KCC스위첸", keyTransit: "경강선 여주역, 여주-원주선 복선전철 착공", memorizeTrick: "경강선 판교 직결 + 남한강 힐링", description: "경강선 판교 직결 및 여주-원주선 환승 연계", pin: { x: 83, y: 68 } },
-  { id: "gapyeong", name: "가평군", subRegion: "북한강 생태축", tier: "경춘선 힐링 관광", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "가평자이, e편한세상가평퍼스트원", keyTransit: "경춘선, ITX-청춘 (청량리 40분, 용산 55분)", memorizeTrick: "ITX-청춘 용산 직결 + 자라섬·남이섬", description: "ITX-청춘으로 서울 용산 50분대 진입 및 북한강 힐링 주거", pin: { x: 67, y: 35 } },
-  { id: "yangpyeong", name: "양평군", subRegion: "남한강 생태축", tier: "경의중앙선 전원 주거", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "양평역 한라비발디, 양평 센트럴파크써밋", keyTransit: "경의중앙선 양평역, KTX-이음(청량리 25분)", memorizeTrick: "KTX 양평역 청량리 25분 + 남한강 영구 조망", description: "KTX 청량리 20분대 도달 및 수도권 대표 전원 친환경 타운", pin: { x: 78, y: 54 } }
+  { id: "seongnam", name: "성남시", subRegion: "경부축 (1급지)", tier: "준서울 / 강남급 (판교·분당)", tierColor: "bg-amber-100 text-amber-900 border-amber-300", leadComplex: "판교푸르지오그랑블, 분당 시범단지, 산성역자이푸르지오", keyTransit: "신분당선(판교 강남 14분), 수인분당선, 8호선, GTX-A(성남역)", memorizeTrick: "IT 수도 판교테크노밸리 + 1기 신도시 대장 분당", description: "판교 IT 10만 고소득 일자리와 분당 명문 학군 보유", pin: { x: 46, y: 66 } },
+  { id: "gwacheon", name: "과천시", subRegion: "경부축 (1급지)", tier: "준강남 0.8티어", tierColor: "bg-amber-100 text-amber-900 border-amber-300", leadComplex: "과천푸르지오써밋, 과천위버필드, 과천자이, 과천지식정보타운", keyTransit: "4호선, GTX-C(과천정부청사역 착공), 위례과천선", memorizeTrick: "서울 02 국번. 관악산·청계산 품은 준강남 최고 부촌", description: "과천지정타 IT 자족도시 및 GTX-C 삼성역 10분 직결", pin: { x: 39, y: 64 } },
+  { id: "hanam", name: "하남시", subRegion: "동부축 (1.5급지)", tier: "준강남 / 강동 배후", tierColor: "bg-emerald-100 text-emerald-900 border-emerald-300", leadComplex: "미사강변루나리움, 감일 에코앤e편한세상, 하남교산 신도시", keyTransit: "5호선(미사·하남검단산), 3호선 연장(송파하남선 교산), 9호선 연장", memorizeTrick: "미사 수변 + 감일 강남 10분 + 3기 신도시 교산", description: "한강변 쾌적 미사강변도시 및 3기 신도시 교산 3호선 연장", pin: { x: 53, y: 58 } },
+  { id: "guri", name: "구리시", subRegion: "동북축 (1.5급지)", tier: "잠실 15분 생활권", tierColor: "bg-emerald-100 text-emerald-900 border-emerald-300", leadComplex: "수택동 메가재개발(7,007세대), 구리역롯데캐슬, 구리토평2", keyTransit: "8호선 별내선(구리역·장자호수공원역 잠실 15분), 경의중앙선", memorizeTrick: "8호선 개통으로 잠실 15분 강남 직결! 수택 7천세대", description: "8호선 별내선 개통 잠실 초근접 및 구리토평2 한강 신도시", pin: { x: 48, y: 55 } },
+  { id: "suwon", name: "수원시", subRegion: "경부축 (2급지)", tier: "경기 남부 최대 거점 (120만)", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "광교중흥S클래스, 화서역파크푸르지오(스타필드), 매교역푸르지오SK", keyTransit: "신분당선(광교중앙역), 1호선, 수인분당선, KTX, GTX-C(수원역)", memorizeTrick: "광교 호수공원 랜드마크 + 삼성전자 본사 본진", description: "삼성전자 영통 본사와 신분당선 광교 신도시의 높은 위계", pin: { x: 39, y: 74 } },
+  { id: "yongin", name: "용인시", subRegion: "경부축 (2급지)", tier: "반도체 메가 클러스터", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "기흥역센트럴푸르지오, 수지 래미안이스트파크, 처인 반도체클러스터", keyTransit: "신분당선(수지), 수인분당선, GTX-A(구성역), 용인경전철", memorizeTrick: "수지 학군 + GTX-A 구성역 + 삼성전자 300조 반도체 클러스터", description: "수지구 강남 접근성과 처인구 남사·원삼 세계 최대 반도체 메가밸리", pin: { x: 53, y: 76 } },
+  { id: "anyang", name: "안양시", subRegion: "경부축 (2급지)", tier: "평촌 1기 신도시 학군", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "평촌 목련마을 재건축, 평촌 더샵센트럴시티, 비산자이아이파크", keyTransit: "1·4호선(범계·평촌역), 월곶판교선(월판선 착공), 인동선", memorizeTrick: "수도권 3대 학군 평촌 학원가 + 월판선 판교 10분", description: "평촌 명문 학원가와 월곶판교선 판교 직결 교통 호재", pin: { x: 34, y: 66 } },
+  { id: "gwangmyeong", name: "광명시", subRegion: "서남축 (2급지)", tier: "서울 02 국번 생활권", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "철산자이더헤리티지, 광명 11구역, 트리우스광명, KTX광명역파크자이", keyTransit: "7호선(철산·광명사거리 가산 5분), 1호선, KTX, 신안산선", memorizeTrick: "서울 02 국번. 7호선 강남 직통 + 광명뉴타운 2.5만가구", description: "가산디지털단지 맞닿은 02국번 및 KTX 복합 상권", pin: { x: 29, y: 63 } },
+  { id: "uiwang", name: "의왕시", subRegion: "경부축", tier: "인덕원·백운호수 생활권", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "인덕원센트럴자이(포일자이), 백운밸리 효성해링턴", keyTransit: "4호선 인덕원역(GTX-C, 월판선, 인동선 쿼드러플), 1호선 의왕역", memorizeTrick: "인덕원 4중 환승역세권 + 백운호수 롯데타임빌라스", description: "GTX-C 및 월곶판교선 환승 허브 인덕원 연계 주거", pin: { x: 38, y: 68 } },
+  { id: "gunpo", name: "군포시", subRegion: "경부축 (산본)", tier: "1기 신도시 산본", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "산본주공 재건축, 래미안수리산채원", keyTransit: "1·4호선 금정역, GTX-C(금정역)", memorizeTrick: "1기 신도시 산본 + 1·4호선 GTX-C 금정역", description: "수리산 쾌적 주거 및 GTX-C 금정역 삼성역 15분", pin: { x: 33, y: 70 } },
+  { id: "bucheon", name: "부천시", subRegion: "서남축 (중동·대장)", tier: "3기 신도시 대장지구", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "중동 센트럴파크푸르지오, 부천대장 3기 신도시", keyTransit: "1·7호선, 서해선(소사대곡선), 대장홍대선(홍대입구 25분)", memorizeTrick: "1기 신도시 중동 + 3기 신도시 대장 + 대장홍대선", description: "대장홍대선으로 홍대·상암 직결 및 SK R&D 그린테크노캠퍼스", pin: { x: 23, y: 60 } },
+  { id: "siheung", name: "시흥시", subRegion: "서남축 (은계·배곧·목감)", tier: "서해안 신흥 주거타운", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "배곧 C1·C2 호반써밋, 시흥은계 센트럴타운, 장현지구", keyTransit: "서해선, 신안산선(착공), 월곶판교선(월판선)", memorizeTrick: "배곧 서울대병원 + 신안산선 여의도 직결", description: "배곧 바이오 특화단지와 월판선·신안산선 트리플 철도망", pin: { x: 24, y: 67 } },
+  { id: "ansan", name: "안산시", subRegion: "서남축 (고잔·그랑시티)", tier: "서해안 산업 거점", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "그랑시티자이 1·2차(7,600세대), 안산센트럴푸르지오", keyTransit: "4호선, 수인분당선, 서해선, 신안산선(한양대 에리카역)", memorizeTrick: "7,600세대 초대형 그랑시티자이 + 신안산선 여의도 25분", description: "신안산선 개통으로 여의도 25분대 진입하는 서남부 중심", pin: { x: 27, y: 71 } },
+  { id: "hwaseong", name: "화성시", subRegion: "남부축 (동탄1·2 / 100만)", tier: "인구 100만 대도시 (동탄)", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "동탄역 롯데캐슬, 동탄 린스트라우스, 송산그린시티", keyTransit: "GTX-A(동탄역 수서 20분 개통), SRT, 동탄트램", memorizeTrick: "GTX-A 개통 수서 20분! 동탄테크노밸리 + 삼성전자 화성캠퍼스", description: "인구 100만 특례시 진입, GTX-A 수서역 20분 및 삼성전자 배후", pin: { x: 31, y: 80 } },
+  { id: "pyeongtaek", name: "평택시", subRegion: "남부축 (고덕 반도체)", tier: "반도체 세계 최대 팹", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "고덕국제신도시 파라곤, 지제역 더샵센트럴파크", keyTransit: "1호선 평택지제역, SRT, KTX 직결(예정), GTX-A/C 연장 추진", memorizeTrick: "삼성전자 평택 캠퍼스 세계 최대 팹 + 지제역 SRT", description: "삼성전자 평택캠퍼스 및 지제역 광역교통 복합환승 허브", pin: { x: 37, y: 89 } },
+  { id: "osan", name: "오산시", subRegion: "남부축 (세교)", tier: "세교 신도시", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "오산세교 더샵라포르테, 운암주공", keyTransit: "1호선 오산역, 분당선 연장(예정)", memorizeTrick: "동탄 옆 세교 신도시 + 1호선", description: "동탄2 신도시 인접 생활권 및 세교 2·3지구 공급", pin: { x: 42, y: 80 } },
+  { id: "anseong", name: "안성시", subRegion: "남부축", tier: "동탄-청주 철도 연계", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "안성공도 우방아이유쉘, 스타필드 안성", keyTransit: "경부고속도로 안성IC, 수도권내륙선 철도 추진", memorizeTrick: "스타필드 안성 + 반도체 소부장 특화단지", description: "스타필드 안성 및 반도체 소부장 특화단지 육성", pin: { x: 57, y: 88 } },
+  { id: "goyang", name: "고양시", subRegion: "경의축 (일산·창릉 / 108만)", tier: "1기 일산 + 3기 창릉 신도시", tierColor: "bg-blue-100 text-blue-900 border-blue-300", leadComplex: "킨텍스 원시티, 일산 요진와이시티, 고양창릉 3기 신도시", keyTransit: "3호선, 경의중앙선, 서해선(대곡소사), GTX-A(킨텍스·대곡·창릉 개통)", memorizeTrick: "GTX-A 개통 삼성 18분! 킨텍스 + 3기 신도시 창릉", description: "GTX-A 개통으로 강남권 20분대 주파, 일산 재건축 선도지구", pin: { x: 26, y: 51 } },
+  { id: "paju", name: "파주시", subRegion: "경의축 (운정 신도시)", tier: "GTX-A 기점 도시", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "운정신도시 아이파크, 힐스테이트 운정, 센트럴푸르지오(운정 3대장)", keyTransit: "GTX-A(운정역 기점), 경의중앙선(야당·운정역)", memorizeTrick: "GTX-A 운정역 기점! 서울역 20분 직통 운정신도시", description: "GTX-A 개통으로 서울역 20분 도달, 운정 3지구 자족도시", pin: { x: 24, y: 39 } },
+  { id: "gimpo", name: "김포시", subRegion: "서북축 (한강 신도시)", tier: "5호선 연장 추진 도시", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "한강메트로자이, 힐스테이트 리버시티, 김포 풍무푸르지오", keyTransit: "김포골드라인, 지하철 5호선 연장(검단-김포 추진)", memorizeTrick: "마곡 직주근접 + 5호선 연장선 추진 한강신도시", description: "마곡지구 15분 생활권 및 한강2 콤팩트시티 신규 지정", pin: { x: 10, y: 49 } },
+  { id: "namyangju", name: "남양주시", subRegion: "경춘·경원축 (왕숙 6.6만)", tier: "3기 신도시 최대 거점 (왕숙)", tierColor: "bg-emerald-100 text-emerald-900 border-emerald-300", leadComplex: "다산 e편한세상자이, 별내 아이파크, 남양주 왕숙 1·2지구", keyTransit: "8호선 별내선, 4호선 진접선, 9호선 연장(풍양역), GTX-B(왕숙역)", memorizeTrick: "3기 신도시 최대어 6.6만세대 왕숙! 8호선 별내 + GTX-B", description: "다산·별내 인프라 및 3기 신도시 왕숙 6.6만호 매머드 공급", pin: { x: 55, y: 51 } },
+  { id: "uijeongbu", name: "의정부시", subRegion: "경원축", tier: "경기 북부 행정 중심", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "탑석센트럴자이, 의정부역 센트럴자이앤위브캐슬", keyTransit: "1호선, 7호선 연장(탑석역), GTX-C(의정부역 착공)", memorizeTrick: "GTX-C 의정부역 삼성역 15분 + 7호선 탑석역 연장", description: "경기도 북부청사 소재지 및 GTX-C 의정부역 강남 직결", pin: { x: 43, y: 45 } },
+  { id: "yangju", name: "양주시", subRegion: "경원축 (옥정·회천)", tier: "GTX-C 기점 (덕정역)", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "양주옥정 더원파크빌리지, 회천 디에트르", keyTransit: "1호선(덕정·덕계역), 7호선 옥정 연장(착공), GTX-C(덕정역)", memorizeTrick: "GTX-C 기점 덕정역 + 옥정 신도시 대단지", description: "GTX-C 덕정역과 7호선 옥정 연장선 착공", pin: { x: 41, y: 40 } },
+  { id: "dongducheon", name: "동두천시", subRegion: "경원축", tier: "수도권 북부 관문", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "지행역 센트레빌, 동두천송내주공", keyTransit: "1호선(지행·동두천역), GTX-C 연장 검토", memorizeTrick: "1호선 지행역 생활권 + 소요산", description: "1호선 급행 운행 및 미군 반환 공여지 개발", pin: { x: 44, y: 35 } },
+  { id: "pocheon", name: "포천시", subRegion: "동북축", tier: "7호선 옥정-포천 연장", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "포천 포레스트자이", keyTransit: "7호선 옥정~포천 광역철도 추진, 세종포천고속도로", memorizeTrick: "세종포천고속도로 + 7호선 포천 연장선", description: "세종포천고속도로 개통 및 7호선 포천 연장 추진", pin: { x: 55, y: 31 } },
+  { id: "yeoncheon", name: "연천군", subRegion: "북부 청정축", tier: "1호선 전철 연장 개통", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "연천 e편한세상", keyTransit: "1호선 연천역 전철 개통", memorizeTrick: "1호선 수도권 전철 종점 연천역", description: "1호선 복선전철 개통으로 서울 접근성 개선", pin: { x: 40, y: 25 } },
+  { id: "gwangju_si", name: "광주시", subRegion: "동남축 (태전·고산)", tier: "판교·강남 20분 생활권", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "태전 힐스테이트, 고산 더샵오포센트리체", keyTransit: "경강선(경기광주역 판교 13분), 수서광주선(수광선 착공)", memorizeTrick: "경강선 판교 13분 + 수서광주선 수서 12분 직결", description: "수서광주선 착공으로 강남 수서역 12분대 직결", pin: { x: 59, y: 66 } },
+  { id: "icheon", name: "이천시", subRegion: "동남축 (SK하이닉스)", tier: "반도체 D램 글로벌 본진", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "이천자이 더파크, 이천롯데캐슬골드스카이", keyTransit: "경강선(이천·부발역), 중부내륙선 KTX-이음", memorizeTrick: "SK하이닉스 본사 글로벌 반도체 10만 고소득", description: "SK하이닉스 본진 위치로 탄탄한 자족 소비력 보유", pin: { x: 70, y: 77 } },
+  { id: "yeoju", name: "여주시", subRegion: "동남축", tier: "경강선 종점 + 수변 힐링", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "여주역 금호어울림베르티스, 여주 KCC스위첸", keyTransit: "경강선 여주역, 여주-원주선 복선전철 착공", memorizeTrick: "경강선 판교 직결 + 남한강 힐링", description: "경강선 판교 직결 및 여주-원주선 환승 연계", pin: { x: 83, y: 74 } },
+  { id: "gapyeong", name: "가평군", subRegion: "북한강 생태축", tier: "경춘선 힐링 관광", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "가평자이, e편한세상가평퍼스트원", keyTransit: "경춘선, ITX-청춘 (청량리 40분, 용산 55분)", memorizeTrick: "ITX-청춘 용산 직결 + 자라섬·남이섬", description: "ITX-청춘으로 서울 용산 50분대 진입 및 북한강 힐링 주거", pin: { x: 67, y: 41 } },
+  { id: "yangpyeong", name: "양평군", subRegion: "남한강 생태축", tier: "경의중앙선 전원 주거", tierColor: "bg-slate-100 text-slate-900 border-slate-300", leadComplex: "양평역 한라비발디, 양평 센트럴파크써밋", keyTransit: "경의중앙선 양평역, KTX-이음(청량리 25분)", memorizeTrick: "KTX 양평역 청량리 25분 + 남한강 영구 조망", description: "KTX 청량리 20분대 도달 및 수도권 대표 전원 친환경 타운", pin: { x: 79, y: 60 } }
 ];
 
 const MEMORIZE_QUIZZES = [
@@ -331,56 +331,59 @@ export const DistrictMemorizer: React.FC = () => {
             </div>
 
             {/* Interactive Map Canvas Container */}
-            <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 flex items-center justify-center min-h-[500px] select-none">
-              <img
-                src={activeRegion === "SEOUL" ? "/maps/seoul_districts_map.png" : "/maps/gyeonggi_districts_map.png"}
-                alt={activeRegion === "SEOUL" ? "서울 25개 자치구 지도" : "경기도 31개 시·군 지도"}
-                className="max-h-[580px] w-auto object-contain transition-all duration-300"
-              />
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 flex items-center justify-center p-2 sm:p-4 min-h-[520px] select-none">
+              {/* Strict Bounding Box hugging the exact rendered image width and height */}
+              <div className="relative inline-block max-w-full">
+                <img
+                  src={activeRegion === "SEOUL" ? "/maps/seoul_districts_map.png" : "/maps/gyeonggi_districts_map.png"}
+                  alt={activeRegion === "SEOUL" ? "서울 25개 자치구 지도" : "경기도 31개 시·군 지도"}
+                  className="block max-h-[560px] w-auto object-contain transition-all duration-300 pointer-events-none"
+                />
 
-              {/* Pin Overlay Layer */}
-              <div className="absolute inset-0 pointer-events-none">
-                {/* 1. All District Subtle Clickable Pin Dots */}
-                {currentList.map((item) => {
-                  const isSelected = selectedDistrict?.id === item.id;
+                {/* Pin Overlay Layer strictly hugging the image */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {/* 1. All District Subtle Clickable Pin Dots */}
+                  {currentList.map((item) => {
+                    const isSelected = selectedDistrict?.id === item.id;
 
-                  return (
-                    <div
-                      key={item.id}
-                      style={{ left: `${item.pin.x}%`, top: `${item.pin.y}%` }}
-                      className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto cursor-pointer group"
-                      onClick={() => setSelectedDistrict(item)}
-                    >
-                      {isSelected ? (
-                        /* Selected Pin Badge & Ripple Pulse */
-                        <div className="relative flex flex-col items-center animate-bounce">
-                          {/* Pin Icon with Glow */}
-                          <div className="w-8 h-8 rounded-full bg-rose-500 text-white shadow-xl flex items-center justify-center border-2 border-white ring-4 ring-rose-300/80 z-20">
-                            <MapPin className="w-5 h-5 fill-white" />
+                    return (
+                      <div
+                        key={item.id}
+                        style={{ left: `${item.pin.x}%`, top: `${item.pin.y}%` }}
+                        className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto cursor-pointer group"
+                        onClick={() => setSelectedDistrict(item)}
+                      >
+                        {isSelected ? (
+                          /* Selected Pin Badge & Ripple Pulse */
+                          <div className="relative flex flex-col items-center animate-bounce z-20">
+                            {/* Pin Icon with Glow */}
+                            <div className="w-8 h-8 rounded-full bg-rose-500 text-white shadow-xl flex items-center justify-center border-2 border-white ring-4 ring-rose-300/80 z-20">
+                              <MapPin className="w-5 h-5 fill-white" />
+                            </div>
+
+                            {/* Pin Label Tooltip */}
+                            <div className="mt-1 px-3 py-1 rounded-xl bg-slate-900 text-white text-xs font-black whitespace-nowrap shadow-lg border border-slate-700 z-30 flex items-center gap-1">
+                              <span>{item.name}</span>
+                              <span className="text-[10px] text-rose-300 font-bold">({item.subRegion.split(" ")[0]})</span>
+                            </div>
+
+                            {/* Radar Ripple Effect */}
+                            <span className="absolute -inset-2 rounded-full bg-rose-400/40 animate-ping z-0" />
+                            <span className="absolute -inset-4 rounded-full bg-rose-400/20 animate-pulse z-0" />
                           </div>
-
-                          {/* Pin Label Tooltip */}
-                          <div className="mt-1 px-3 py-1 rounded-xl bg-slate-900 text-white text-xs font-black whitespace-nowrap shadow-lg border border-slate-700 z-30 flex items-center gap-1">
-                            <span>{item.name}</span>
-                            <span className="text-[10px] text-rose-300 font-bold">({item.subRegion.split(" ")[0]})</span>
+                        ) : (
+                          /* Unselected Minimal Pin Dot (Hoverable) */
+                          <div className="relative flex items-center justify-center">
+                            <div className="w-3 h-3 rounded-full bg-slate-700/60 hover:bg-[#0066ff] border border-white shadow-sm transition group-hover:scale-150" />
+                            <div className="hidden group-hover:block absolute bottom-4 px-2 py-0.5 rounded-lg bg-slate-900 text-white text-[10px] font-bold whitespace-nowrap shadow-md z-30">
+                              {item.name}
+                            </div>
                           </div>
-
-                          {/* Radar Ripple Effect */}
-                          <span className="absolute -inset-2 rounded-full bg-rose-400/40 animate-ping z-0" />
-                          <span className="absolute -inset-4 rounded-full bg-rose-400/20 animate-pulse z-0" />
-                        </div>
-                      ) : (
-                        /* Unselected Minimal Pin Dot (Hoverable) */
-                        <div className="relative flex items-center justify-center">
-                          <div className="w-3.5 h-3.5 rounded-full bg-slate-800/60 hover:bg-[#0066ff] border-2 border-white shadow-sm transition group-hover:scale-150" />
-                          <div className="hidden group-hover:block absolute bottom-5 px-2 py-0.5 rounded-lg bg-slate-900 text-white text-[10px] font-bold whitespace-nowrap shadow-md z-30">
-                            {item.name}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
