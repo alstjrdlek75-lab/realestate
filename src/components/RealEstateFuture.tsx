@@ -41,12 +41,13 @@ import {
   Calendar,
   Users
 } from 'lucide-react';
+import { DistrictMemorizer } from './DistrictMemorizer';
 
 interface RealEstateFutureProps {
   onStartDiagnostic?: () => void;
 }
 
-type FutureTab = 'NEW_TOWNS' | 'FUTURE_NEWS' | 'GLOSSARY';
+type FutureTab = 'NEW_TOWNS' | 'DISTRICT_MEMORIZE' | 'FUTURE_NEWS' | 'GLOSSARY';
 type MapViewType = 'DISTRICT_BLOCKS' | 'METRO';
 type BlockViewDisplay = 'TABLE' | 'CARDS';
 type CalcMode = 'DSR' | 'LTV' | 'GAP';
@@ -1943,12 +1944,13 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
         </div>
       </div>
 
-      {/* Main 3 Sub-Tabs */}
+      {/* Main 4 Sub-Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs sm:text-sm">
         {[
           { id: 'NEW_TOWNS', label: '1. 신도시 & 메가 재개발 도면 및 전수 도감', icon: '🗺️' },
-          { id: 'FUTURE_NEWS', label: '2. 미래 주목 변수 & 실시간 네이버 뉴스', icon: '📡' },
-          { id: 'GLOSSARY', label: '3. 필수 부동산·대출 용어 & 실시간 계산기', icon: '📚' },
+          { id: 'DISTRICT_MEMORIZE', label: '2. 서울 25개 구 & 경기 31개 시·군 암기 도감', icon: '🧠' },
+          { id: 'FUTURE_NEWS', label: '3. 미래 주목 변수 & 실시간 네이버 뉴스', icon: '📡' },
+          { id: 'GLOSSARY', label: '4. 필수 부동산·대출 용어 & 실시간 계산기', icon: '📚' },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -2603,7 +2605,14 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
       )}
 
       {/* ========================================================================= */}
-      {/* SUB-TAB 2: 미래 주목 변수 & 실시간 뉴스 */}
+      {/* SUB-TAB 2: 서울 25개 구 & 경기 31개 시·군 암기 도감 & 퀴즈 */}
+      {/* ========================================================================= */}
+      {activeTab === 'DISTRICT_MEMORIZE' && (
+        <DistrictMemorizer />
+      )}
+
+      {/* ========================================================================= */}
+      {/* SUB-TAB 3: 미래 주목 변수 & 실시간 뉴스 */}
       {/* ========================================================================= */}
       {activeTab === 'FUTURE_NEWS' && (
         <div className="space-y-6 animate-fadeIn">
