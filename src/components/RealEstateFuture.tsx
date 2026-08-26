@@ -1924,103 +1924,27 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
-      {/* Clean & High-Contrast Header Banner */}
-      <div className="naver-card p-6 sm:p-10 bg-white border border-slate-200 shadow-sm rounded-3xl relative overflow-hidden">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-fadeIn">
+      {/* Top General Header Banner */}
+      <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm rounded-3xl relative overflow-hidden">
         <div className="max-w-4xl">
-          <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-black mb-3 border ${
-            selectedTown.category === 'REDEVELOPMENT'
-              ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
-              : 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30'
-          }`}>
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>
-              {selectedTown.category === 'REDEVELOPMENT'
-                ? '서울·수도권 메가 재개발·뉴타운 정비사업 구역별 전수 도감'
-                : '나무위키 3.1. 공동주택 전수 목록 & 국토부·LH 공식 토지이용계획도 연동'
-              }
-            </span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-black mb-2.5 border bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>수도권 미래 주거 공급 & 정비사업 통합 마스터플랜</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            <span className={selectedTown.category === 'REDEVELOPMENT' ? 'text-indigo-600' : 'text-[#03c75a]'}>
-              {selectedTown.name}
-            </span> {selectedTown.category === 'REDEVELOPMENT' ? '구역별 정비사업 도감' : '공동주택 전수 도감'} <br />
-            {selectedTown.category === 'REDEVELOPMENT' ? '구역·시공사·세대수·사업단계 총정리' : '구역·단지명·세대수·시행주체·시공사 총정리'}
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+            <span className="text-[#03c75a]">신도시 & 재개발</span> 미래지도 및 실시간 브리핑
           </h1>
 
-          <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
-            {selectedTown.category === 'REDEVELOPMENT'
-              ? <span>서울 및 수도권 핵심 정비사업지의 <strong>구역별(1~8구역 등) 시공사(현대건설 디에이치, 대우 써밋, DL 아크로, 포스코 오티에르, 삼성 래미안 등)와 세대수, 일반분양/입주 시기</strong>를 완벽하게 비교 탐색할 수 있습니다.</span>
-              : <span>나무위키 및 LH 청약플러스의 <strong>'3.1. 공동주택'</strong> 전수 데이터(A1~A25, B1~B17, S1~S20 등)를 도표와 공식 도면으로 완벽 구현하여, <strong>시공사(대광건영, 계룡건설, 대우건설, 현대건설 등)와 청약·입주 시기</strong>를 즉시 확인할 수 있습니다.</span>
-            }
+          <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed font-medium">
+            3기 신도시 7대 지구 공식 토지이용계획도, 서울·수도권 4대 핵심 메가 재개발 정비계획도, 네이버/위성 인터랙티브 실물 지도, 실시간 뉴스 및 금융 시뮬레이터를 통합 제공합니다.
           </p>
-
-          <div className="flex flex-wrap items-center gap-2.5 mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-slate-600">
-            <a 
-              href="https://www.xn--3-3u6ey6lv7rsa.kr/kor/Main.do" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#03c75a] hover:bg-[#02b14f] text-white shadow-xs transition"
-            >
-              <Building2 className="w-3.5 h-3.5" />
-              <span>3기신도시.kr 공식 메인 포털 ↗</span>
-            </a>
-            <a 
-              href={selectedTown.lhOfficialUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#e8f8ee] hover:bg-[#03c75a] text-[#029f45] hover:text-white transition"
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span>{selectedTown.shortName} 공식 지구 현황관 ↗</span>
-            </a>
-            <a 
-              href="https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/AreanoticeMgr/list.do?mCode=MN123" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#edf4ff] hover:bg-[#0066ff] text-[#0066ff] hover:text-white transition"
-            >
-              <Radio className="w-3.5 h-3.5" />
-              <span>청약일정 알리미 ↗</span>
-            </a>
-            <a 
-              href={selectedTown.namuWikiUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 transition"
-            >
-              <BookOpen className="w-3.5 h-3.5 text-[#0066ff]" />
-              <span>나무위키 {selectedTown.shortName} 백과 원문 ↗</span>
-            </a>
-            {selectedTown.discoUrl && (
-              <a 
-                href={selectedTown.discoUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-[#0066ff] text-[#0066ff] hover:text-white transition shadow-xs"
-              >
-                <Compass className="w-3.5 h-3.5" />
-                <span>디스코 구리토평2 분석 리포트 원문 ↗</span>
-              </a>
-            )}
-            {selectedTown.hdecNewsUrl && (
-              <a 
-                href={selectedTown.hdecNewsUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-700 text-indigo-700 hover:text-white transition shadow-xs font-black"
-              >
-                <HardHat className="w-3.5 h-3.5" />
-                <span>현대건설 구리 수택 7,007세대 수주 공식 뉴스룸 ↗</span>
-              </a>
-            )}
-          </div>
         </div>
       </div>
 
       {/* Main 3 Sub-Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs sm:text-sm">
         {[
           { id: 'NEW_TOWNS', label: '1. 신도시 & 메가 재개발 도면 및 전수 도감', icon: '🗺️' },
           { id: 'FUTURE_NEWS', label: '2. 미래 주목 변수 & 실시간 네이버 뉴스', icon: '📡' },
@@ -2046,6 +1970,102 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
       {/* ========================================================================= */}
       {activeTab === 'NEW_TOWNS' && (
         <div className="space-y-6 animate-fadeIn">
+
+          {/* Selected Town / Redevelopment Specific Header Banner */}
+          <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm rounded-3xl relative overflow-hidden">
+            <div className="max-w-4xl">
+              <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-black mb-3 border ${
+                selectedTown.category === 'REDEVELOPMENT'
+                  ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                  : 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30'
+              }`}>
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>
+                  {selectedTown.category === 'REDEVELOPMENT'
+                    ? '서울·수도권 메가 재개발·뉴타운 정비사업 구역별 전수 도감'
+                    : '나무위키 3.1. 공동주택 전수 목록 & 국토부·LH 공식 토지이용계획도 연동'
+                  }
+                </span>
+              </div>
+
+              <h2 className="text-xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                <span className={selectedTown.category === 'REDEVELOPMENT' ? 'text-indigo-600' : 'text-[#03c75a]'}>
+                  {selectedTown.name}
+                </span> {selectedTown.category === 'REDEVELOPMENT' ? '구역별 정비사업 도감' : '공동주택 전수 도감'} <br />
+                <span className="text-base sm:text-2xl text-slate-700 font-bold">
+                  {selectedTown.category === 'REDEVELOPMENT' ? '구역·시공사·세대수·사업단계 총정리' : '구역·단지명·세대수·시행주체·시공사 총정리'}
+                </span>
+              </h2>
+
+              <p className="text-slate-600 text-xs sm:text-sm mt-3 leading-relaxed font-medium">
+                {selectedTown.category === 'REDEVELOPMENT'
+                  ? <span>서울 및 수도권 핵심 정비사업지의 <strong>구역별(1~8구역 등) 시공사(현대건설 디에이치, 대우 써밋, DL 아크로, 포스코 오티에르 등)와 세대수, 일반분양/입주 시기</strong>를 완벽하게 비교 탐색할 수 있습니다.</span>
+                  : <span>나무위키 및 LH 청약플러스의 <strong>'3.1. 공동주택'</strong> 전수 데이터(A1~A25, B1~B17, S1~S20 등)를 도표와 공식 도면으로 완벽 구현하여, <strong>시공사(대광건영, 계룡건설, 대우건설, 현대건설 등)와 청약·입주 시기</strong>를 즉시 확인할 수 있습니다.</span>
+                }
+              </p>
+
+              <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-slate-600">
+                <a 
+                  href="https://www.xn--3-3u6ey6lv7rsa.kr/kor/Main.do" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#03c75a] hover:bg-[#02b14f] text-white shadow-xs transition"
+                >
+                  <Building2 className="w-3.5 h-3.5" />
+                  <span>3기신도시.kr 공식 메인 포털 ↗</span>
+                </a>
+                <a 
+                  href={selectedTown.lhOfficialUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#e8f8ee] hover:bg-[#03c75a] text-[#029f45] hover:text-white transition"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>{selectedTown.shortName} 공식 지구 현황관 ↗</span>
+                </a>
+                <a 
+                  href="https://www.xn--3-3u6ey6lv7rsa.kr/kor/CMS/AreanoticeMgr/list.do?mCode=MN123" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#edf4ff] hover:bg-[#0066ff] text-[#0066ff] hover:text-white transition"
+                >
+                  <Radio className="w-3.5 h-3.5" />
+                  <span>청약일정 알리미 ↗</span>
+                </a>
+                <a 
+                  href={selectedTown.namuWikiUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 transition"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-[#0066ff]" />
+                  <span>나무위키 {selectedTown.shortName} 백과 원문 ↗</span>
+                </a>
+                {selectedTown.discoUrl && (
+                  <a 
+                    href={selectedTown.discoUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-[#0066ff] text-[#0066ff] hover:text-white transition shadow-xs"
+                  >
+                    <Compass className="w-3.5 h-3.5" />
+                    <span>디스코 구리토평2 분석 리포트 원문 ↗</span>
+                  </a>
+                )}
+                {selectedTown.hdecNewsUrl && (
+                  <a 
+                    href={selectedTown.hdecNewsUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-700 text-indigo-700 hover:text-white transition shadow-xs font-black"
+                  >
+                    <HardHat className="w-3.5 h-3.5" />
+                    <span>현대건설 구리 수택 7,007세대 수주 공식 뉴스룸 ↗</span>
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
 
           {/* Category Filter Switcher & Map Mode Controls */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
