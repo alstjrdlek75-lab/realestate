@@ -41,21 +41,21 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Logo (Naver Land style) */}
         <div 
           onClick={onReset}
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-2 sm:gap-3 cursor-pointer group shrink-0"
         >
-          <div className="w-9 h-9 rounded-xl bg-[#03c75a] flex items-center justify-center shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-            <Building2 className="w-5 h-5 text-white" />
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#03c75a] flex items-center justify-center shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform shrink-0">
+            <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-black text-xl tracking-tight text-slate-900">
+            <div className="flex items-center gap-1 sm:gap-2">
+              <span className="font-black text-base sm:text-xl tracking-tight text-slate-900 whitespace-nowrap">
                 <span className="text-[#03c75a]">부동산</span> 매트릭스
               </span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30">
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 hidden sm:inline-block">
                 PRO 2.0
               </span>
             </div>
-            <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
+            <p className="text-[11px] text-slate-500 font-medium hidden md:block">
               살기 좋은 집(Living) vs 사야 하는 집(Buying) 맞춤 진단기
             </p>
           </div>
@@ -104,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Navigation & Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {/* Mobile Nav Tabs */}
           <div className="flex lg:hidden items-center gap-1">
             <button
@@ -146,14 +146,14 @@ export const Header: React.FC<HeaderProps> = ({
               )}
               <button
                 onClick={onGoToDiagnostic}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-semibold transition cursor-pointer"
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-semibold transition cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>재진단</span>
               </button>
               <button
                 onClick={handleShare}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs sm:text-sm font-bold shadow-sm transition cursor-pointer"
+                className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs sm:text-sm font-bold shadow-sm transition cursor-pointer"
               >
                 <Share2 className="w-3.5 h-3.5" />
                 <span>{copied ? '복사됨!' : '공유'}</span>
@@ -163,9 +163,9 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center gap-2 sm:gap-3">
               <button
                 onClick={onGoToDiagnostic}
-                className="flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs sm:text-sm font-bold shadow-sm transition-all hover:scale-105 cursor-pointer"
+                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs sm:text-sm font-bold shadow-sm transition-all hover:scale-105 cursor-pointer whitespace-nowrap"
               >
-                <Compass className="w-4 h-4" />
+                <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                 <span>진단 시작</span>
               </button>
             </div>

@@ -90,12 +90,12 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
                   부동산 매수 필독 원칙
                 </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-normal whitespace-nowrap">
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight leading-snug break-keep">
                 왜 '살고 싶은 곳(Living)'과 '사야 하는 곳(Buying)'을 분리해야 할까요?
               </h2>
             </div>
 
-            <span className="text-xs text-slate-400 font-medium whitespace-nowrap shrink-0">
+            <span className="text-xs text-slate-500 font-medium break-keep">
               대한민국 가계 자산의 70%가 묶이는 부동산의 본질
             </span>
           </div>
