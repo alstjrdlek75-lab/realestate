@@ -76,16 +76,6 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <button
-            onClick={onGoToThoughts}
-            className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer ${
-              isThoughtsView ? 'bg-white text-[#03c75a] shadow-2xs font-black' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Lightbulb className="w-3.5 h-3.5 text-[#03c75a]" />
-            <span>내 생각</span>
-          </button>
-
-          <button
             onClick={onGoToHistory}
             className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1 cursor-pointer ${
               isHistoryView ? 'bg-white text-[#0066ff] shadow-2xs font-black' : 'text-slate-600 hover:text-slate-900'
@@ -114,20 +104,22 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="px-1 py-0.2 rounded bg-white/20 text-[10px] font-black">Npay</span>
             <span>부동산 뉴스</span>
           </button>
+
+          <button
+            onClick={onGoToThoughts}
+            className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer ${
+              isThoughtsView ? 'bg-white text-[#03c75a] shadow-2xs font-black' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Lightbulb className="w-3.5 h-3.5 text-[#03c75a]" />
+            <span>내 생각</span>
+          </button>
         </div>
 
         {/* Navigation & Actions */}
         <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {/* Mobile Nav Tabs */}
           <div className="flex lg:hidden items-center gap-1">
-            <button
-              onClick={onGoToThoughts}
-              className={`px-2 py-1 rounded-lg text-xs font-bold transition border cursor-pointer ${
-                isThoughtsView ? 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30 font-black' : 'bg-slate-100 text-slate-700 border-slate-200'
-              }`}
-            >
-              내생각
-            </button>
             <button
               onClick={onGoToNews}
               className={`px-2 py-1 rounded-lg text-xs font-bold transition border cursor-pointer ${
@@ -143,6 +135,14 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               미래지도
+            </button>
+            <button
+              onClick={onGoToThoughts}
+              className={`px-2 py-1 rounded-lg text-xs font-bold transition border cursor-pointer ${
+                isThoughtsView ? 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30 font-black' : 'bg-slate-100 text-slate-700 border-slate-200'
+              }`}
+            >
+              내생각
             </button>
           </div>
 

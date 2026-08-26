@@ -130,37 +130,9 @@ export function App() {
           <div className="animate-fadeIn">
             <Hero onStart={handleStartDiagnostic} />
             
-            {/* Quick Teaser 4-Column Cards: My Thoughts & History & Future & Naver News */}
+            {/* Quick Teaser 4-Column Cards: History & Future & Naver News & My Thoughts */}
             <div className="max-w-6xl mx-auto px-4 pb-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Card 1: My Thoughts (New) */}
-              <div 
-                onClick={handleGoToThoughts}
-                className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group ring-1 ring-emerald-500/20"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-[#e8f8ee] text-[#029f45] flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
-                    <Lightbulb className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-black text-[#029f45] bg-[#e8f8ee] px-2 py-0.5 rounded-full">
-                      필독 칼럼
-                    </span>
-                    <h3 className="text-base font-black text-slate-900 mt-0.5">
-                      💡 내 생각
-                    </h3>
-                  </div>
-                </div>
-
-                <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  "오피스텔은 왜 살기(Live)만 하고 사지(Buy) 말라는가?" 등 시장 본질을 꿰뚫는 실전 칼럼
-                </p>
-
-                <div className="pt-2 flex items-center text-xs font-bold text-[#029f45] group-hover:translate-x-1 transition-transform">
-                  <span>칼럼 읽어보기 →</span>
-                </div>
-              </div>
-
-              {/* Card 2: History */}
+              {/* Card 1: History */}
               <div 
                 onClick={handleGoToHistory}
                 className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
@@ -188,7 +160,7 @@ export function App() {
                 </div>
               </div>
 
-              {/* Card 3: Future & 3rd New Towns & Redevelopments */}
+              {/* Card 2: Future & 3rd New Towns & Redevelopments */}
               <div 
                 onClick={handleGoToFuture}
                 className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
@@ -216,7 +188,7 @@ export function App() {
                 </div>
               </div>
 
-              {/* Card 4: Naver Land News Portal */}
+              {/* Card 3: Naver Land News Portal */}
               <div 
                 onClick={handleGoToNews}
                 className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
@@ -241,6 +213,34 @@ export function App() {
 
                 <div className="pt-2 flex items-center text-xs font-bold text-[#03c75a] group-hover:translate-x-1 transition-transform">
                   <span>실시간 뉴스 보기 →</span>
+                </div>
+              </div>
+
+              {/* Card 4: My Thoughts (Placed at the end) */}
+              <div 
+                onClick={handleGoToThoughts}
+                className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group ring-1 ring-emerald-500/20"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-[#e8f8ee] text-[#029f45] flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
+                    <Lightbulb className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black text-[#029f45] bg-[#e8f8ee] px-2 py-0.5 rounded-full">
+                      필독 칼럼
+                    </span>
+                    <h3 className="text-base font-black text-slate-900 mt-0.5">
+                      💡 내 생각
+                    </h3>
+                  </div>
+                </div>
+
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  "오피스텔은 왜 살기(Live)만 하고 사지(Buy) 말라는가?" 등 시장 본질을 꿰뚫는 실전 칼럼
+                </p>
+
+                <div className="pt-2 flex items-center text-xs font-bold text-[#029f45] group-hover:translate-x-1 transition-transform">
+                  <span>칼럼 읽어보기 →</span>
                 </div>
               </div>
             </div>
