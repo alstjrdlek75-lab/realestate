@@ -59,55 +59,51 @@ export const MyThoughts: React.FC = () => {
   const allTags = ['전체', ...Array.from(new Set(THOUGHT_ARTICLES.map(a => a.tag)))];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 animate-fadeIn space-y-6 sm:space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
       
-      {/* Top Banner Header (Naver Land Signature Clean Style) */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-8 relative overflow-hidden border-t-4 border-t-[#03c75a]">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-2 max-w-3xl">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 text-xs font-black">
-              <Lightbulb className="w-3.5 h-3.5" />
-              <span>부동산 실전 리서치 칼럼</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 leading-tight">
-              읽어볼만한 생각들
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-              시장 유행과 단기 호가에 휩쓸리지 않고, <strong>부동산의 본질(대지지분, 입지 서열, 세제, 현금흐름)</strong>을 꿰뚫어보는 실전 투자·거주 인사이트 컬렉션입니다.
-            </p>
+      {/* Clean & High-Contrast Header Banner (Naver Real Estate History Style) */}
+      <div className="naver-card p-6 sm:p-10 bg-white border border-slate-200 shadow-sm rounded-3xl relative overflow-hidden">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 text-xs font-black mb-3">
+            <Lightbulb className="w-3.5 h-3.5 text-[#03c75a]" />
+            <span>부동산 실전 칼럼 컬렉션</span>
           </div>
 
-          <div className="flex items-center gap-3 self-start md:self-auto bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-200 text-xs text-slate-600 font-bold">
-            <BookOpen className="w-4 h-4 text-[#03c75a]" />
-            <span>총 <strong className="text-slate-900">{THOUGHT_ARTICLES.length}편</strong>의 엄선 칼럼 수록</span>
-          </div>
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            시장 유행에 흔들리지 않는, <br />
+            <span className="text-[#03c75a]">부동산 실전 인사이트</span>와 옥석 가리기
+          </h1>
+
+          <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
+            철도 호재 거품 판별부터 진짜 역세권의 디테일한 기준, 생애주기별 자산 배분과 청약·갈아타기 실전 공식까지 — <br className="hidden sm:inline" />
+            빅데이터와 실증 사례를 분석하면 <strong>왜 사는(실거주) 집과 사야 하는(자산가치) 집이 달라야 하는지</strong> 그 해답이 보입니다.
+          </p>
         </div>
+      </div>
+
+      {/* Navigation Sub-Tabs (Clean Naver Tab Style) */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs sm:text-sm">
+        {allTags.map(tag => (
+          <button
+            key={tag}
+            onClick={() => setSelectedTag(tag)}
+            className={`px-4 py-3 rounded-2xl whitespace-nowrap font-black transition flex items-center gap-1.5 cursor-pointer border ${
+              selectedTag === tag
+                ? 'bg-[#03c75a] text-white border-[#03c75a] shadow-sm'
+                : 'bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-50 border-slate-200'
+            }`}
+          >
+            <span>{tag === '전체' ? '📑 전체 칼럼' : tag}</span>
+          </button>
+        ))}
       </div>
 
       {/* Main Two-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
         
-        {/* Left Column: Article List & Filter (4 Cols) */}
+        {/* Left Column: Article List & Search (4 Cols) */}
         <div className="lg:col-span-4 space-y-4">
-          
-          {/* Tag Filter Pills */}
-          <div className="flex flex-wrap gap-1.5 p-1.5 bg-white rounded-2xl border border-slate-200 shadow-2xs">
-            {allTags.map(tag => (
-              <button
-                key={tag}
-                onClick={() => setSelectedTag(tag)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition cursor-pointer ${
-                  selectedTag === tag
-                    ? 'bg-[#03c75a] text-white shadow-xs'
-                    : 'text-slate-600 hover:bg-slate-100'
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
-
-          {/* Search Box (Naver Style) */}
+          {/* Search Box */}
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
@@ -115,7 +111,7 @@ export const MyThoughts: React.FC = () => {
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="칼럼 제목 및 키워드 검색..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white border border-slate-200 text-xs focus:outline-hidden focus:border-[#03c75a] focus:ring-2 focus:ring-[#03c75a]/20 font-medium"
+              className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-xs focus:outline-hidden focus:border-[#03c75a] focus:ring-2 focus:ring-[#03c75a]/20 font-medium shadow-2xs"
             />
           </div>
 
