@@ -1291,24 +1291,24 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
   },
   {
     id: 'guri_topyeong',
-    name: '구리 토평 (구리토평2 2.2만호)',
+    name: '구리 토평 (구리토평2 1.85만호)',
     shortName: '구리 토평 (신규택지)',
     category: 'NEW_TOWN',
     categoryLabel: '3기 신도시 & 신규택지',
     location: '경기도 구리시 교문동·수택동·토평동·아천동 일원',
-    units: '약 18,500~22,000호',
-    areaSize: '약 275만㎡ (약 83만 평)',
-    plannedPopulation: '약 5만 3천 명',
-    expectedMoveIn: '2029~2034년 순차 공급/입주 목표',
-    statusTag: '지구지정 고시 완료 & 한강변 리버프론트',
-    statusTagColor: 'bg-cyan-50 text-cyan-800 border-cyan-300',
-    transitSummary: '지하철 8호선(장자호수공원역), 경의중앙선(구리역), GTX-B(갈매 연계), 강변북로 지하화/확장, 세종포천고속도로(남구리IC), 수도권제1순환(토평IC)',
-    transitLines: ['지하철 8호선 (장자호수공원역)', '경의중앙선', '강변북로', '세종포천고속도로', '수도권제1순환'],
-    anchorCompanies: 'AI·빅데이터·SW 혁신 산업, 디지털 헬스케어, MICE·수변 레저 문화 복합 클러스터, 첨단 스타트업 밸리',
-    selfSufficientLand: '약 55만㎡ 자족시설용지 (한강변 워터프론트 복합 자족도시)',
-    currentStatus: '2023년 11월 신규택지 발표 후 2025년 12월 지구지정 및 지형도면 고시 완료. 2026년 지구계획 수립 승인 신청 및 2027년 최초 청약/보상 본격화 추진.',
-    proTip: '한강 영구 조망권과 8호선 장자호수공원역을 품은 3.5기 신도시 최대어. 잠실 15분, 강남 25분대 진입 가능한 준강남급 한강변 최상급 입지.',
-    naverNewsQuery: '구리 토평2 공공주택지구 분양 8호선',
+    units: '약 18,500호 (지구계획 수립 단계 / 미확정)',
+    areaSize: '약 292만㎡ (약 88만 평)',
+    plannedPopulation: '약 4만 5천 명 (기본구상 예상치)',
+    expectedMoveIn: '2029~2033년 순차 공급/입주 목표 (예정)',
+    statusTag: '신규공공택지 지구지정 완료 (지구계획 수립 중)',
+    statusTagColor: 'bg-amber-50 text-amber-900 border-amber-300',
+    transitSummary: '지하철 8호선(장자호수공원역), 경의중앙선(구리역), GTX-B(갈매 연계), 강변북로 지하화/확장 구상, 세종포천고속도로(남구리IC), 수도권제1순환(토평IC)',
+    transitLines: ['지하철 8호선 (장자호수공원역 연계)', '경의중앙선', '강변북로 지하화 구상', '세종포천고속도로', '수도권제1순환'],
+    anchorCompanies: '한강변 수변 여가·MICE 복합 특화단지, AI·빅데이터·SW 혁신 산업, 디지털 헬스케어, 스마트 스타트업 밸리 유치 구상',
+    selfSufficientLand: '약 55만㎡ 자족시설용지 (한강변 워터프론트 복합 자족도시 구상안)',
+    currentStatus: '2023년 11월 국토부 신규공공택지(1.85만호) 발표 후 지구지정 고시 단계입니다. 왕숙·교산 등 기존 3기 신도시와 달리 아직 세부 아파트 블록 번호(A/B/S)나 시공사, 세부 분양가는 발표되지 않았으며, 2026~2027년 국토부 지구계획 승인 고시를 통해 구체적인 분양 블록이 확정될 예정입니다.',
+    proTip: '현재는 국토교통부 공식 공간구상도에 따른 4대 권역(리버프론트·역세권·MICE·에듀) 기본구상 단계입니다. 8호선 장자호수공원역 접근성과 한강 영구조망 입지적 가치를 눈여겨보시되, 향후 세부 블록 고시를 확인해야 합니다.',
+    naverNewsQuery: '구리 토평2 공공주택지구 지구계획 8호선',
     officialBlueprintUrl: '/maps/guri_topyeong_plan.png',
     namuWikiUrl: 'https://namu.wiki/w/%EA%B5%AC%EB%A6%AC%ED%86%A0%ED%8F%892%EC%A7%80%EA%B5%AC',
     lhOfficialUrl: 'https://www.xn--3-3u6ey6lv7rsa.kr/kor/Main.do',
@@ -1316,79 +1316,79 @@ const NEW_TOWNS_DATA: NewTownDetail[] = [
     mapCoords: { x: 630, y: 310, gangnamTime: '잠실 15분 / 강남 25분 (8호선)', seoulTime: '을지로 25분' },
     blocks: [
       {
-        blockCode: '토평 리버프론트 1블록',
-        shortCode: '리버1',
-        complexName: '구리토평 한강 리버프론트 대장',
-        unitsTotal: '1,250세대',
-        units: 1250,
-        supplyType: '공공분양',
-        subscriptionDate: '2027년 사전청약 예정',
-        moveInDate: '2031년',
-        builder: '미정 (1군 랜드마크 브랜드 예정)',
-        sizes: '전용 59㎡, 84㎡, 102㎡',
-        priceEstimate: '59㎡ 약 5.5억 / 84㎡ 약 7.5억 예상',
-        stationDistance: '한강 수변공원 바로 앞 (영구 한강 조망)',
-        featureBadge: '🌊 한강 영구조망 대장',
-        progressStatus: '지구계획 수립 중',
-        progressStatusColor: 'bg-cyan-100 text-cyan-800 border-cyan-300',
-        note: '한강 수변을 바로 내려다보는 최고급 조망 특화 랜드마크 대단지',
+        blockCode: '[공간구상 1] 한강 리버프론트존',
+        shortCode: '리버프론트',
+        complexName: '한강 수변 특화 주거단지 (기본구상)',
+        unitsTotal: '지구계획 수립 후 확정',
+        units: 0,
+        supplyType: '공공·민간 혼합 구상',
+        subscriptionDate: '2027년 이후 예정',
+        moveInDate: '2031년 이후 예정',
+        builder: '지구계획 승인 후 공모/선정',
+        sizes: '전용 59㎡, 84㎡, 대형 평형 구상',
+        priceEstimate: '지구계획 승인 시 확정',
+        stationDistance: '한강 수변공원 워터프론트 조망 벨트',
+        featureBadge: '🌊 한강 영구조망 특화 권역',
+        progressStatus: '국토부 기본구상 단계 (미확정)',
+        progressStatusColor: 'bg-amber-100 text-amber-900 border-amber-300',
+        note: '국토부 공간구상도 상 한강 수변을 직접 조망하는 최고급 주거 구역. 세부 블록(A/B) 및 단지명은 향후 지구계획 승인 시 확정됩니다.',
         pinPos: { x: 55, y: 65 }
       },
       {
-        blockCode: '토평 장자호수 2블록',
-        shortCode: '장자2',
-        complexName: '토평2 장자호수공원 역세권',
-        unitsTotal: '980세대',
-        units: 980,
-        supplyType: '공공분양',
-        subscriptionDate: '2027년',
-        moveInDate: '2031년',
-        builder: '미정',
-        sizes: '전용 59㎡, 74㎡, 84㎡',
-        priceEstimate: '84㎡ 약 7.2억 예상',
-        stationDistance: '8호선 장자호수공원역 도보 7분 (잠실 15분)',
-        featureBadge: '🚇 8호선 잠실 15분',
-        progressStatus: '지구계획 수립 중',
-        progressStatusColor: 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30',
-        note: '8호선 장자호수공원역 접근성이 가장 우수하여 잠실·강남 출퇴근 최적',
+        blockCode: '[공간구상 2] 장자호수공원 역세권존',
+        shortCode: '장자호수역세권',
+        complexName: '8호선 장자호수역 연계 주거복합단지',
+        unitsTotal: '지구계획 수립 후 확정',
+        units: 0,
+        supplyType: '공공분양·역세권 콤팩트 구상',
+        subscriptionDate: '2027~2028년 예정',
+        moveInDate: '2031년 이후 예정',
+        builder: '지구계획 승인 후 결정',
+        sizes: '전용 59㎡, 74㎡, 84㎡ 구상',
+        priceEstimate: '지구계획 승인 시 확정',
+        stationDistance: '8호선 장자호수공원역 도보 생활권 (잠실 15분)',
+        featureBadge: '🚇 8호선 초역세권 콤팩트시티',
+        progressStatus: '국토부 기본구상 단계 (미확정)',
+        progressStatusColor: 'bg-amber-100 text-amber-900 border-amber-300',
+        note: '8호선 장자호수공원역 접근성이 가장 우수하여 대중교통과 상업 인프라가 집중되는 고밀 복합 역세권 구역입니다.',
         pinPos: { x: 45, y: 35 }
       },
       {
-        blockCode: '토평 혁신MICE 3블록',
-        shortCode: 'MICE3',
-        complexName: '토평2 스마트 MICE 복합단지',
-        unitsTotal: '820세대',
-        units: 820,
-        supplyType: '민간분양',
-        subscriptionDate: '2028년',
-        moveInDate: '2032년',
-        builder: '미정 (하이엔드 브랜드)',
-        sizes: '전용 84㎡, 115㎡',
-        priceEstimate: '84㎡ 약 7.8억 예상',
+        blockCode: '[공간구상 3] 스마트 MICE·혁신산업존',
+        shortCode: '스마트MICE',
+        complexName: '신산업 일자리 & 자족시설 복합단지',
+        unitsTotal: '지구계획 수립 후 확정',
+        units: 0,
+        supplyType: '자족·주거 복합 구상',
+        subscriptionDate: '2028년 이후 예정',
+        moveInDate: '2032년 이후 예정',
+        builder: '민간공모 및 LH 추진',
+        sizes: '전용 84㎡, 중대형 구상',
+        priceEstimate: '지구계획 승인 시 확정',
         stationDistance: '스마트 테크노밸리 & MICE 앵커 인접',
-        featureBadge: '🏢 스마트 MICE 직주일치',
-        progressStatus: '사업계획 구상 중',
-        progressStatusColor: 'bg-purple-100 text-purple-800 border-purple-200',
-        note: 'AI·바이오 연구단지 및 상업 문화 융복합 지구와 맞닿은 하이엔드 주거 단지',
+        featureBadge: '🏢 스마트 MICE 직주일치 구상',
+        progressStatus: '사업계획 구상 중 (미확정)',
+        progressStatusColor: 'bg-slate-100 text-slate-700 border-slate-300',
+        note: 'AI, 빅데이터, 바이오 등 신산업 연구단지 및 상업·문화 복합 자족시설이 배치될 예정인 구역입니다.',
         pinPos: { x: 70, y: 45 }
       },
       {
-        blockCode: '토평 아이돌봄 4블록',
-        shortCode: '에듀4',
-        complexName: '토평2 아이돌봄 에듀타운',
-        unitsTotal: '650세대',
-        units: 650,
-        supplyType: '신혼희망타운',
-        subscriptionDate: '2027년',
-        moveInDate: '2031년',
+        blockCode: '[공간구상 4] 친환경 에듀·아이돌봄 클러스터',
+        shortCode: '에듀클러스터',
+        complexName: '초·중·고 & 보육 통합 에듀타운',
+        unitsTotal: '지구계획 수립 후 확정',
+        units: 0,
+        supplyType: '공공분양·신혼희망타운 구상',
+        subscriptionDate: '2027~2028년 예정',
+        moveInDate: '2031년 이후 예정',
         builder: '미정',
-        sizes: '전용 55㎡, 59㎡',
-        priceEstimate: '55㎡ 약 4.5억',
-        stationDistance: '초·중·고 통합캠퍼스 및 공원 인접',
-        featureBadge: '👶 아이돌봄 클러스터',
-        progressStatus: '지구계획 수립 중',
-        progressStatusColor: 'bg-emerald-100 text-emerald-800 border-emerald-300',
-        note: '보육센터, 유치원, 초등학교가 단지 내 완비된 아이 키우기 가장 좋은 에듀 블록',
+        sizes: '전용 55㎡, 59㎡, 84㎡ 구상',
+        priceEstimate: '지구계획 승인 시 확정',
+        stationDistance: '안심 통학로 및 녹지 축 인접',
+        featureBadge: '👶 아이돌봄 에듀 클러스터',
+        progressStatus: '국토부 기본구상 단계 (미확정)',
+        progressStatusColor: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+        note: '단지 내 보육센터, 유치원, 초·중·고교 통합 캠퍼스와 공원이 연계된 가족 친화형 에듀 주거벨트 구상 구역입니다.',
         pinPos: { x: 35, y: 55 }
       }
     ]
@@ -2582,16 +2582,40 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
           {/* 📋 3.1. 나무위키 & LH 전수 공동주택 목록 테이블 (User Image Exact Match) */}
           {/* ========================================================================= */}
           <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm space-y-5">
+            {/* Guri Topyeong Special Planning Notice Banner */}
+            {selectedTown.id === 'guri_topyeong' && (
+              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-medium leading-relaxed flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <strong className="font-black text-amber-950 block text-sm">
+                    📢 구리토평2 공공주택지구 현황 및 데이터 반영 안내
+                  </strong>
+                  <p className="text-amber-800">
+                    구리토평2는 2023년 11월 발표된 신규공공택지(3.5기)로, 현재 <strong>지구지정 고시 및 기본구상 수립 단계</strong>입니다.
+                  </p>
+                  <p className="text-amber-800">
+                    왕숙·교산 등 기존 3기 신도시처럼 세부 아파트 블록 번호(A-1, B-1 등)나 시공사, 세부 분양가는 아직 확정 고시되지 않았으며, <strong>2026~2027년 국토교통부 지구계획 승인</strong>을 통해 구체적인 분양 블록이 발표될 예정입니다. 아래 목록은 국토교통부 공식 공간구상도 기반의 <strong>4대 핵심 권역 기본구상안</strong>입니다.
+                  </p>
+                </div>
+              </div>
+            )}
+
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
               <div>
                 <div className="flex items-center gap-2">
                   <TableIcon className="w-5 h-5 text-[#0066ff]" />
                   <h3 className="text-lg sm:text-xl font-black text-slate-900">
-                    3.1. {selectedTown.name} 공동주택 전수 목록표 (나무위키 100% 반영)
+                    {selectedTown.id === 'guri_topyeong' 
+                      ? `3.1. ${selectedTown.name} 국토부 4대 핵심 공간구상권역 도감`
+                      : `3.1. ${selectedTown.name} 공동주택 전수 목록표 (나무위키 100% 반영)`
+                    }
                   </h3>
                 </div>
                 <p className="text-xs text-slate-500 mt-1">
-                  행을 클릭하면 상단 도면에서 해당 블록의 위치가 즉시 빨간색 포인터로 표시됩니다.
+                  {selectedTown.id === 'guri_topyeong'
+                    ? '구상 권역을 클릭하면 상단 도면에서 해당 공간의 위치가 즉시 핀포인터로 표시됩니다.'
+                    : '행을 클릭하면 상단 도면에서 해당 블록의 위치가 즉시 빨간색 포인터로 표시됩니다.'
+                  }
                 </p>
               </div>
 
