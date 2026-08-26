@@ -234,7 +234,7 @@ export const MyThoughts: React.FC = () => {
                         </h4>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium pl-8">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium pl-8 whitespace-pre-line">
                         {point.description}
                       </p>
 
