@@ -27,7 +27,7 @@ import { THOUGHT_ARTICLES, ThoughtArticle } from '../data/thoughtArticles';
 export const MyThoughts: React.FC = () => {
   const [selectedTag, setSelectedTag] = useState<string>('전체');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [activeArticleId, setActiveArticleId] = useState<string>('officetel-live-vs-buy');
+  const [activeArticleId, setActiveArticleId] = useState<string>(THOUGHT_ARTICLES[0]?.id || 'life-cycle-housing-guide');
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const [likedIds, setLikedIds] = useState<string[]>([]);
 
@@ -56,7 +56,7 @@ export const MyThoughts: React.FC = () => {
     );
   };
 
-  const allTags = ['전체', '#오피스텔_매매주의', '#거주와투자의분리', '#대출한도전략'];
+  const allTags = ['전체', ...Array.from(new Set(THOUGHT_ARTICLES.map(a => a.tag)))];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fadeIn space-y-8">
@@ -254,7 +254,7 @@ export const MyThoughts: React.FC = () => {
               <div className="space-y-3 pt-2">
                 <h3 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
                   <Layers className="w-5 h-5 text-[#0066ff]" />
-                  <span>주거용 오피스텔 vs 일반 아파트 핵심 비교</span>
+                  <span>핵심 비교 및 가이드 요약</span>
                 </h3>
 
                 <div className="overflow-x-auto rounded-2xl border border-slate-200">
@@ -262,16 +262,19 @@ export const MyThoughts: React.FC = () => {
                     <thead>
                       <tr className="bg-slate-100 border-b border-slate-200 text-slate-800 font-black">
                         {currentArticle.tableData.headers.map((h, i) => (
-                          <th key={i} className={`p-3.5 ${i === 2 ? 'text-[#029f45]' : ''}`}>{h}</th>
+                          <th key={i} className={`p-3.5 whitespace-nowrap ${i === 1 ? 'text-[#0066ff]' : i === 2 ? 'text-[#029f45]' : ''}`}>{h}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
                       {currentArticle.tableData.rows.map((row, idx) => (
                         <tr key={idx} className="hover:bg-slate-50">
-                          <td className="p-3.5 font-bold text-slate-900 bg-slate-50/50">{row.category}</td>
+                          <td className="p-3.5 font-bold text-slate-900 bg-slate-50/50 whitespace-nowrap">{row.category}</td>
                           <td className="p-3.5 text-slate-600">{row.col1}</td>
                           <td className="p-3.5 font-bold text-[#029f45]">{row.col2}</td>
+                          {row.col3 && (
+                            <td className="p-3.5 font-black text-indigo-600">{row.col3}</td>
+                          )}
                         </tr>
                       ))}
                     </tbody>
