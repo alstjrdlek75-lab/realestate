@@ -14,10 +14,11 @@ import { ScoreBreakdownModal } from './components/ScoreBreakdownModal';
 import { RealEstateHistory } from './components/RealEstateHistory';
 import { RealEstateFuture } from './components/RealEstateFuture';
 import { NaverLandNews } from './components/NaverLandNews';
+import { MyThoughts } from './components/MyThoughts';
 import { Footer } from './components/Footer';
-import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter, History, Building, Newspaper } from 'lucide-react';
+import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter, History, Building, Newspaper, Lightbulb } from 'lucide-react';
 
-type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS';
+type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS' | 'MY_THOUGHTS';
 
 const DEFAULT_INPUTS: DiagnosticInput = {
   cash: 3.5, // 3.5억
@@ -70,6 +71,11 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleGoToThoughts = () => {
+    setViewMode('MY_THOUGHTS');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleFormSubmit = (values: DiagnosticInput) => {
     setDiagnosticInput(values);
     if (values.targetCities) {
@@ -109,6 +115,7 @@ export function App() {
           setViewMode('DIAGNOSTIC');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
+        onGoToThoughts={handleGoToThoughts}
         onGoToHistory={handleGoToHistory}
         onGoToFuture={handleGoToFuture}
         onGoToNews={handleGoToNews}
@@ -123,29 +130,57 @@ export function App() {
           <div className="animate-fadeIn">
             <Hero onStart={handleStartDiagnostic} />
             
-            {/* Quick Teaser 3-Column Cards: History & Future & Naver News */}
-            <div className="max-w-6xl mx-auto px-4 pb-14 grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Card 1: History */}
+            {/* Quick Teaser 4-Column Cards: My Thoughts & History & Future & Naver News */}
+            <div className="max-w-6xl mx-auto px-4 pb-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Card 1: My Thoughts (New) */}
+              <div 
+                onClick={handleGoToThoughts}
+                className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group ring-1 ring-emerald-500/20"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-[#e8f8ee] text-[#029f45] flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
+                    <Lightbulb className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black text-[#029f45] bg-[#e8f8ee] px-2 py-0.5 rounded-full">
+                      필독 칼럼
+                    </span>
+                    <h3 className="text-base font-black text-slate-900 mt-0.5">
+                      💡 내 생각
+                    </h3>
+                  </div>
+                </div>
+
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  "오피스텔은 왜 살기(Live)만 하고 사지(Buy) 말라는가?" 등 시장 본질을 꿰뚫는 실전 칼럼
+                </p>
+
+                <div className="pt-2 flex items-center text-xs font-bold text-[#029f45] group-hover:translate-x-1 transition-transform">
+                  <span>칼럼 읽어보기 →</span>
+                </div>
+              </div>
+
+              {/* Card 2: History */}
               <div 
                 onClick={handleGoToHistory}
-                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
+                className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
                     <History className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
-                      필독 역사 칼럼
+                    <span className="text-[10px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
+                      50년 변천사
                     </span>
                     <h3 className="text-base font-black text-slate-900 mt-0.5">
-                      📜 부동산 50년사
+                      📜 부동산 역사
                     </h3>
                   </div>
                 </div>
 
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  강남 개발부터 1기 신도시, 판교, 2026 초양극화까지 — 집값이 오른 진짜 이유와 불변의 4대 가치 공식
+                  강남 개발부터 판교, 2026 초양극화까지 — 집값이 오른 진짜 이유와 불변의 가치 공식
                 </p>
 
                 <div className="pt-2 flex items-center text-xs font-bold text-indigo-600 group-hover:translate-x-1 transition-transform">
@@ -153,27 +188,27 @@ export function App() {
                 </div>
               </div>
 
-              {/* Card 2: Future & 3rd New Towns & Redevelopments */}
+              {/* Card 3: Future & 3rd New Towns & Redevelopments */}
               <div 
                 onClick={handleGoToFuture}
-                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
+                className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-[#e8f8ee] text-[#029f45] flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
                     <Building className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-black text-[#029f45] bg-[#e8f8ee] px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-black text-[#029f45] bg-[#e8f8ee] px-2 py-0.5 rounded-full">
                       미래 핵심 전망
                     </span>
                     <h3 className="text-base font-black text-slate-900 mt-0.5">
-                      🔮 신도시 & 재개발 미래지도
+                      🔮 미래지도
                     </h3>
                   </div>
                 </div>
 
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  왕숙·교산·창릉·토평 등 3기 신도시와 한남·성수·노량진·수택 메가 재개발 공식 정비계획도 & 실물 지도
+                  3기 신도시와 한남·성수·노량진·수택 메가 재개발 공식 정비계획도 & 실물 지도
                 </p>
 
                 <div className="pt-2 flex items-center text-xs font-bold text-[#029f45] group-hover:translate-x-1 transition-transform">
@@ -181,52 +216,59 @@ export function App() {
                 </div>
               </div>
 
-              {/* Card 3: Naver Land News Portal */}
+              {/* Card 4: Naver Land News Portal */}
               <div 
                 onClick={handleGoToNews}
-                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
+                className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#03c75a] flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
                     <Newspaper className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-black text-[#03c75a] bg-[#e8f8ee] px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-black text-[#03c75a] bg-[#e8f8ee] px-2 py-0.5 rounded-full">
                       Npay 실시간
                     </span>
                     <h3 className="text-base font-black text-slate-900 mt-0.5">
-                      📰 네이버 부동산 뉴스
+                      📰 부동산 뉴스
                     </h3>
                   </div>
                 </div>
 
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  AI 핵심 3줄 요약, 주간 아파트 시세 랭킹, 청약·재개발·DSR 규제 실시간 헤드라인 속보
+                  AI 핵심 3줄 요약, 주간 시세 랭킹, 청약·재개발·DSR 규제 실시간 속보
                 </p>
 
                 <div className="pt-2 flex items-center text-xs font-bold text-[#03c75a] group-hover:translate-x-1 transition-transform">
-                  <span>실시간 뉴스 브리핑 보기 →</span>
+                  <span>실시간 뉴스 보기 →</span>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* VIEW 2: HISTORY TAB */}
+        {/* VIEW 2: MY THOUGHTS TAB */}
+        {viewMode === 'MY_THOUGHTS' && (
+          <div className="animate-fadeIn">
+            <MyThoughts />
+          </div>
+        )}
+
+        {/* VIEW 3: HISTORY TAB */}
         {viewMode === 'HISTORY' && (
           <div className="animate-fadeIn">
             <RealEstateHistory onStartDiagnostic={handleStartDiagnostic} />
           </div>
         )}
 
-        {/* VIEW 3: FUTURE & 3RD NEW TOWNS TAB */}
+        {/* VIEW 4: FUTURE & 3RD NEW TOWNS TAB */}
         {viewMode === 'FUTURE' && (
           <div className="animate-fadeIn">
             <RealEstateFuture onStartDiagnostic={handleStartDiagnostic} />
           </div>
         )}
 
-        {/* VIEW 4: NAVER LAND REAL ESTATE NEWS TAB */}
+        {/* VIEW 5: NAVER LAND REAL ESTATE NEWS TAB */}
         {viewMode === 'NEWS' && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fadeIn">
             <NaverLandNews />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building2, RefreshCw, Share2, Compass, ShieldCheck, MapPin, Sparkles, BookOpen, History, Flame, Radio, Newspaper } from 'lucide-react';
+import { Building2, RefreshCw, Share2, Compass, ShieldCheck, MapPin, Sparkles, BookOpen, History, Flame, Radio, Newspaper, Lightbulb } from 'lucide-react';
 
 interface HeaderProps {
   onReset: () => void;
@@ -7,8 +7,9 @@ interface HeaderProps {
   onGoToHistory: () => void;
   onGoToFuture: () => void;
   onGoToNews: () => void;
+  onGoToThoughts: () => void;
   onGoToRegionalExplorer?: () => void;
-  currentView: 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS';
+  currentView: 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS' | 'MY_THOUGHTS';
 }
 
 export const Header: React.FC<HeaderProps> = ({ 
@@ -17,6 +18,7 @@ export const Header: React.FC<HeaderProps> = ({
   onGoToHistory,
   onGoToFuture,
   onGoToNews,
+  onGoToThoughts,
   onGoToRegionalExplorer,
   currentView
 }) => {
@@ -34,6 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
   const isHistoryView = currentView === 'HISTORY';
   const isFutureView = currentView === 'FUTURE';
   const isNewsView = currentView === 'NEWS';
+  const isThoughtsView = currentView === 'MY_THOUGHTS';
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
@@ -73,6 +76,16 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <button
+            onClick={onGoToThoughts}
+            className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer ${
+              isThoughtsView ? 'bg-white text-[#03c75a] shadow-2xs font-black' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Lightbulb className="w-3.5 h-3.5 text-[#03c75a]" />
+            <span>내 생각</span>
+          </button>
+
+          <button
             onClick={onGoToHistory}
             className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1 cursor-pointer ${
               isHistoryView ? 'bg-white text-[#0066ff] shadow-2xs font-black' : 'text-slate-600 hover:text-slate-900'
@@ -108,20 +121,20 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Mobile Nav Tabs */}
           <div className="flex lg:hidden items-center gap-1">
             <button
+              onClick={onGoToThoughts}
+              className={`px-2 py-1 rounded-lg text-xs font-bold transition border cursor-pointer ${
+                isThoughtsView ? 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30 font-black' : 'bg-slate-100 text-slate-700 border-slate-200'
+              }`}
+            >
+              내생각
+            </button>
+            <button
               onClick={onGoToNews}
               className={`px-2 py-1 rounded-lg text-xs font-bold transition border cursor-pointer ${
                 isNewsView ? 'bg-[#03c75a] text-white border-[#03c75a]' : 'bg-slate-100 text-slate-700 border-slate-200'
               }`}
             >
               뉴스
-            </button>
-            <button
-              onClick={onGoToHistory}
-              className={`px-2 py-1 rounded-lg text-xs font-bold transition border cursor-pointer ${
-                isHistoryView ? 'bg-[#edf4ff] text-[#0066ff] border-[#0066ff]/30' : 'bg-slate-100 text-slate-700 border-slate-200'
-              }`}
-            >
-              역사
             </button>
             <button
               onClick={onGoToFuture}
