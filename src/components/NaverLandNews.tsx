@@ -883,32 +883,32 @@ export const NaverLandNews: React.FC = () => {
             </div>
 
             {/* Modal Bottom Action Bar */}
-            <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50 flex items-center justify-between gap-3">
+            <div className="p-3.5 sm:p-5 border-t border-slate-100 bg-slate-50 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
               <button
                 onClick={() => toggleLike(selectedArticle.id)}
-                className={`px-4 py-2.5 rounded-xl border font-bold text-xs flex items-center gap-1.5 transition cursor-pointer ${
+                className={`px-4 py-2.5 rounded-xl border font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition cursor-pointer ${
                   likedArticles.includes(selectedArticle.id)
                     ? "bg-rose-50 border-rose-300 text-rose-600 font-black"
                     : "bg-white border-slate-200 text-slate-700 hover:bg-slate-100"
                 }`}
               >
-                <ThumbsUp className="w-3.5 h-3.5" />
+                <ThumbsUp className="w-4 h-4" />
                 <span>좋아요 {selectedArticle.likes + (likedArticles.includes(selectedArticle.id) ? 1 : 0)}</span>
               </button>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <a
                   href={selectedArticle.naverLandUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2.5 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs font-black transition flex items-center gap-1.5 shadow-xs"
+                  className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[#03c75a] hover:bg-[#02b14f] text-white text-xs sm:text-sm font-black transition flex items-center justify-center gap-1.5 shadow-xs text-center"
                 >
-                  <Building2 className="w-3.5 h-3.5" />
-                  <span>네이버 부동산 포털 원문 이동 ↗</span>
+                  <Building2 className="w-4 h-4 shrink-0" />
+                  <span>네이버 부동산 원문 이동 ↗</span>
                 </a>
                 <button
                   onClick={() => setSelectedArticle(null)}
-                  className="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs sm:text-sm font-black transition cursor-pointer shrink-0"
                 >
                   닫기
                 </button>

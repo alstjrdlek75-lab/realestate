@@ -386,12 +386,12 @@ export const DistrictMemorizer: React.FC = () => {
             </div>
 
             {/* Quick Smart Focus Mode Bar & Manual Zoom Controls */}
-            <div className="flex flex-wrap items-center justify-between gap-2 bg-slate-50 p-2.5 rounded-2xl border border-slate-200 text-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-slate-50 p-2.5 sm:p-3 rounded-2xl border border-slate-200 text-xs">
               <div className="flex flex-wrap items-center gap-1.5 font-bold">
-                <span className="text-slate-500 font-black">보기 모드:</span>
+                <span className="text-slate-600 font-black text-xs sm:text-sm">보기 모드:</span>
                 <button
                   onClick={handleResetZoom}
-                  className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs ${
+                  className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs sm:text-sm ${
                     zoomLevel === 1.0 && !isDenseFocus
                       ? "bg-white text-slate-900 border border-slate-300 shadow-xs font-black"
                       : "text-slate-600 hover:bg-slate-200"
@@ -402,33 +402,33 @@ export const DistrictMemorizer: React.FC = () => {
                 </button>
                 <button
                   onClick={handleFocusDenseCentral}
-                  className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 text-xs ${
+                  className={`px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 text-xs sm:text-sm ${
                     isDenseFocus
                       ? "bg-[#03c75a] text-white shadow-xs font-black"
-                      : "bg-emerald-50 text-[#029f45] hover:bg-emerald-100 border border-emerald-200"
+                      : "bg-emerald-50 text-[#029f45] hover:bg-emerald-100 border border-emerald-200 font-bold"
                   }`}
                   title="면적이 좁고 밀집된 중심 권역을 2.2배 크게 확대하여 핀이 겹치지 않고 여유롭게 보이도록 합니다."
                 >
-                  <Scan className="w-3.5 h-3.5" />
+                  <Scan className="w-3.5 h-3.5 shrink-0" />
                   <span>
                     {activeRegion === "GYEONGGI"
-                      ? "🔍 경기 중남부 밀집권 집중 확대 (의왕·수원·성남·군포·과천·안양·광명) (2.2x)"
-                      : "🔍 서울 도심·한강변 밀집권 집중 확대 (마용성·강남3구·영등포) (2.0x)"
+                      ? "🔍 경기 중남부 밀집권 집중 확대 (2.2x)"
+                      : "🔍 서울 도심·한강변 밀집권 집중 확대 (2.0x)"
                     }
                   </span>
                 </button>
               </div>
 
               {/* Floating Zoom Step Buttons */}
-              <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 shadow-xs shrink-0">
+              <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200 shadow-xs shrink-0 self-end sm:self-auto">
                 <button
                   onClick={handleZoomIn}
                   className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-700 font-bold transition cursor-pointer"
                   title="확대 (Zoom In)"
                 >
-                  <ZoomIn className="w-3.5 h-3.5" />
+                  <ZoomIn className="w-4 h-4" />
                 </button>
-                <span className="text-[11px] font-black px-1 text-slate-800">
+                <span className="text-xs sm:text-sm font-black px-1.5 text-slate-800">
                   {Math.round(zoomLevel * 10) / 10}x
                 </span>
                 <button
@@ -436,20 +436,20 @@ export const DistrictMemorizer: React.FC = () => {
                   className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-700 font-bold transition cursor-pointer"
                   title="축소 (Zoom Out)"
                 >
-                  <ZoomOut className="w-3.5 h-3.5" />
+                  <ZoomOut className="w-4 h-4" />
                 </button>
                 <button
                   onClick={handleResetZoom}
                   className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-700 font-bold transition cursor-pointer"
                   title="기본 크기 초기화"
                 >
-                  <RotateCcw className="w-3.5 h-3.5" />
+                  <RotateCcw className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
             {/* Interactive Map Canvas Container */}
-            <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 flex items-center justify-center p-2 sm:p-4 min-h-[520px] max-h-[620px] select-none">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 flex items-center justify-center p-2 sm:p-4 min-h-[380px] sm:min-h-[520px] max-h-[540px] sm:max-h-[620px] select-none">
               {/* Strict Bounding Box hugging the exact rendered image width and height */}
               <div 
                 className="relative inline-block max-w-full transition-transform duration-500 ease-out"
@@ -511,7 +511,7 @@ export const DistrictMemorizer: React.FC = () => {
               </div>
             </div>
 
-            <p className="text-xs text-slate-500 text-center font-medium">
+            <p className="text-xs sm:text-sm text-slate-600 text-center font-medium leading-relaxed">
               💡 <strong>과천·성남·안양·군포·의왕·수원</strong> 등 면적이 작은 지역은 상단의 <strong>[🔍 경기 중남부 밀집권 집중 확대 (2.2x)]</strong> 버튼을 누르면 핀이 겹치지 않고 넓고 시원하게 표시됩니다!
             </p>
           </div>
@@ -520,51 +520,51 @@ export const DistrictMemorizer: React.FC = () => {
           <div className="lg:col-span-5 space-y-4">
             
             {/* Memorize Formula Box */}
-            <div className="naver-card p-5 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl shadow-sm space-y-3.5">
+            <div className="naver-card p-4 sm:p-5 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl shadow-sm space-y-3.5">
               <div className="flex items-center gap-2 border-b border-slate-700 pb-2.5">
-                <Sparkles className="w-4 h-4 text-emerald-400" />
-                <h3 className="text-sm font-black text-white">
+                <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
+                <h3 className="text-sm sm:text-base font-black text-white">
                   {activeRegion === "SEOUL" ? "서울 5대 권역 묶음 암기 공식" : "경기 5대 발전축 묶음 암기 공식"}
                 </h3>
               </div>
 
-              <div className="space-y-2 text-xs">
+              <div className="space-y-2 text-xs sm:text-sm font-medium">
                 {activeRegion === "SEOUL" ? (
                   <>
-                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <span className="font-black text-amber-400 block mb-0.5">👑 1. 강남 4구 (동남권)</span>
-                      <p className="text-slate-300">강남구 · 서초구 · 송파구 · 강동구 (대한민국 최고 부촌)</p>
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-white/10 border border-white/15">
+                      <span className="font-black text-amber-300 text-xs sm:text-sm block mb-0.5">👑 1. 강남 4구 (동남권)</span>
+                      <p className="text-slate-200 text-xs sm:text-sm font-semibold">강남구 · 서초구 · 송파구 · 강동구 (대한민국 최고 부촌)</p>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <span className="font-black text-emerald-400 block mb-0.5">🌊 2. 마·용·성 (한강변 핵심)</span>
-                      <p className="text-slate-300">마포구 · 용산구 · 성동구 (도심+강남 더블 접근성)</p>
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-white/10 border border-white/15">
+                      <span className="font-black text-emerald-300 text-xs sm:text-sm block mb-0.5">🌊 2. 마·용·성 (한강변 핵심)</span>
+                      <p className="text-slate-200 text-xs sm:text-sm font-semibold">마포구 · 용산구 · 성동구 (도심+강남 더블 접근성)</p>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <span className="font-black text-blue-400 block mb-0.5">🏢 3. 3대 업무지구 배후 (서남권)</span>
-                      <p className="text-slate-300">영등포구(여의도) · 양천구(목동) · 동작구 · 강서구(마곡)</p>
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-white/10 border border-white/15">
+                      <span className="font-black text-blue-300 text-xs sm:text-sm block mb-0.5">🏢 3. 3대 업무지구 배후 (서남권)</span>
+                      <p className="text-slate-200 text-xs sm:text-sm font-semibold">영등포구(여의도) · 양천구(목동) · 동작구 · 강서구(마곡)</p>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <span className="font-black text-purple-400 block mb-0.5">🎓 4. 동북 학군 & 뉴타운 (동북권)</span>
-                      <p className="text-slate-300">노원구(중계) · 광진구(광장) · 동대문구(청량리·이문) · 성북구</p>
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-white/10 border border-white/15">
+                      <span className="font-black text-purple-300 text-xs sm:text-sm block mb-0.5">🎓 4. 동북 학군 & 뉴타운 (동북권)</span>
+                      <p className="text-slate-200 text-xs sm:text-sm font-semibold">노원구(중계) · 광진구(광장) · 동대문구(청량리·이문) · 성북구</p>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <span className="font-black text-amber-400 block mb-0.5">🚀 1. 경부선 골든 라인 (핵심 1~2급지)</span>
-                      <p className="text-slate-300">과천 ➡️ 성남(판교·분당) ➡️ 수원(광교) ➡️ 용인 ➡️ 화성(동탄) ➡️ 평택</p>
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-white/10 border border-white/15">
+                      <span className="font-black text-amber-300 text-xs sm:text-sm block mb-0.5">🚀 1. 경부선 골든 라인 (핵심 1~2급지)</span>
+                      <p className="text-slate-200 text-xs sm:text-sm font-semibold">과천 ➡️ 성남(판교·분당) ➡️ 수원(광교) ➡️ 용인 ➡️ 화성(동탄) ➡️ 평택</p>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <span className="font-black text-emerald-400 block mb-0.5">🌊 2. 한강 & 동북권 벨트</span>
-                      <p className="text-slate-300">하남(미사·교산) ➡️ 구리(수택·토평) ➡️ 남양주(다산·별내·왕숙)</p>
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-white/10 border border-white/15">
+                      <span className="font-black text-emerald-300 text-xs sm:text-sm block mb-0.5">🌊 2. 한강 & 동북권 벨트</span>
+                      <p className="text-slate-200 text-xs sm:text-sm font-semibold">하남(미사·교산) ➡️ 구리(수택·토평) ➡️ 남양주(다산·별내·왕숙)</p>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <span className="font-black text-blue-400 block mb-0.5">🏢 3. 서남권 환승 & 테크노</span>
-                      <p className="text-slate-300">광명(02국번) ➡️ 안양(평촌) ➡️ 부천(대장) ➡️ 시흥 ➡️ 안산</p>
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-white/10 border border-white/15">
+                      <span className="font-black text-blue-300 text-xs sm:text-sm block mb-0.5">🏢 3. 서남권 환승 & 테크노</span>
+                      <p className="text-slate-200 text-xs sm:text-sm font-semibold">광명(02국번) ➡️ 안양(평촌) ➡️ 부천(대장) ➡️ 시흥 ➡️ 안산</p>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      <span className="font-black text-purple-400 block mb-0.5">🚄 4. 경의·GTX 서북권</span>
-                      <p className="text-slate-300">고양(일산·창릉) ➡️ 파주(운정) ➡️ 김포(한강)</p>
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-white/10 border border-white/15">
+                      <span className="font-black text-purple-300 text-xs sm:text-sm block mb-0.5">🚄 4. 경의·GTX 서북권</span>
+                      <p className="text-slate-200 text-xs sm:text-sm font-semibold">고양(일산·창릉) ➡️ 파주(운정) ➡️ 김포(한강)</p>
                     </div>
                   </>
                 )}
@@ -572,12 +572,12 @@ export const DistrictMemorizer: React.FC = () => {
             </div>
 
             {/* Quick Click District Pills List */}
-            <div className="naver-card p-5 bg-white border border-slate-200 shadow-sm rounded-3xl space-y-3">
+            <div className="naver-card p-4 sm:p-5 bg-white border border-slate-200 shadow-sm rounded-3xl space-y-3">
               <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                <h3 className="text-xs font-black text-slate-800">
+                <h3 className="text-xs sm:text-sm font-black text-slate-900">
                   {activeRegion === "SEOUL" ? "서울 25개 구 빠른 핀 선택 (클릭)" : "경기 31개 시·군 빠른 핀 선택 (클릭)"}
                 </h3>
-                <span className="text-[10px] text-slate-500 font-bold">{filteredList.length}개 지역</span>
+                <span className="text-xs text-slate-500 font-bold">{filteredList.length}개 지역</span>
               </div>
 
               <div className="flex flex-wrap gap-1.5 max-h-[220px] overflow-y-auto pr-1">
@@ -588,13 +588,13 @@ export const DistrictMemorizer: React.FC = () => {
                     <button
                       key={item.id}
                       onClick={() => handleSelectDistrict(item)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border flex items-center gap-1 ${
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition cursor-pointer border flex items-center gap-1 ${
                         isSelected
                           ? "bg-[#03c75a] text-white border-[#03c75a] shadow-xs font-black scale-105"
-                          : "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200"
+                          : "bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200"
                       }`}
                     >
-                      {isSelected && <MapPin className="w-3 h-3 fill-white" />}
+                      {isSelected && <MapPin className="w-3.5 h-3.5 fill-white shrink-0" />}
                       <span>{item.name}</span>
                     </button>
                   );
@@ -603,26 +603,26 @@ export const DistrictMemorizer: React.FC = () => {
 
               {/* Selected District Detail Card */}
               {selectedDistrict && (
-                <div className="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-xs space-y-2 animate-scaleUp">
+                <div className="p-4 sm:p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm space-y-2.5 animate-scaleUp shadow-xs">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4 text-rose-500 fill-rose-500" />
-                      <span className="font-black text-sm text-slate-900">{selectedDistrict.name}</span>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-white text-[#029f45] border border-emerald-300 font-black">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-rose-500 fill-rose-500 shrink-0" />
+                      <span className="font-black text-base sm:text-lg text-slate-900">{selectedDistrict.name}</span>
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-white text-[#029f45] border border-emerald-300 font-black">
                         {selectedDistrict.subRegion}
                       </span>
                     </div>
-                    <span className="text-[10px] font-bold text-slate-500">{selectedDistrict.tier}</span>
+                    <span className="text-xs font-black text-slate-600 bg-white/80 px-2 py-0.5 rounded-md border border-slate-200">{selectedDistrict.tier}</span>
                   </div>
 
-                  <p className="text-slate-700 font-medium">
-                    <strong>대장 단지:</strong> {selectedDistrict.leadComplex}
+                  <p className="text-slate-800 font-semibold leading-relaxed">
+                    <strong className="text-slate-900 font-black">대장 단지:</strong> {selectedDistrict.leadComplex}
                   </p>
-                  <p className="text-slate-700 font-medium">
-                    <strong>핵심 노선:</strong> {selectedDistrict.keyTransit}
+                  <p className="text-slate-800 font-semibold leading-relaxed">
+                    <strong className="text-slate-900 font-black">핵심 노선:</strong> {selectedDistrict.keyTransit}
                   </p>
-                  <div className="p-2 rounded-xl bg-white text-slate-800 font-bold text-[11px] border border-emerald-100">
-                    💡 <strong>암기 팁:</strong> {selectedDistrict.memorizeTrick}
+                  <div className="p-3 rounded-xl bg-white text-slate-900 font-bold text-xs sm:text-sm border border-emerald-200/80 shadow-2xs leading-relaxed">
+                    💡 <strong className="text-emerald-700 font-black">암기 팁:</strong> {selectedDistrict.memorizeTrick}
                   </div>
                 </div>
               )}
