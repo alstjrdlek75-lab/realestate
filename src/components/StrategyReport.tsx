@@ -120,14 +120,14 @@ export const StrategyReport: React.FC<StrategyReportProps> = ({ result }) => {
 
               <div className="space-y-3.5 text-xs">
                 <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
-                  <span className="text-slate-500 block text-[11px] font-medium">실거주 솔루션 (Living)</span>
+                  <span className="text-slate-500 block text-[11px] font-medium">실거주 솔루션</span>
                   <span className="font-bold text-slate-800 mt-1 block">
                     {activeStrategy.samplePortfolio.livingSolution}
                   </span>
                 </div>
 
                 <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
-                  <span className="text-slate-500 block text-[11px] font-medium">매수·투자 솔루션 (Buying)</span>
+                  <span className="text-slate-500 block text-[11px] font-medium">매수·투자 솔루션</span>
                   <span className="font-bold text-[#0066ff] mt-1 block">
                     {activeStrategy.samplePortfolio.buyingSolution}
                   </span>
@@ -166,14 +166,14 @@ export const StrategyReport: React.FC<StrategyReportProps> = ({ result }) => {
                     <span className="w-7 h-7 rounded-xl bg-[#03c75a] text-white font-black text-xs flex items-center justify-center shadow-sm">
                       {stepItem.step}
                     </span>
-                    <span className="text-[11px] font-bold text-slate-400">STEP {stepItem.step}</span>
+                    <span className="text-[11px] font-bold text-slate-400">{stepItem.step}단계</span>
                   </div>
                   <h4 className="text-sm font-bold text-slate-900">{stepItem.title}</h4>
                   <p className="text-xs text-slate-600 mt-2 leading-relaxed">{stepItem.description}</p>
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-slate-200 text-[11px] text-[#029f45] flex items-start gap-1.5 font-medium">
-                  <span className="font-bold shrink-0">💡 TIP:</span>
+                  <span className="font-bold shrink-0">💡 실전 팁:</span>
                   <span>{stepItem.tip}</span>
                 </div>
               </div>
@@ -187,7 +187,7 @@ export const StrategyReport: React.FC<StrategyReportProps> = ({ result }) => {
           <div className="bg-[#e8f8ee]/60 border border-[#03c75a]/30 p-5 rounded-2xl">
             <h4 className="text-sm font-bold text-[#029f45] flex items-center gap-2 mb-3">
               <CheckCircle2 className="w-4 h-4" />
-              <span>전략의 핵심 장점 (Pros)</span>
+              <span>전략의 핵심 장점</span>
             </h4>
             <ul className="space-y-2 text-xs text-slate-700 font-medium">
               {activeStrategy.pros.map((pro, idx) => (
@@ -203,7 +203,7 @@ export const StrategyReport: React.FC<StrategyReportProps> = ({ result }) => {
           <div className="bg-amber-50/70 border border-amber-200 p-5 rounded-2xl">
             <h4 className="text-sm font-bold text-amber-800 flex items-center gap-2 mb-3">
               <AlertTriangle className="w-4 h-4 text-amber-600" />
-              <span>주의 및 리스크 관리 요인 (Risk Factors)</span>
+              <span>주의 및 리스크 관리 요인</span>
             </h4>
             <ul className="space-y-2 text-xs text-slate-700 font-medium">
               {activeStrategy.cons.map((con, idx) => (

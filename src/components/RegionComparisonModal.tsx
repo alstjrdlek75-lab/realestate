@@ -103,11 +103,11 @@ export const RegionComparisonModal: React.FC<RegionComparisonModalProps> = ({
             {/* Scores & Prices */}
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3 text-xs">
               <div className="flex justify-between py-1 border-b border-slate-200">
-                <span className="text-slate-500 font-medium">실거주 만족도 (Living)</span>
+                <span className="text-slate-500 font-medium">실거주 만족도</span>
                 <span className="font-black text-[#029f45] text-sm">{regionA.livingScore}점</span>
               </div>
               <div className="flex justify-between py-1 border-b border-slate-200">
-                <span className="text-slate-500 font-medium">자산 투자 가치 (Buying)</span>
+                <span className="text-slate-500 font-medium">자산 투자 가치</span>
                 <span className="font-black text-[#0066ff] text-sm">{regionA.buyingScore}점</span>
               </div>
               <div className="flex justify-between py-1 border-b border-slate-200">
@@ -127,15 +127,15 @@ export const RegionComparisonModal: React.FC<RegionComparisonModalProps> = ({
                 <span>주요 업무지구 소요시간</span>
               </div>
               <div className="flex justify-between text-slate-700 font-medium">
-                <span className="text-slate-500">강남(GBD)</span>
+                <span className="text-slate-500">강남권</span>
                 <span className="font-bold text-[#029f45]">{regionA.commuteTimeToGbd}</span>
               </div>
               <div className="flex justify-between text-slate-700 font-medium">
-                <span className="text-slate-500">광화문/도심(CBD)</span>
+                <span className="text-slate-500">도심권(광화문·종로)</span>
                 <span className="font-semibold text-slate-800">{regionA.commuteTimeToCbd}</span>
               </div>
               <div className="flex justify-between text-slate-700 font-medium">
-                <span className="text-slate-500">여의도(YBD)</span>
+                <span className="text-slate-500">여의도권</span>
                 <span className="font-semibold text-slate-800">{regionA.commuteTimeToYbd}</span>
               </div>
             </div>
@@ -188,11 +188,11 @@ export const RegionComparisonModal: React.FC<RegionComparisonModalProps> = ({
             {/* Scores & Prices */}
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3 text-xs">
               <div className="flex justify-between py-1 border-b border-slate-200">
-                <span className="text-slate-500 font-medium">실거주 만족도 (Living)</span>
+                <span className="text-slate-500 font-medium">실거주 만족도</span>
                 <span className="font-black text-[#029f45] text-sm">{regionB.livingScore}점</span>
               </div>
               <div className="flex justify-between py-1 border-b border-slate-200">
-                <span className="text-slate-500 font-medium">자산 투자 가치 (Buying)</span>
+                <span className="text-slate-500 font-medium">자산 투자 가치</span>
                 <span className="font-black text-[#0066ff] text-sm">{regionB.buyingScore}점</span>
               </div>
               <div className="flex justify-between py-1 border-b border-slate-200">
@@ -212,15 +212,15 @@ export const RegionComparisonModal: React.FC<RegionComparisonModalProps> = ({
                 <span>주요 업무지구 소요시간</span>
               </div>
               <div className="flex justify-between text-slate-700 font-medium">
-                <span className="text-slate-500">강남(GBD)</span>
+                <span className="text-slate-500">강남권</span>
                 <span className="font-bold text-[#029f45]">{regionB.commuteTimeToGbd}</span>
               </div>
               <div className="flex justify-between text-slate-700 font-medium">
-                <span className="text-slate-500">광화문/도심(CBD)</span>
+                <span className="text-slate-500">도심권(광화문·종로)</span>
                 <span className="font-semibold text-slate-800">{regionB.commuteTimeToCbd}</span>
               </div>
               <div className="flex justify-between text-slate-700 font-medium">
-                <span className="text-slate-500">여의도(YBD)</span>
+                <span className="text-slate-500">여의도권</span>
                 <span className="font-semibold text-slate-800">{regionB.commuteTimeToYbd}</span>
               </div>
             </div>

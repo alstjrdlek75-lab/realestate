@@ -39,8 +39,8 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
       {/* Main Headline */}
       <div className="text-center max-w-4xl mx-auto">
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.2] sm:leading-[1.18]">
-          살기 좋은 집<span className="text-[#03c75a]">(Living)</span>과 <br className="hidden sm:inline" />
-          사야 하는 집<span className="text-[#0066ff]">(Buying)</span>은 다릅니다
+          살기 좋은 집과 <br className="hidden sm:inline" />
+          사야 하는 집은 다릅니다
         </h1>
         
         <p className="mt-5 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
@@ -91,7 +91,7 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
                 </span>
               </div>
               <h2 className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight leading-snug break-keep">
-                왜 '살고 싶은 곳(Living)'과 '사야 하는 곳(Buying)'을 분리해야 할까요?
+                왜 '살고 싶은 곳(실거주)'과 '사야 하는 곳(자산가치)'을 분리해야 할까요?
               </h2>
             </div>
 

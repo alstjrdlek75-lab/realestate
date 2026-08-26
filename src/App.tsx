@@ -355,7 +355,7 @@ export function App() {
                       title="클릭 시 실거주 점수 산출 근거 확인"
                     >
                       <div className="flex items-center justify-center gap-1 text-[11px] uppercase font-bold text-slate-500 group-hover:text-[#029f45]">
-                        <span>실거주 (Living)</span>
+                        <span>실거주 편의</span>
                         <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-[#029f45]" />
                       </div>
                       <span className="text-2xl sm:text-3xl font-black text-[#029f45]">{diagnosticResult.livingScore}점</span>
@@ -372,7 +372,7 @@ export function App() {
                       title="클릭 시 투자가치 점수 산출 근거 확인"
                     >
                       <div className="flex items-center justify-center gap-1 text-[11px] uppercase font-bold text-slate-500 group-hover:text-[#0066ff]">
-                        <span>투자성 (Buying)</span>
+                        <span>자산 투자가치</span>
                         <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-[#0066ff]" />
                       </div>
                       <span className="text-2xl sm:text-3xl font-black text-[#0066ff]">{diagnosticResult.buyingScore}점</span>

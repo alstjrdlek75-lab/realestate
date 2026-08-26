@@ -36,8 +36,8 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed font-medium">
-            1970년대 강남 개발부터 1기 신도시(분당·일산), 2000년대 버블세븐과 판교, 그리고 2026년 초양극화 시대까지 — <br className="hidden sm:inline" />
-            50년의 역사를 분석하면 <strong>왜 사는(Living) 곳과 사야 하는(Buying) 곳이 달라야 하는지</strong> 그 해답이 보입니다.
+            1970년대 강남 개발부터 1기 신도시(분당·일산), 2000년대 판교, 그리고 2026년 초양극화 시대까지 — <br className="hidden sm:inline" />
+            50년의 역사를 분석하면 <strong>왜 사는(실거주) 곳과 사야 하는(자산가치) 곳이 달라야 하는지</strong> 그 해답이 보입니다.
           </p>
         </div>
       </div>
@@ -88,13 +88,13 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                   <span className="text-xs font-black text-[#029f45] bg-[#e8f8ee] px-2.5 py-1 rounded-md border border-[#03c75a]/20">
                     원인 ① 화폐적 요인
                   </span>
-                  <span className="text-xs text-slate-400 font-bold">M2 통화량 팽창</span>
+                  <span className="text-xs text-slate-400 font-bold">시중 통화량 팽창</span>
                 </div>
                 <h3 className="text-lg font-black text-slate-900">
-                  통화량(M2)의 급격한 팽창과 실물자산 인플레이션
+                  통화량의 급격한 팽창과 실물자산 인플레이션
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  대한민국의 광의통화(M2)는 지난 20년간 연평균 6~8%씩 꾸준히 증가했습니다. 
+                  대한민국의 광의통화는 지난 20년간 연평균 6~8%씩 꾸준히 증가했습니다. 
                   시중에 풀린 돈의 양이 10배 늘어나는 동안, <strong>원화(현금)의 구매력은 급격히 감소</strong>했으며, 
                   한정된 토지와 신축 아파트는 이러한 화폐 인플레이션을 온전히 흡수하며 가격이 명목상 상승했습니다.
                 </p>
@@ -112,11 +112,11 @@ export const RealEstateHistory: React.FC<RealEstateHistoryProps> = () => {
                   <span className="text-xs text-slate-400 font-bold">수도권 초집중</span>
                 </div>
                 <h3 className="text-lg font-black text-slate-900">
-                  수도권 일자리(GBD/판교/YBD) 및 인구 초밀집
+                  수도권 핵심 일자리 및 인구 초밀집
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
                   대한민국 전체 국토의 11.8%에 불과한 수도권에 <strong>전국 인구의 50.6%</strong>와 <strong>고소득 일자리의 75%</strong>가 집중되어 있습니다. 
-                  강남(GBD), 판교 테크노밸리, 여의도(YBD), 도심(CBD)으로 출퇴근할 수 있는 지하철 역세권 아파트는 대체 불가능한 '시간 절약 자산'이 되었습니다.
+                  강남권, 판교 테크노밸리, 여의도, 도심권(광화문·종로)으로 출퇴근할 수 있는 지하철 역세권 아파트는 대체 불가능한 '시간 절약 자산'이 되었습니다.
                 </p>
                 <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-800 font-bold">
                   💡 <strong>결론</strong>: 인구는 줄어도 '양질의 일자리와 연결된 수도권 핵심지'의 수요는 더 집중됩니다.
