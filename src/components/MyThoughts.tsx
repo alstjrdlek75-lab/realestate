@@ -59,33 +59,39 @@ export const MyThoughts: React.FC = () => {
   const allTags = ['전체', ...Array.from(new Set(THOUGHT_ARTICLES.map(a => a.tag)))];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fadeIn space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 animate-fadeIn space-y-6 sm:space-y-8">
       
-      {/* Top Banner Header */}
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-        <div className="relative z-10 max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-[#03c75a] border border-emerald-500/30 text-xs font-black">
-            <Lightbulb className="w-3.5 h-3.5" />
-            <span>부동산 인사이트 & 실전 칼럼</span>
+      {/* Top Banner Header (Naver Land Signature Clean Style) */}
+      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-6 sm:p-8 relative overflow-hidden border-t-4 border-t-[#03c75a]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-2 max-w-3xl">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30 text-xs font-black">
+              <Lightbulb className="w-3.5 h-3.5" />
+              <span>부동산 실전 리서치 칼럼</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 leading-tight">
+              읽어볼만한 생각들
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+              시장 유행과 단기 호가에 휩쓸리지 않고, <strong>부동산의 본질(대지지분, 입지 서열, 세제, 현금흐름)</strong>을 꿰뚫어보는 실전 투자·거주 인사이트 컬렉션입니다.
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
-            읽어볼만한 생각들
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
-            시장 유행과 호가에 휩쓸리지 않고, <strong>부동산의 본질(대지지분, 출구전략, 세제, 현금흐름)</strong>을 꿰뚫어보는 실전 투자·거주 칼럼 모음집입니다.
-          </p>
+
+          <div className="flex items-center gap-3 self-start md:self-auto bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-200 text-xs text-slate-600 font-bold">
+            <BookOpen className="w-4 h-4 text-[#03c75a]" />
+            <span>총 <strong className="text-slate-900">{THOUGHT_ARTICLES.length}편</strong>의 엄선 칼럼 수록</span>
+          </div>
         </div>
       </div>
 
       {/* Main Two-Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
         
         {/* Left Column: Article List & Filter (4 Cols) */}
         <div className="lg:col-span-4 space-y-4">
           
           {/* Tag Filter Pills */}
-          <div className="flex flex-wrap gap-1.5 p-1 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+          <div className="flex flex-wrap gap-1.5 p-1.5 bg-white rounded-2xl border border-slate-200 shadow-2xs">
             {allTags.map(tag => (
               <button
                 key={tag}
@@ -101,7 +107,7 @@ export const MyThoughts: React.FC = () => {
             ))}
           </div>
 
-          {/* Search Box */}
+          {/* Search Box (Naver Style) */}
           <div className="relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
@@ -109,7 +115,7 @@ export const MyThoughts: React.FC = () => {
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="칼럼 제목 및 키워드 검색..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white border border-slate-200 text-xs focus:outline-hidden focus:ring-2 focus:ring-[#03c75a]/30 font-medium"
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white border border-slate-200 text-xs focus:outline-hidden focus:border-[#03c75a] focus:ring-2 focus:ring-[#03c75a]/20 font-medium"
             />
           </div>
 
@@ -124,20 +130,25 @@ export const MyThoughts: React.FC = () => {
                 <div
                   key={art.id}
                   onClick={() => setActiveArticleId(art.id)}
-                  className={`p-4 sm:p-5 rounded-2xl border transition cursor-pointer flex flex-col justify-between space-y-3 ${
+                  className={`p-4 sm:p-5 rounded-2xl border transition cursor-pointer flex flex-col justify-between space-y-3 relative overflow-hidden ${
                     isActive 
-                      ? 'bg-white border-[#03c75a] ring-2 ring-[#03c75a]/30 shadow-md' 
-                      : 'bg-white hover:bg-slate-50 border-slate-200/90 shadow-2xs'
+                      ? 'bg-white border-[#03c75a] shadow-md ring-1 ring-[#03c75a]' 
+                      : 'bg-white hover:bg-slate-50/80 border-slate-200/90 shadow-2xs'
                   }`}
                 >
+                  {isActive && (
+                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#03c75a]" />
+                  )}
+                  
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-50 text-[#029f45] border border-emerald-200">
+                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30">
                         {art.tag}
                       </span>
                       <button
                         onClick={(e) => handleToggleBookmark(art.id, e)}
                         className="text-slate-400 hover:text-[#03c75a] transition cursor-pointer"
+                        title="북마크"
                       >
                         <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-[#03c75a] text-[#03c75a]' : ''}`} />
                       </button>
@@ -179,18 +190,21 @@ export const MyThoughts: React.FC = () => {
           <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-8">
             
             {/* Article Top Header */}
-            <div className="space-y-3 border-b border-slate-100 pb-6">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-emerald-50 text-[#029f45] border border-emerald-200">
-                  {currentArticle.categoryLabel}
-                </span>
-                <span className="text-[11px] font-black text-slate-500">
-                  {currentArticle.tag}
-                </span>
-                <span className="text-xs text-slate-300">•</span>
-                <span className="text-xs text-slate-500 font-medium">
-                  {currentArticle.publishedAt} 발행
-                </span>
+            <div className="space-y-4 border-b border-slate-100 pb-6">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30">
+                    {currentArticle.categoryLabel}
+                  </span>
+                  <span className="text-[11px] font-black text-slate-500">
+                    {currentArticle.tag}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-400 font-medium">
+                  <span>{currentArticle.publishedAt} 발행</span>
+                  <span>•</span>
+                  <span>조회 {currentArticle.views}</span>
+                </div>
               </div>
 
               <h1 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight leading-snug break-keep">
@@ -198,24 +212,36 @@ export const MyThoughts: React.FC = () => {
               </h1>
 
               {currentArticle.subtitle && (
-                <p className="text-sm sm:text-base font-bold text-[#029f45] bg-[#e8f8ee] p-3 rounded-xl border border-[#03c75a]/20">
-                  💡 {currentArticle.subtitle}
-                </p>
+                <div className="text-xs sm:text-sm font-bold text-[#029f45] bg-[#f0faf4] p-3.5 rounded-2xl border border-[#03c75a]/25 flex items-start gap-2">
+                  <span className="shrink-0 mt-0.5">💡</span>
+                  <span>{currentArticle.subtitle}</span>
+                </div>
               )}
+
+              {/* Author / Source Meta Bar */}
+              <div className="flex items-center justify-between text-xs text-slate-500 pt-1 font-medium">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-md bg-[#03c75a] text-white flex items-center justify-center font-black text-[10px]">
+                    N
+                  </div>
+                  <span className="font-bold text-slate-700">부동산 실전 리서치팀</span>
+                </div>
+                <span>소요시간 약 {currentArticle.readTime}</span>
+              </div>
             </div>
 
             {/* Intro Lead Paragraphs */}
-            <div className="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+            <div className="space-y-3.5 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
               {currentArticle.contentParagraphs.map((p, idx) => (
-                <p key={idx}>{p}</p>
+                <p key={idx} className="leading-relaxed">{p}</p>
               ))}
             </div>
 
-            {/* 4 Key Points / Core Structural Reasons */}
+            {/* Core Structural Reasons / Key Points */}
             {currentArticle.keyPoints && currentArticle.keyPoints.length > 0 && (
               <div className="space-y-4">
                 <h3 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
-                  <ShieldAlert className="w-5 h-5 text-rose-600" />
+                  <ShieldAlert className="w-5 h-5 text-[#03c75a]" />
                   <span>핵심 구조적 원인 심층 분석</span>
                 </h3>
 
@@ -223,10 +249,10 @@ export const MyThoughts: React.FC = () => {
                   {currentArticle.keyPoints.map(point => (
                     <div 
                       key={point.num}
-                      className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5 hover:border-slate-300 transition"
+                      className="p-5 sm:p-6 rounded-2xl bg-[#f8faf9] border border-slate-200/90 space-y-3 hover:border-slate-300 transition"
                     >
-                      <div className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-slate-900 text-white font-black text-xs flex items-center justify-center">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-6 h-6 rounded-full bg-[#03c75a] text-white font-black text-xs flex items-center justify-center shadow-xs">
                           {point.num}
                         </span>
                         <h4 className="text-sm sm:text-base font-black text-slate-900">
@@ -234,12 +260,12 @@ export const MyThoughts: React.FC = () => {
                         </h4>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium pl-8 whitespace-pre-line">
+                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium pl-8 whitespace-pre-line">
                         {point.description}
                       </p>
 
                       {point.quote && (
-                        <div className="ml-8 p-3 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800 italic">
+                        <div className="ml-8 p-3.5 rounded-xl bg-white border-l-4 border-l-[#03c75a] border border-slate-200 text-xs font-bold text-slate-800 shadow-2xs">
                           "{point.quote}"
                         </div>
                       )}
@@ -257,18 +283,18 @@ export const MyThoughts: React.FC = () => {
                   <span>핵심 비교 및 가이드 요약</span>
                 </h3>
 
-                <div className="overflow-x-auto rounded-2xl border border-slate-200">
+                <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-2xs">
                   <table className="w-full text-left text-xs sm:text-sm border-collapse">
                     <thead>
-                      <tr className="bg-slate-100 border-b border-slate-200 text-slate-800 font-black">
+                      <tr className="bg-slate-100/90 border-b border-slate-200 text-slate-800 font-black">
                         {currentArticle.tableData.headers.map((h, i) => (
                           <th key={i} className={`p-3.5 whitespace-nowrap ${i === 1 ? 'text-[#0066ff]' : i === 2 ? 'text-[#029f45]' : ''}`}>{h}</th>
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                    <tbody className="divide-y divide-slate-100 font-medium text-slate-700 bg-white">
                       {currentArticle.tableData.rows.map((row, idx) => (
-                        <tr key={idx} className="hover:bg-slate-50">
+                        <tr key={idx} className="hover:bg-[#f8faf9] transition-colors">
                           <td className="p-3.5 font-bold text-slate-900 bg-slate-50/50 whitespace-nowrap">{row.category}</td>
                           <td className="p-3.5 text-slate-600">{row.col1}</td>
                           <td className="p-3.5 font-bold text-[#029f45]">{row.col2}</td>
@@ -283,11 +309,11 @@ export const MyThoughts: React.FC = () => {
               </div>
             )}
 
-            {/* Final Conclusion Box */}
+            {/* Final Conclusion Box (Naver Pay Clean Green Style) */}
             {currentArticle.conclusion && (
-              <div className="p-5 sm:p-6 rounded-2xl bg-[#e8f8ee] border border-[#03c75a]/30 flex items-start gap-3 text-xs sm:text-sm text-slate-800">
+              <div className="p-5 sm:p-6 rounded-2xl bg-[#e8f8ee] border border-[#03c75a]/35 flex items-start gap-3.5 text-xs sm:text-sm text-slate-800 shadow-2xs">
                 <CheckCircle2 className="w-5 h-5 text-[#03c75a] shrink-0 mt-0.5" />
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <strong className="text-slate-900 block font-black text-sm sm:text-base">
                     💡 필자의 최종 결론 및 자산 배분 조언
                   </strong>
@@ -301,7 +327,7 @@ export const MyThoughts: React.FC = () => {
             {/* Footer action bar */}
             <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
               <div className="flex items-center gap-2 text-slate-500 font-bold">
-                <Eye className="w-4 h-4" />
+                <Eye className="w-4 h-4 text-slate-400" />
                 <span>조회수 {currentArticle.views}</span>
               </div>
 
@@ -314,7 +340,7 @@ export const MyThoughts: React.FC = () => {
                       : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
                   }`}
                 >
-                  <Heart className={`w-3.5 h-3.5 ${likedIds.includes(currentArticle.id) ? 'fill-rose-500' : ''}`} />
+                  <Heart className={`w-3.5 h-3.5 ${likedIds.includes(currentArticle.id) ? 'fill-rose-500 text-rose-500' : ''}`} />
                   <span>좋아요 {currentArticle.likes + (likedIds.includes(currentArticle.id) ? 1 : 0)}</span>
                 </button>
 
@@ -325,9 +351,9 @@ export const MyThoughts: React.FC = () => {
                       alert('칼럼 링크가 복사되었습니다.');
                     }
                   }}
-                  className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-black flex items-center gap-1.5 transition cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-black flex items-center gap-1.5 transition cursor-pointer shadow-2xs"
                 >
-                  <Share2 className="w-3.5 h-3.5" />
+                  <Share2 className="w-3.5 h-3.5 text-slate-500" />
                   <span>공유하기</span>
                 </button>
               </div>
