@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   Building2, 
   Sparkles, 
@@ -56,7 +56,7 @@ export interface BlockDetail {
   complexName: string; // 단지명 (나무위키 100% 반영: 왕숙 푸르지오 더 퍼스트, 왕숙 아테라, 미정 등)
   unitsTotal: string; // 총 세대수 (사전청약 세대수)
   units: number;
-  supplyType: '공공분양' | '신혼희망타운' | '나눔형' | '일반형' | '선택형' | '민간분양' | '통합공공임대' | '행복주택';
+  supplyType: '공공분양' | '신혼희망타운' | '나눔형' | '일반형' | '선택형' | '민간분양' | '통합공공임대' | '행복주택' | '민간재개발' | string;
   subscriptionDate: string; // 청약 시기 (2024년 10월, 2025년 8월, 미정 등)
   moveInDate: string; // 입주 시기 (2027년 6월, 2028년 8월, 미정 등)
   builder: string; // 시공사 (대광건영, 계룡건설, 대우건설, 금호건설, 미정 등)

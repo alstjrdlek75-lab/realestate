@@ -43,7 +43,7 @@ export type RegionZone =
 export interface ApartmentComplexDetail {
   id: string;
   name: string;
-  tierTag: '초역세권 대장주' | '가성비 실속형' | '초품아 학군형' | '미래호재 성장형';
+  tierTag: '초역세권 대장주' | '가성비 실속형' | '초품아 학군형' | '미래호재 성장형' | string;
   units: number;                 // 세대수 e.g. 1164
   builtYear: number;             // 준공년도 e.g. 2021
   stationDistance: string;       // e.g. "5호선 미사역 도보 2분"
