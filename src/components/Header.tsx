@@ -1,13 +1,14 @@
 import React from 'react';
-import { Building2, RefreshCw, Share2, Compass, ShieldCheck, MapPin, Sparkles, BookOpen, History, Flame, Radio } from 'lucide-react';
+import { Building2, RefreshCw, Share2, Compass, ShieldCheck, MapPin, Sparkles, BookOpen, History, Flame, Radio, Newspaper } from 'lucide-react';
 
 interface HeaderProps {
   onReset: () => void;
   onGoToDiagnostic: () => void;
   onGoToHistory: () => void;
   onGoToFuture: () => void;
+  onGoToNews: () => void;
   onGoToRegionalExplorer?: () => void;
-  currentView: 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE';
+  currentView: 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS';
 }
 
 export const Header: React.FC<HeaderProps> = ({ 
@@ -15,6 +16,7 @@ export const Header: React.FC<HeaderProps> = ({
   onGoToDiagnostic, 
   onGoToHistory,
   onGoToFuture,
+  onGoToNews,
   onGoToRegionalExplorer,
   currentView
 }) => {
@@ -31,6 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
   const isResultView = currentView === 'RESULT';
   const isHistoryView = currentView === 'HISTORY';
   const isFutureView = currentView === 'FUTURE';
+  const isNewsView = currentView === 'NEWS';
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
@@ -88,12 +91,30 @@ export const Header: React.FC<HeaderProps> = ({
             <Sparkles className="w-3.5 h-3.5 text-[#03c75a]" />
             <span>신도시 & 재개발 미래지도</span>
           </button>
+
+          <button
+            onClick={onGoToNews}
+            className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer ${
+              isNewsView ? 'bg-[#03c75a] text-white shadow-2xs font-black' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <span className="px-1 py-0.2 rounded bg-white/20 text-[10px] font-black">Npay</span>
+            <span>부동산 뉴스</span>
+          </button>
         </div>
 
         {/* Navigation & Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Mobile Nav Tabs */}
           <div className="flex lg:hidden items-center gap-1">
+            <button
+              onClick={onGoToNews}
+              className={`px-2 py-1 rounded-lg text-xs font-bold transition border cursor-pointer ${
+                isNewsView ? 'bg-[#03c75a] text-white border-[#03c75a]' : 'bg-slate-100 text-slate-700 border-slate-200'
+              }`}
+            >
+              뉴스
+            </button>
             <button
               onClick={onGoToHistory}
               className={`px-2 py-1 rounded-lg text-xs font-bold transition border cursor-pointer ${
@@ -108,7 +129,7 @@ export const Header: React.FC<HeaderProps> = ({
                 isFutureView ? 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30' : 'bg-slate-100 text-slate-700 border-slate-200'
               }`}
             >
-              신도시·재개발
+              미래지도
             </button>
           </div>
 

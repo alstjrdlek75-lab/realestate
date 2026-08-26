@@ -13,10 +13,11 @@ import { ChecklistSection } from './components/ChecklistSection';
 import { ScoreBreakdownModal } from './components/ScoreBreakdownModal';
 import { RealEstateHistory } from './components/RealEstateHistory';
 import { RealEstateFuture } from './components/RealEstateFuture';
+import { NaverLandNews } from './components/NaverLandNews';
 import { Footer } from './components/Footer';
-import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter, History, Building } from 'lucide-react';
+import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter, History, Building, Newspaper } from 'lucide-react';
 
-type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE';
+type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS';
 
 const DEFAULT_INPUTS: DiagnosticInput = {
   cash: 3.5, // 3.5억
@@ -64,6 +65,11 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleGoToNews = () => {
+    setViewMode('NEWS');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleFormSubmit = (values: DiagnosticInput) => {
     setDiagnosticInput(values);
     if (values.targetCities) {
@@ -105,6 +111,7 @@ export function App() {
         }}
         onGoToHistory={handleGoToHistory}
         onGoToFuture={handleGoToFuture}
+        onGoToNews={handleGoToNews}
         onGoToRegionalExplorer={handleScrollToRegionalExplorer}
         currentView={viewMode}
       />
@@ -116,12 +123,12 @@ export function App() {
           <div className="animate-fadeIn">
             <Hero onStart={handleStartDiagnostic} />
             
-            {/* Quick Teaser Dual Cards: History & Future 3rd New Towns */}
-            <div className="max-w-5xl mx-auto px-4 pb-14 grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Quick Teaser 3-Column Cards: History & Future & Naver News */}
+            <div className="max-w-6xl mx-auto px-4 pb-14 grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Card 1: History */}
               <div 
                 onClick={handleGoToHistory}
-                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
+                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
@@ -132,7 +139,7 @@ export function App() {
                       필독 역사 칼럼
                     </span>
                     <h3 className="text-base font-black text-slate-900 mt-0.5">
-                      📜 대한민국 부동산 50년사 & 가치 유인
+                      📜 부동산 50년사
                     </h3>
                   </div>
                 </div>
@@ -146,10 +153,10 @@ export function App() {
                 </div>
               </div>
 
-              {/* Card 2: Future & 3rd New Towns */}
+              {/* Card 2: Future & 3rd New Towns & Redevelopments */}
               <div 
                 onClick={handleGoToFuture}
-                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
+                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-[#e8f8ee] text-[#029f45] flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
@@ -160,17 +167,45 @@ export function App() {
                       미래 핵심 전망
                     </span>
                     <h3 className="text-base font-black text-slate-900 mt-0.5">
-                      🔮 3기 신도시 총정리 & 부동산 미래
+                      🔮 신도시 & 재개발 미래지도
                     </h3>
                   </div>
                 </div>
 
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  왕숙·교산·창릉·대장·계양·과천 현재 진행 상황, 앵커 유치 기업, 실시간 네이버 뉴스 & 대출 계산기
+                  왕숙·교산·창릉·토평 등 3기 신도시와 한남·성수·노량진·수택 메가 재개발 공식 정비계획도 & 실물 지도
                 </p>
 
                 <div className="pt-2 flex items-center text-xs font-bold text-[#029f45] group-hover:translate-x-1 transition-transform">
-                  <span>3기 신도시 & 미래 탭 보기 →</span>
+                  <span>미래지도 보기 →</span>
+                </div>
+              </div>
+
+              {/* Card 3: Naver Land News Portal */}
+              <div 
+                onClick={handleGoToNews}
+                className="p-6 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#03c75a] flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
+                    <Newspaper className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-black text-[#03c75a] bg-[#e8f8ee] px-2 py-0.5 rounded-full">
+                      Npay 실시간
+                    </span>
+                    <h3 className="text-base font-black text-slate-900 mt-0.5">
+                      📰 네이버 부동산 뉴스
+                    </h3>
+                  </div>
+                </div>
+
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  AI 핵심 3줄 요약, 주간 아파트 시세 랭킹, 청약·재개발·DSR 규제 실시간 헤드라인 속보
+                </p>
+
+                <div className="pt-2 flex items-center text-xs font-bold text-[#03c75a] group-hover:translate-x-1 transition-transform">
+                  <span>실시간 뉴스 브리핑 보기 →</span>
                 </div>
               </div>
             </div>
@@ -191,7 +226,14 @@ export function App() {
           </div>
         )}
 
-        {/* VIEW 4: DIAGNOSTIC FORM */}
+        {/* VIEW 4: NAVER LAND REAL ESTATE NEWS TAB */}
+        {viewMode === 'NEWS' && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fadeIn">
+            <NaverLandNews />
+          </div>
+        )}
+
+        {/* VIEW 5: DIAGNOSTIC FORM */}
         {viewMode === 'DIAGNOSTIC' && (
           <div className="animate-fadeIn">
             <DiagnosticForm

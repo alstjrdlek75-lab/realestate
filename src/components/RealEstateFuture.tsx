@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { RealEstateGeographicMap } from './RealEstateGeographicMap';
+import { NaverLandNews } from './NaverLandNews';
 import { 
   Building2, 
   Sparkles, 
@@ -2586,6 +2587,9 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
       {/* ========================================================================= */}
       {activeTab === 'FUTURE_NEWS' && (
         <div className="space-y-6 animate-fadeIn">
+          {/* Full Naver Land Real Estate News Portal Component */}
+          <NaverLandNews />
+
           {/* Top Section: 4 Future Megatrends */}
           <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm space-y-6">
             <div className="border-b border-slate-100 pb-4">
@@ -2649,48 +2653,6 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                   GTX-A 개통을 필두로 GTX-B, GTX-C 및 지하철 3·8·9호선 연장선이 순차 개통됩니다. 
                   과거 '거리상 멀었던' 수도권 외곽이 <strong>강남역·서울역 15~20분대 직결 생활권</strong>으로 탈바꿈하면서 3기 신도시 핵심 역세권 블록의 가치가 서울 중하위권 구축을 역전하는 현상이 발생합니다.
                 </p>
-              </div>
-            </div>
-
-            {/* Real-time Naver News Live Search Section */}
-            <div className="pt-6 border-t border-slate-100 space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Flame className="w-5 h-5 text-rose-500 animate-bounce" />
-                  <h3 className="text-base sm:text-lg font-black text-slate-900">
-                    실시간 네이버 부동산 뉴스 핫이슈 키워드 (원클릭 최신순 검색)
-                  </h3>
-                </div>
-                <span className="text-xs text-slate-400 font-bold hidden sm:inline">네이버 뉴스 최신순 직통 연결</span>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
-                {[
-                  { tag: '3기 신도시', query: '3기 신도시 본청약 분양가 일정', badge: 'HOT' },
-                  { tag: '스트레스 DSR', query: '스트레스 DSR 2단계 주택담보대출 한도', badge: '대출' },
-                  { tag: 'GTX-A/B/C', query: 'GTX 개통 창릉역 왕숙역 노선', badge: '교통' },
-                  { tag: '공사비 분쟁', query: '아파트 재건축 공사비 분양가 상승', badge: '공급' },
-                  { tag: '전세가율 상승', query: '수도권 아파트 전세가율 갭투자 전세 사기', badge: '전세' },
-                  { tag: '금리 인하', query: '한국은행 기준금리 인하 주담대 변동금리', badge: '금융' },
-                  { tag: '서울 신축 품귀', query: '서울 아파트 입주 물량 절벽 신축', badge: '시세' },
-                  { tag: '청약 경쟁률', query: '서울 수도권 아파트 로또 청약 경쟁률', badge: '청약' },
-                ].map((item, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleOpenNaverNews(item.query)}
-                    className="p-3 rounded-xl bg-slate-50 hover:bg-[#e8f8ee] border border-slate-200 hover:border-[#03c75a] text-left transition cursor-pointer group flex flex-col justify-between"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-slate-200 group-hover:bg-[#03c75a] group-hover:text-white text-slate-600 transition">
-                        {item.badge}
-                      </span>
-                      <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-[#03c75a]" />
-                    </div>
-                    <span className="text-xs font-black text-slate-800 group-hover:text-[#029f45] mt-2 block truncate">
-                      {item.tag} ↗
-                    </span>
-                  </button>
-                ))}
               </div>
             </div>
           </div>
