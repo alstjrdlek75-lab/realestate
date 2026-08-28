@@ -1,4 +1,6 @@
-import React, { useState, useMemo } from 'react';
+const fs = require('fs');
+
+const code = `import React, { useState, useMemo } from 'react';
 import { 
   Calculator, 
   CheckCircle2, 
@@ -257,11 +259,11 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-6">
           <button
             onClick={() => setActiveTab('POLICY_MORTGAGE')}
-            className={`px-4 py-3.5 rounded-2xl text-sm font-black transition flex items-center justify-center gap-2 cursor-pointer border-2 ${
+            className={\`px-4 py-3.5 rounded-2xl text-sm font-black transition flex items-center justify-center gap-2 cursor-pointer border-2 \${
               activeTab === 'POLICY_MORTGAGE'
                 ? 'bg-[#03c75a] text-white border-[#03c75a] shadow-md'
                 : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200 hover:border-slate-300'
-            }`}
+            }\`}
           >
             <Landmark className="w-4 h-4 shrink-0" />
             <span>1. 정책 모기지 판별</span>
@@ -269,11 +271,11 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
 
           <button
             onClick={() => setActiveTab('REPAYMENT_COMPARISON')}
-            className={`px-4 py-3.5 rounded-2xl text-sm font-black transition flex items-center justify-center gap-2 cursor-pointer border-2 ${
+            className={\`px-4 py-3.5 rounded-2xl text-sm font-black transition flex items-center justify-center gap-2 cursor-pointer border-2 \${
               activeTab === 'REPAYMENT_COMPARISON'
                 ? 'bg-[#03c75a] text-white border-[#03c75a] shadow-md'
                 : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200 hover:border-slate-300'
-            }`}
+            }\`}
           >
             <TrendingUp className="w-4 h-4 shrink-0" />
             <span>2. 체증식 상환 비교</span>
@@ -281,11 +283,11 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
 
           <button
             onClick={() => setActiveTab('STRESS_DSR')}
-            className={`px-4 py-3.5 rounded-2xl text-sm font-black transition flex items-center justify-center gap-2 cursor-pointer border-2 ${
+            className={\`px-4 py-3.5 rounded-2xl text-sm font-black transition flex items-center justify-center gap-2 cursor-pointer border-2 \${
               activeTab === 'STRESS_DSR'
                 ? 'bg-[#03c75a] text-white border-[#03c75a] shadow-md'
                 : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200 hover:border-slate-300'
-            }`}
+            }\`}
           >
             <ShieldCheck className="w-4 h-4 shrink-0" />
             <span>3. 스트레스 DSR 한도</span>
@@ -293,11 +295,11 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
 
           <button
             onClick={() => setActiveTab('TOTAL_PURCHASE_BUDGET')}
-            className={`px-4 py-3.5 rounded-2xl text-sm font-black transition flex items-center justify-center gap-2 cursor-pointer border-2 ${
+            className={\`px-4 py-3.5 rounded-2xl text-sm font-black transition flex items-center justify-center gap-2 cursor-pointer border-2 \${
               activeTab === 'TOTAL_PURCHASE_BUDGET'
                 ? 'bg-[#03c75a] text-white border-[#03c75a] shadow-md'
                 : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200 hover:border-slate-300'
-            }`}
+            }\`}
           >
             <Calculator className="w-4 h-4 shrink-0" />
             <span>4. 취득세 & 총예산</span>
@@ -393,9 +395,9 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
                   <button
                     type="button"
                     onClick={() => setHasNewborn(!hasNewborn)}
-                    className={`p-3.5 rounded-2xl border-2 text-left transition cursor-pointer flex items-center justify-between shadow-2xs ${
+                    className={\`p-3.5 rounded-2xl border-2 text-left transition cursor-pointer flex items-center justify-between shadow-2xs \${
                       hasNewborn ? 'bg-[#e8f8ee] border-[#03c75a] text-[#028137]' : 'bg-[#f8faf9] border-slate-200 hover:border-slate-300 text-slate-800'
-                    }`}
+                    }\`}
                   >
                     <div>
                       <div className="text-sm font-black">👶 2년 내 출산 (신생아)</div>
@@ -407,9 +409,9 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
                   <button
                     type="button"
                     onClick={() => setIsNewlywed(!isNewlywed)}
-                    className={`p-3.5 rounded-2xl border-2 text-left transition cursor-pointer flex items-center justify-between shadow-2xs ${
+                    className={\`p-3.5 rounded-2xl border-2 text-left transition cursor-pointer flex items-center justify-between shadow-2xs \${
                       isNewlywed ? 'bg-[#e8f8ee] border-[#03c75a] text-[#028137]' : 'bg-[#f8faf9] border-slate-200 hover:border-slate-300 text-slate-800'
-                    }`}
+                    }\`}
                   >
                     <div>
                       <div className="text-sm font-black">💍 신혼부부</div>
@@ -421,9 +423,9 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
                   <button
                     type="button"
                     onClick={() => setIsFirstHome(!isFirstHome)}
-                    className={`p-3.5 rounded-2xl border-2 text-left transition cursor-pointer flex items-center justify-between shadow-2xs ${
+                    className={\`p-3.5 rounded-2xl border-2 text-left transition cursor-pointer flex items-center justify-between shadow-2xs \${
                       isFirstHome ? 'bg-[#e8f8ee] border-[#03c75a] text-[#028137]' : 'bg-[#f8faf9] border-slate-200 hover:border-slate-300 text-slate-800'
-                    }`}
+                    }\`}
                   >
                     <div>
                       <div className="text-sm font-black">🏠 생애최초 무주택</div>
@@ -435,9 +437,9 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
                   <button
                     type="button"
                     onClick={() => setHasMultipleKids(!hasMultipleKids)}
-                    className={`p-3.5 rounded-2xl border-2 text-left transition cursor-pointer flex items-center justify-between shadow-2xs ${
+                    className={\`p-3.5 rounded-2xl border-2 text-left transition cursor-pointer flex items-center justify-between shadow-2xs \${
                       hasMultipleKids ? 'bg-[#e8f8ee] border-[#03c75a] text-[#028137]' : 'bg-[#f8faf9] border-slate-200 hover:border-slate-300 text-slate-800'
-                    }`}
+                    }\`}
                   >
                     <div>
                       <div className="text-sm font-black">👨‍👩‍👧‍👦 2자녀 이상 다자녀</div>
@@ -488,9 +490,9 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
                 {/* Newborn */}
                 <div className="p-4.5 flex items-center justify-between">
                   <div className="flex items-center gap-3.5">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm ${
+                    <div className={\`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm \${
                       policyEvaluation.isNewbornEligible ? 'bg-[#e8f8ee] text-[#028137] border border-[#03c75a]/30' : 'bg-slate-100 text-slate-500'
-                    }`}>
+                    }\`}>
                       1
                     </div>
                     <div>
@@ -510,9 +512,9 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
                 {/* Didimdol */}
                 <div className="p-4.5 flex items-center justify-between">
                   <div className="flex items-center gap-3.5">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm ${
+                    <div className={\`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm \${
                       policyEvaluation.isDidimdolEligible ? 'bg-[#e8f8ee] text-[#028137] border border-[#03c75a]/30' : 'bg-slate-100 text-slate-500'
-                    }`}>
+                    }\`}>
                       2
                     </div>
                     <div>
@@ -532,9 +534,9 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
                 {/* Bogeumjari */}
                 <div className="p-4.5 flex items-center justify-between">
                   <div className="flex items-center gap-3.5">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm ${
+                    <div className={\`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm \${
                       policyEvaluation.isBogeumjariEligible ? 'bg-[#e8f8ee] text-[#028137] border border-[#03c75a]/30' : 'bg-slate-100 text-slate-500'
-                    }`}>
+                    }\`}>
                       3
                     </div>
                     <div>
@@ -922,3 +924,7 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
     </div>
   );
 };
+`;
+
+fs.writeFileSync('src/components/LoanCalculator.tsx', code, 'utf-8');
+console.log('Successfully updated LoanCalculator with large, high-contrast readable typography!');
