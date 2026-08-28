@@ -1,4 +1,6 @@
-import React, { useState, useMemo, useEffect } from "react";
+const fs = require('fs');
+
+const newsContent = `import React, { useState, useMemo, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { 
   Newspaper, 
@@ -391,7 +393,7 @@ export const NaverLandNews: React.FC = () => {
 
   const openNaverLiveSearch = (query: string) => {
     const targetQuery = query || "부동산 아파트 청약";
-    window.open(`https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(targetQuery)}&sort=1`, '_blank');
+    window.open(\`https://search.naver.com/search.naver?where=news&query=\${encodeURIComponent(targetQuery)}&sort=1\`, '_blank');
   };
 
   return (
@@ -418,7 +420,7 @@ export const NaverLandNews: React.FC = () => {
             onClick={handleRefreshLiveNews}
             className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold transition cursor-pointer border border-slate-700"
           >
-            <RefreshCw className={`w-3 h-3 text-[#03c75a] ${isRefreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw className={\`w-3 h-3 text-[#03c75a] \${isRefreshing ? 'animate-spin' : ''}\`} />
             <span>최신 동기화</span>
           </button>
         </div>
@@ -630,9 +632,9 @@ export const NaverLandNews: React.FC = () => {
                   className="p-3 rounded-2xl bg-[#f8faf9] hover:bg-slate-100 border border-slate-200 transition flex items-center justify-between text-xs"
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className={`w-6 h-6 rounded-lg flex items-center justify-center font-black text-xs ${
+                    <span className={\`w-6 h-6 rounded-lg flex items-center justify-center font-black text-xs \${
                       item.rank <= 3 ? "bg-rose-100 text-rose-700 font-black" : "bg-slate-200 text-slate-700"
-                    }`}>
+                    }\`}>
                       {item.rank}
                     </span>
                     <div>
@@ -673,17 +675,17 @@ export const NaverLandNews: React.FC = () => {
           <button
             key={tab.id}
             onClick={() => setSelectedCategory(tab.id as NewsCategory)}
-            className={`px-4 py-3 rounded-2xl whitespace-nowrap transition flex items-center gap-2 cursor-pointer border-2 ${
+            className={\`px-4 py-3 rounded-2xl whitespace-nowrap transition flex items-center gap-2 cursor-pointer border-2 \${
               selectedCategory === tab.id
                 ? "bg-[#03c75a] text-white border-[#03c75a] shadow-sm font-black"
                 : "bg-white text-slate-800 hover:bg-slate-50 border-slate-200"
-            }`}
+            }\`}
           >
             <span>{tab.icon}</span>
             <span>{tab.label}</span>
-            <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${
+            <span className={\`text-xs px-2 py-0.5 rounded-full font-bold \${
               selectedCategory === tab.id ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
-            }`}>
+            }\`}>
               {tab.count}
             </span>
           </button>
@@ -739,11 +741,11 @@ export const NaverLandNews: React.FC = () => {
                           e.stopPropagation();
                           toggleBookmark(article.id);
                         }}
-                        className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition cursor-pointer ${
+                        className={\`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition cursor-pointer \${
                           isBookmarked 
                             ? "bg-[#03c75a] text-white" 
                             : "bg-black/40 text-white/80 hover:text-white"
-                        }`}
+                        }\`}
                         title="북마크"
                       >
                         <Bookmark className="w-4 h-4" />
@@ -898,3 +900,7 @@ export const NaverLandNews: React.FC = () => {
     </div>
   );
 };
+`;
+
+fs.writeFileSync('src/components/NaverLandNews.tsx', newsContent, 'utf-8');
+console.log('Successfully updated NaverLandNews with real-time live clock, official 5 sections launcher, and direct Naver real-time search!');
