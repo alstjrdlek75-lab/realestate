@@ -138,9 +138,22 @@ export const MyThoughts: React.FC = () => {
                   
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30">
-                        {art.tag}
-                      </span>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        {art.difficulty && (
+                          <span className={`text-[10px] font-black px-2 py-0.5 rounded-full border ${
+                            art.difficulty === '초급 입문' 
+                              ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+                              : art.difficulty === '중급 실전'
+                              ? 'bg-blue-50 text-blue-700 border-blue-200'
+                              : 'bg-purple-50 text-purple-700 border-purple-200'
+                          }`}>
+                            {art.difficulty}
+                          </span>
+                        )}
+                        <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30">
+                          {art.tag}
+                        </span>
+                      </div>
                       <button
                         onClick={(e) => handleToggleBookmark(art.id, e)}
                         className="text-slate-400 hover:text-[#03c75a] transition cursor-pointer"
@@ -188,7 +201,18 @@ export const MyThoughts: React.FC = () => {
             {/* Article Top Header */}
             <div className="space-y-4 border-b border-slate-100 pb-6">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {currentArticle.difficulty && (
+                    <span className={`text-[11px] font-black px-2.5 py-0.5 rounded-full border ${
+                      currentArticle.difficulty === '초급 입문' 
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+                        : currentArticle.difficulty === '중급 실전'
+                        ? 'bg-blue-50 text-blue-700 border-blue-200'
+                        : 'bg-purple-50 text-purple-700 border-purple-200'
+                    }`}>
+                      {currentArticle.difficulty}
+                    </span>
+                  )}
                   <span className="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-[#e8f8ee] text-[#029f45] border border-[#03c75a]/30">
                     {currentArticle.categoryLabel}
                   </span>
@@ -211,6 +235,24 @@ export const MyThoughts: React.FC = () => {
                 <div className="text-xs sm:text-sm font-bold text-[#029f45] bg-[#f0faf4] p-3.5 rounded-2xl border border-[#03c75a]/25 flex items-start gap-2">
                   <span className="shrink-0 mt-0.5">💡</span>
                   <span>{currentArticle.subtitle}</span>
+                </div>
+              )}
+
+              {/* ⚡ 10초 3줄 핵심 요약 (TL;DR) Card */}
+              {currentArticle.tldr && currentArticle.tldr.length > 0 && (
+                <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/80 rounded-2xl p-4 sm:p-5 space-y-2.5 shadow-2xs">
+                  <div className="flex items-center gap-2 text-amber-900 font-black text-xs sm:text-sm">
+                    <span className="text-base">⚡</span>
+                    <span>10초 3줄 핵심 요약 (TL;DR)</span>
+                  </div>
+                  <ul className="space-y-1.5 text-xs sm:text-sm text-slate-800 font-medium">
+                    {currentArticle.tldr.map((line, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-amber-600 font-bold shrink-0 mt-0.5">✔</span>
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
 

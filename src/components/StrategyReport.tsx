@@ -19,6 +19,65 @@ export const StrategyReport: React.FC<StrategyReportProps> = ({ result }) => {
 
   return (
     <div className="space-y-6">
+      {/* 🚨 나의 맞춤 자산 처방전 (Action Prescription) Banner */}
+      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white p-6 sm:p-8 rounded-3xl shadow-md border border-emerald-500/30 relative overflow-hidden">
+        <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-emerald-500/10 blur-3xl pointer-events-none" />
+        
+        <div className="relative z-10 space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-emerald-500 text-slate-950 text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>AI 맞춤 자산 처방전</span>
+            </span>
+            <span className="text-xs text-emerald-300 font-bold">
+              진단 점수: 실거주 {result.livingScore}점 / 자산가치 {result.investmentScore}점
+            </span>
+          </div>
+
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white leading-snug">
+            {result.primaryStrategy.key === 'SEPARATION' ? (
+              <>
+                "지금 무리해서 외곽 집을 사기보다, <br className="hidden sm:inline" />
+                <span className="text-emerald-400">상급지 갭투자 + 직주근접 전세 거주</span>가 자산 증식에 2배 유리합니다."
+              </>
+            ) : result.primaryStrategy.key === 'GOLDEN_INTERSECTION' ? (
+              <>
+                "자본과 상환 능력이 충분합니다. <br className="hidden sm:inline" />
+                <span className="text-emerald-400">실거주와 시세 차익을 모두 잡는 핵심지 대장 아파트</span>를 직접 매수하십시오."
+              </>
+            ) : (
+              <>
+                "상급지로 직행하기보다, <br className="hidden sm:inline" />
+                <span className="text-emerald-400">역세권 대단지 소형 아파트로 자산 사다리(징검다리)</span>를 먼저 구축하십시오."
+              </>
+            )}
+          </h2>
+
+          <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-4xl font-medium">
+            {result.recommendationSummary}
+          </p>
+
+          {/* 내일 당장 실행할 3대 액션 플랜 */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div className="bg-white/10 backdrop-blur-xs p-3.5 rounded-2xl border border-white/15 space-y-1">
+              <div className="text-[11px] font-black text-emerald-400">ACTION 1</div>
+              <div className="text-xs font-bold text-white">확정 DSR 대출 한도 조회</div>
+              <p className="text-[11px] text-slate-300">내 소득 기준 스트레스 DSR 주담대 최대 실행 가능액 확인</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-xs p-3.5 rounded-2xl border border-white/15 space-y-1">
+              <div className="text-[11px] font-black text-emerald-400">ACTION 2</div>
+              <div className="text-xs font-bold text-white">추천 단지 전세가율 추이 확인</div>
+              <p className="text-[11px] text-slate-300">네이버 부동산에서 추천 아파트 최근 3개월 실거래가 및 전세 매물 점검</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-xs p-3.5 rounded-2xl border border-white/15 space-y-1">
+              <div className="text-[11px] font-black text-emerald-400">ACTION 3</div>
+              <div className="text-xs font-bold text-white">지하철 승강장 도보 임장</div>
+              <p className="text-[11px] text-slate-300">해당 동에서 지하철 개찰구 및 승강장까지 실제 소요 시간 직접 걷기</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Strategy Selector Tabs */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
         <div className="flex items-center gap-2">

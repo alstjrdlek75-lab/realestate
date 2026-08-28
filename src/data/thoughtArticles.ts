@@ -9,6 +9,8 @@ export interface ThoughtArticle {
   views: string;
   likes: number;
   featured?: boolean;
+  difficulty?: '초급 입문' | '중급 실전' | '고급 심화';
+  tldr?: string[];
   summary: string;
   contentParagraphs: string[];
   keyPoints?: {
@@ -29,6 +31,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'how-to-filter-gem-subscription',
     tag: '#알짜청약_선별필터',
     categoryLabel: '청약 실전 필터링 칼럼',
+    difficulty: '중급 실전',
+    tldr: [
+      '분양가상한제가 적용되어 인근 5년 준신축 대비 최소 15% 이상 안전마진이 있는 단지만 선별',
+      '3대 업무지구(강남·도심·여의도)까지 편도 40분 내 직결되는 지하철 역세권 필수',
+      '1,000세대 이상 1군 브랜드 대단지 + 안전한 초품아 환경 검증 전까지 청약 통장을 아낄 것'
+    ],
     title: '일생일대의 기회, 실패 없는 옥석 가리기: \'진짜 알짜 단지\' 청약 선별법 4단계',
     subtitle: '분양가상한제 15% 안전마진부터 3대 일자리 40분 룰까지 4대 검증 필터',
     publishedAt: '2026.08.26',
@@ -82,6 +90,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'third-generation-new-town-blocks',
     tag: '#3기신도시_핵심블록',
     categoryLabel: '신도시 청약 심층 분석',
+    difficulty: '중급 실전',
+    tldr: [
+      '과천 선바위역(4호선·위례과천선), 하남교산 신설역(3호선), 남양주왕숙(GTX-B·9호선) 핵심 역세권 블록 정조준',
+      '당해 지역 거주 요건(1~2년)을 선점하여 3회 추첨 기회로 당첨 확률 3배 극대화',
+      '2040 저가점자는 80% 물량이 배정되는 특별공급(신혼·신생아·생초)에 집중'
+    ],
     title: '3기 신도시 어디를 노려야 할까? 하남교산·과천·남양주왕숙 핵심 블록 및 본청약 공략법',
     subtitle: '분양가상한제 안전마진과 3·9호선·GTX 환승 역세권 랜드마크 블록 정밀 분석',
     publishedAt: '2026.08.26',
@@ -128,6 +142,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'guri-redevelopment-and-topyeong2',
     tag: '#구리_재개발_토평2지구',
     categoryLabel: '지역 심층 분석 칼럼',
+    difficulty: '중급 실전',
+    tldr: [
+      '구리역세권 재개발(인창·수택 1만 세대): 8호선+GTX-B 더블역세권으로 강동구 시세의 80~85% 키 맞추기',
+      '한강변 토평2지구(2만 세대): 희소한 한강 영구 조망권 랜드마크로 장기 15~18억 원대 기대',
+      '단기·중기는 구리역세권 입주권/분양권, 장기는 토평2지구 청약 준비가 유효한 로드맵'
+    ],
     title: '구리의 대변혁: 역세권 재개발과 한강변 토평2지구, 분양가와 시세의 미래는?',
     subtitle: '8호선 별내선 개통과 1만 세대 신축 벨트, 한강 조망 공공택지의 시세 전망',
     publishedAt: '2026.08.26',
@@ -176,6 +196,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'newborn-newlywed-special-supply',
     tag: '#신혼_신생아특공',
     categoryLabel: '청약 실전 공략 칼럼',
+    difficulty: '초급 입문',
+    tldr: [
+      '신혼부부(혼인 7년 내) 및 신생아(2년 내 출산) 특공 물량 대폭 확대로 저가점자 진입 기회',
+      '맞벌이 소득 기준 최대 200%(연소득 약 1.6억~2억 원) 완화로 고소득 직장인 부부도 지원 가능',
+      '부부 동일 단지 동시 중복 청약(확률 2배) + 비인기 타워형 틈새 타입 + 신생아 특례대출(1~3%대) 연계'
+    ],
     title: '가점 낮아도 당첨된다: 신생아·신혼부부 특별공급 완벽 공략법',
     subtitle: '완화된 소득 기준(맞벌이 200%)과 부부 중복 청약으로 당첨 확률 2배 높이기',
     publishedAt: '2026.08.26',
@@ -224,6 +250,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'subscription-vs-existing-purchase',
     tag: '#청약vs매매전략',
     categoryLabel: '실전 매수 전략 칼럼',
+    difficulty: '초급 입문',
+    tldr: [
+      '유주택 이력이나 가점 40점 이하 저가점자에게 청약 대기는 기회비용을 날리는 희망고문',
+      '공사비 급등으로 신규 분양가 메리트가 축소되어 기존 준신축 급매 매수가 더 빠르고 안전',
+      '특공 자격이나 가점 65점 이상이 아니라면 검증된 역세권 기존 아파트 매수에 집중할 것'
+    ],
     title: '청약 통장만 붙들고 있을까, 지금 매수할까? 2040을 위한 확률적 선택 전략',
     subtitle: '치솟은 분양가와 가점제 장벽 속에서 내 자산 형성 속도를 지키는 현실적 해법',
     publishedAt: '2026.08.26',
@@ -272,6 +304,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'upgrade-housing-budget-formula',
     tag: '#상급지_갈아타기계산',
     categoryLabel: '실전 자금 설계 칼럼',
+    difficulty: '초급 입문',
+    tldr: [
+      '가용 예산 = (기존 집 매도가 - 기존 대출) + 신규 주담대 + 모아둔 현금 - 세금 및 부대비용',
+      '취득세(3.3%) + 중개비 + 이사비 등 약 4,000만~5,000만 원 부대비용을 빼지 않으면 잔금일에 자금 펑크 발생',
+      '계산된 상한선(예: 8.6억)을 엄수하고 무리한 영끌 대신 가격 협상 또는 평형 현실화로 안전마진 확보'
+    ],
     title: '6억 아파트에서 9억 상급지로 갈아타는 현실 자금 계산법: 취득세·부대비용의 함정',
     subtitle: '공무원·직장인 가상 사례로 완벽 해부하는 4대 갈아타기 자금 공식',
     publishedAt: '2026.08.26',
@@ -320,6 +358,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'subway-lines-value-guide',
     tag: '#지하철노선_가치분석',
     categoryLabel: '교통망 입지 칼럼',
+    difficulty: '초급 입문',
+    tldr: [
+      '3대 일자리(강남·도심·여의도) 직결 노선(2호선, 9호선, 신분당선, 3·7·5호선)이 불패의 핵심',
+      '같은 노선 안에서도 급행 정차역과 일반역 간에 수천만~수억 원의 시세 격차 발생',
+      '강남 직결성이 없는 외곽 지선이나 경전철은 하락장에서 매수 수요가 급격히 메마름'
+    ],
     title: '노선이 곧 집값이다: 서울·수도권 지하철 1~9호선 및 주요 라인 완벽 분석',
     subtitle: '강남·도심·여의도 3대 일자리 직결성과 급행 유무가 가르는 노선별 입지 서열',
     publishedAt: '2026.08.26',
@@ -367,6 +411,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'railway-overshooting-indicators',
     tag: '#철도호재_거품판별',
     categoryLabel: '실전 리스크 분석 칼럼',
+    difficulty: '고급 심화',
+    tldr: [
+      '전세가율 45% 미만 붕괴: 매매가만 뛰고 전세가가 멈춘 곳은 실수요 지지 기반이 없는 거품',
+      '상급지 입지 서열 역전: 외곽 호재 단지가 마용성·분당 가격을 넘어서는 순간 상방은 닫힘',
+      '거래 절벽 속 착시 신고가: 월 거래량 1~2건으로 띄운 호가는 침체기 급락의 전조'
+    ],
     title: '철도 호재로 급등한 아파트, 거품(오버슈팅)을 가려내는 3대 실증 지표',
     subtitle: '2021년 수도권 광풍 사례로 증명된 전세가율·입지 서열·거래량의 경고',
     publishedAt: '2026.08.26',
@@ -413,6 +463,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'station-proximity-premium',
     tag: '#역세권의_가치',
     categoryLabel: '입지 데이터 칼럼',
+    difficulty: '초급 입문',
+    tldr: [
+      '진짜 역세권의 절대 마지노선은 도보 10분, 실제 보행 거리 700m 이내 (동일 평형 1.5억~3억 격차)',
+      '직선거리가 아닌 실제 거주할 동 기준 보행 동선, 언덕 경사도, 지하 승강장 깊이(5분 추가) 확인 필수',
+      '도보 10분 초과 단지는 역세권 프리미엄을 지불하지 말고 마을버스 생활권으로 냉정히 평가'
+    ],
     title: '왜 사람들은 ‘역세권’에 집착할까? 진짜 역세권의 디테일한 기준과 데이터',
     subtitle: '‘억’ 단위 시세 격차부터 도보 500m 법적 기준, 거리 측정의 3대 함정까지',
     publishedAt: '2026.08.26',
@@ -466,6 +522,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'life-cycle-housing-guide',
     tag: '#생애주기_내집마련',
     categoryLabel: '생애주기 맞춤 칼럼',
+    difficulty: '초급 입문',
+    tldr: [
+      '2030 사회초년생·신혼: 직주근접과 환금성 높은 역세권 대단지 소형으로 자산 사다리 선점',
+      '3040 자녀 양육기: 초품아, 학원가, 커뮤니티가 갖춰진 30평대 학군지 아파트로 주거 안정성 확보',
+      '50대 이후: 면적 슬림화로 노후 현금 흐름 전환 및 종합병원 인근(의세권) 평지 단지 이동'
+    ],
     title: '인생의 계절마다 집의 기준은 달라진다: 생애주기별 내 집 마련 가이드',
     subtitle: '‘직주근접’에서 ‘학군’, 그리고 ‘은퇴 후 현금 흐름’으로의 인생 자산 배분 전략',
     publishedAt: '2026.08.26',
@@ -519,6 +581,12 @@ export const THOUGHT_ARTICLES: ThoughtArticle[] = [
     id: 'officetel-live-vs-buy',
     tag: '#오피스텔_매매주의',
     categoryLabel: '부동산 심층 칼럼',
+    difficulty: '초급 입문',
+    tldr: [
+      '토지 지분(대지지분) 부족: 건물은 감가상각되고 땅이 올라야 하는데 오피스텔은 대지지분이 극히 미미',
+      '용적률 800% 포화로 30년 뒤 재건축·리모델링 출구 전략이 사실상 불가능',
+      '실거주는 역세권 가성비 전·월세(Living)로 누리고, 매수(Buying)는 반드시 아파트에 집중'
+    ],
     title: '살기는 편한데 사기는 꺼려지는 오피스텔, 왜 자산가치는 오르지 않을까?',
     subtitle: '“오피스텔은 사는(거주) 곳이지, 사는(매수) 것이 아니다”',
     publishedAt: '2026.08.26',
