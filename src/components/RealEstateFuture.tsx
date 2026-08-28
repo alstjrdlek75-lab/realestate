@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { RealEstateGeographicMap } from './RealEstateGeographicMap';
-import { NaverLandNews } from './NaverLandNews';
 import { 
   Building2, 
   Sparkles, 
@@ -47,7 +46,7 @@ interface RealEstateFutureProps {
   onStartDiagnostic?: () => void;
 }
 
-type FutureTab = 'NEW_TOWNS' | 'DISTRICT_MEMORIZE' | 'FUTURE_NEWS' | 'GLOSSARY';
+type FutureTab = 'NEW_TOWNS' | 'DISTRICT_MEMORIZE' | 'GLOSSARY';
 type MapViewType = 'DISTRICT_BLOCKS' | 'METRO';
 type BlockViewDisplay = 'TABLE' | 'CARDS';
 type CalcMode = 'DSR' | 'LTV' | 'GAP';
@@ -2136,13 +2135,12 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
         </div>
       </div>
 
-      {/* Main 4 Sub-Tabs */}
+      {/* Main 3 Sub-Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs sm:text-sm">
         {[
           { id: 'NEW_TOWNS', label: '1. 신도시 & 메가 재개발 도면 및 전수 도감', icon: '🗺️' },
           { id: 'DISTRICT_MEMORIZE', label: '2. 서울 25개 구 & 경기 31개 시·군 암기 도감', icon: '🧠' },
-          { id: 'FUTURE_NEWS', label: '3. 미래 주목 변수 & 실시간 네이버 뉴스', icon: '📡' },
-          { id: 'GLOSSARY', label: '4. 필수 부동산·대출 용어 & 실시간 계산기', icon: '📚' },
+          { id: 'GLOSSARY', label: '3. 필수 부동산 용어 · 4대 미래 변수 & 실시간 계산기', icon: '📚' },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -2900,15 +2898,12 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
       )}
 
       {/* ========================================================================= */}
-      {/* SUB-TAB 3: 미래 주목 변수 & 실시간 뉴스 */}
+      {/* SUB-TAB 3: 필수 부동산·대출 용어 사전 & 실시간 계산기 */}
       {/* ========================================================================= */}
-      {activeTab === 'FUTURE_NEWS' && (
+      {activeTab === 'GLOSSARY' && (
         <div className="space-y-6 animate-fadeIn">
-          {/* Full Naver Land Real Estate News Portal Component */}
-          <NaverLandNews />
-
           {/* Top Section: 4 Future Megatrends */}
-          <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm space-y-6">
+          <div className="naver-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm rounded-3xl space-y-6">
             <div className="border-b border-slate-100 pb-4">
               <div className="flex items-center gap-2">
                 <Radio className="w-6 h-6 text-[#03c75a] animate-pulse" />
@@ -2936,6 +2931,23 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
                   전국 총인구는 줄어들지만, <strong>수도권 1~2인 가구 및 고소득 3040 가구는 2040년까지 지속 증가</strong>합니다. 
                   지방 및 외곽 비역세권 나홀로 단지는 인구 소멸 위험에 노출되는 반면, <strong>강남 직결 황금노선 역세권과 학군지 대단지</strong>는 자산 쏠림 현상이 극대화되어 시세 격차가 2배 이상 벌어집니다.
+                </p>
+              </div>
+
+              {/* Point 2 */}
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-[#0066ff] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                    미래 변수 ②
+                  </span>
+                  <span className="text-xs text-slate-400 font-bold">공사비 급등 & 공급 절벽</span>
+                </div>
+                <h3 className="text-lg font-black text-slate-900">
+                  신축 희소성 폭발 — '오늘의 분양가가 가장 싸다'
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  원자재 가격과 인건비 상승으로 서울 평균 분양가가 3.3㎡(평)당 4,500만 원을 돌파했습니다. 
+                  인허가 및 착공 물량이 급감하여 2026~2028년 수도권 입주 물량 절벽이 현실화됨에 따라, <strong>입지가 검증된 3기 신도시 분양가상한제 단지와 서울 핵심 재개발 신축</strong>의 희소 가치는 더욱 치솟습니다.
                 </p>
               </div>
 
@@ -2973,14 +2985,7 @@ export const RealEstateFuture: React.FC<RealEstateFutureProps> = () => {
               </div>
             </div>
           </div>
-        </div>
-      )}
 
-      {/* ========================================================================= */}
-      {/* SUB-TAB 3: 필수 부동산·대출 용어 사전 & 실시간 계산기 */}
-      {/* ========================================================================= */}
-      {activeTab === 'GLOSSARY' && (
-        <div className="space-y-6 animate-fadeIn">
           
           {/* Quick Calculators Trigger Bar */}
           <div className="naver-card p-6 sm:p-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl shadow-md border border-slate-700 space-y-4">
