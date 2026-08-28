@@ -42,6 +42,7 @@ export function App() {
   const [viewMode, setViewMode] = useState<ViewMode>('HERO');
   const [diagnosticInput, setDiagnosticInput] = useState<DiagnosticInput>(DEFAULT_INPUTS);
   const [selectedTargetCities, setSelectedTargetCities] = useState<string[]>([]);
+  const [selectedThoughtArticleId, setSelectedThoughtArticleId] = useState<string | undefined>(undefined);
 
   // Score Breakdown Modal state
   const [isScoreModalOpen, setIsScoreModalOpen] = useState<boolean>(false);
@@ -72,7 +73,8 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleGoToThoughts = () => {
+  const handleGoToThoughts = (articleId?: string) => {
+    setSelectedThoughtArticleId(articleId);
     setViewMode('MY_THOUGHTS');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -292,7 +294,7 @@ export function App() {
         {/* VIEW 3: MY THOUGHTS TAB */}
         {viewMode === 'MY_THOUGHTS' && (
           <div className="animate-fadeIn">
-            <MyThoughts />
+            <MyThoughts initialArticleId={selectedThoughtArticleId} />
           </div>
         )}
 

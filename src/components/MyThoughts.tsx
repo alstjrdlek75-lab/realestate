@@ -24,12 +24,30 @@ import {
 
 import { THOUGHT_ARTICLES, ThoughtArticle } from '../data/thoughtArticles';
 
-export const MyThoughts: React.FC = () => {
+interface MyThoughtsProps {
+  initialArticleId?: string;
+}
+
+export const MyThoughts: React.FC<MyThoughtsProps> = ({ initialArticleId }) => {
   const [selectedTag, setSelectedTag] = useState<string>('전체');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [activeArticleId, setActiveArticleId] = useState<string>(THOUGHT_ARTICLES[0]?.id || 'life-cycle-housing-guide');
+  const [activeArticleId, setActiveArticleId] = useState<string>(
+    initialArticleId || THOUGHT_ARTICLES[0]?.id || 'mortgage-loan-optimization-guide'
+  );
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const [likedIds, setLikedIds] = useState<string[]>([]);
+
+  // Update active article when initialArticleId prop changes
+  React.useEffect(() => {
+    if (initialArticleId) {
+      setActiveArticleId(initialArticleId);
+      const article = THOUGHT_ARTICLES.find(a => a.id === initialArticleId);
+      if (article) {
+        // Clear search or reset tag if needed
+        setSelectedTag('전체');
+      }
+    }
+  }, [initialArticleId]);
 
   const filteredArticles = THOUGHT_ARTICLES.filter(art => {
     if (selectedTag !== '전체' && art.tag !== selectedTag) return false;

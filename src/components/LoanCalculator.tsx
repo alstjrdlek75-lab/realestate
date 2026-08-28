@@ -25,7 +25,7 @@ import {
 export type LoanTabMode = 'POLICY_MORTGAGE' | 'REPAYMENT_COMPARISON' | 'STRESS_DSR' | 'TOTAL_PURCHASE_BUDGET';
 
 interface LoanCalculatorProps {
-  onGoToThoughts?: () => void;
+  onGoToThoughts?: (articleId?: string) => void;
 }
 
 export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }) => {
@@ -244,7 +244,7 @@ export const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onGoToThoughts }
 
           {onGoToThoughts && (
             <button
-              onClick={onGoToThoughts}
+              onClick={() => onGoToThoughts('mortgage-loan-optimization-guide')}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-black transition cursor-pointer self-start md:self-auto shrink-0 border border-slate-300 shadow-2xs"
             >
               <FileText className="w-4 h-4 text-[#029f45]" />
