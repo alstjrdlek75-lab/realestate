@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building2, RefreshCw, Share2, Compass, ShieldCheck, MapPin, Sparkles, BookOpen, History, Flame, Radio, Newspaper, Lightbulb } from 'lucide-react';
+import { Building2, RefreshCw, Share2, Compass, ShieldCheck, MapPin, Sparkles, BookOpen, History, Flame, Radio, Newspaper, Lightbulb, Calculator } from 'lucide-react';
 
 interface HeaderProps {
   onReset: () => void;
@@ -8,19 +8,21 @@ interface HeaderProps {
   onGoToFuture: () => void;
   onGoToNews: () => void;
   onGoToThoughts: () => void;
+  onGoToLoanCalculator: () => void;
   onGoToRegionalExplorer?: () => void;
-  currentView: 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS' | 'MY_THOUGHTS';
+  currentView: 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS' | 'MY_THOUGHTS' | 'LOAN_CALCULATOR';
 }
 
 export const Header: React.FC<HeaderProps> = ({ 
   onReset, 
   onGoToDiagnostic, 
-  onGoToHistory,
-  onGoToFuture,
-  onGoToNews,
-  onGoToThoughts,
-  onGoToRegionalExplorer,
-  currentView
+  onGoToHistory, 
+  onGoToFuture, 
+  onGoToNews, 
+  onGoToThoughts, 
+  onGoToLoanCalculator,
+  onGoToRegionalExplorer, 
+  currentView 
 }) => {
   const [copied, setCopied] = React.useState(false);
 
@@ -37,6 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
   const isFutureView = currentView === 'FUTURE';
   const isNewsView = currentView === 'NEWS';
   const isThoughtsView = currentView === 'MY_THOUGHTS';
+  const isLoanView = currentView === 'LOAN_CALCULATOR';
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
@@ -92,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-[#03c75a]" />
-            <span>신도시 & 재개발 미래지도</span>
+            <span>신도시 & 미래지도</span>
           </button>
 
           <button
@@ -113,6 +116,16 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Lightbulb className="w-3.5 h-3.5 text-[#03c75a]" />
             <span>읽어볼만한 생각들</span>
+          </button>
+
+          <button
+            onClick={onGoToLoanCalculator}
+            className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer ${
+              isLoanView ? 'bg-white text-[#029f45] shadow-2xs font-black' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Calculator className="w-3.5 h-3.5 text-[#03c75a]" />
+            <span>대출 계산기</span>
           </button>
         </div>
 
@@ -143,6 +156,14 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               생각들
+            </button>
+            <button
+              onClick={onGoToLoanCalculator}
+              className={`px-2 py-1 rounded-lg text-xs font-bold transition border cursor-pointer ${
+                isLoanView ? 'bg-[#e8f8ee] text-[#029f45] border-[#03c75a]/30 font-black' : 'bg-slate-100 text-slate-700 border-slate-200'
+              }`}
+            >
+              대출
             </button>
           </div>
 

@@ -15,10 +15,11 @@ import { RealEstateHistory } from './components/RealEstateHistory';
 import { RealEstateFuture } from './components/RealEstateFuture';
 import { NaverLandNews } from './components/NaverLandNews';
 import { MyThoughts } from './components/MyThoughts';
+import { LoanCalculator } from './components/LoanCalculator';
 import { Footer } from './components/Footer';
-import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter, History, Building, Newspaper, Lightbulb } from 'lucide-react';
+import { RefreshCw, Sparkles, Download, MapPin, ArrowRight, HelpCircle, ChevronRight, Filter, History, Building, Newspaper, Lightbulb, Calculator } from 'lucide-react';
 
-type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS' | 'MY_THOUGHTS';
+type ViewMode = 'HERO' | 'DIAGNOSTIC' | 'RESULT' | 'HISTORY' | 'FUTURE' | 'NEWS' | 'MY_THOUGHTS' | 'LOAN_CALCULATOR';
 
 const DEFAULT_INPUTS: DiagnosticInput = {
   cash: 3.5, // 3.5억
@@ -76,6 +77,11 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleGoToLoanCalculator = () => {
+    setViewMode('LOAN_CALCULATOR');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleFormSubmit = (values: DiagnosticInput) => {
     setDiagnosticInput(values);
     if (values.targetCities) {
@@ -116,6 +122,7 @@ export function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onGoToThoughts={handleGoToThoughts}
+        onGoToLoanCalculator={handleGoToLoanCalculator}
         onGoToHistory={handleGoToHistory}
         onGoToFuture={handleGoToFuture}
         onGoToNews={handleGoToNews}
@@ -130,8 +137,8 @@ export function App() {
           <div className="animate-fadeIn">
             <Hero onStart={handleStartDiagnostic} />
             
-            {/* Quick Teaser 4-Column Cards: History & Future & Naver News & My Thoughts */}
-            <div className="max-w-6xl mx-auto px-4 pb-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Quick Teaser 5-Column Cards: History & Future & Naver News & My Thoughts & Loan Calculator */}
+            <div className="max-w-7xl mx-auto px-4 pb-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
               {/* Card 1: History */}
               <div 
                 onClick={handleGoToHistory}
@@ -216,7 +223,7 @@ export function App() {
                 </div>
               </div>
 
-              {/* Card 4: My Thoughts (Placed at the end) */}
+              {/* Card 4: My Thoughts */}
               <div 
                 onClick={handleGoToThoughts}
                 className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group ring-1 ring-emerald-500/20"
@@ -230,45 +237,80 @@ export function App() {
                       필독 칼럼
                     </span>
                     <h3 className="text-base font-black text-slate-900 mt-0.5">
-                      💡 읽어볼만한 생각들
+                      💡 생각들
                     </h3>
                   </div>
                 </div>
 
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                  "오피스텔은 왜 살기(거주)만 하고 사지(매수) 말라는가?" 등 시장 본질을 꿰뚫는 실전 칼럼
+                  "오피스텔은 왜 살기만 하고 사지 말라는가?" 등 시장 본질을 꿰뚫는 실전 칼럼
                 </p>
 
                 <div className="pt-2 flex items-center text-xs font-bold text-[#029f45] group-hover:translate-x-1 transition-transform">
                   <span>칼럼 읽어보기 →</span>
                 </div>
               </div>
+
+              {/* Card 5: Loan Calculator */}
+              <div 
+                onClick={handleGoToLoanCalculator}
+                className="p-5 bg-white hover:bg-slate-50 rounded-3xl border border-slate-200 shadow-xs hover:shadow-sm cursor-pointer transition flex flex-col justify-between space-y-3 group ring-1 ring-blue-500/20"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black shrink-0 group-hover:scale-105 transition-transform">
+                    <Calculator className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
+                      실시간 금융
+                    </span>
+                    <h3 className="text-base font-black text-slate-900 mt-0.5">
+                      💰 대출 계산기
+                    </h3>
+                  </div>
+                </div>
+
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                  디딤돌·신생아 판별, 체증식 상환 비교, 스트레스 DSR, 취득세 총소요 자금 계산
+                </p>
+
+                <div className="pt-2 flex items-center text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">
+                  <span>대출 계산해보기 →</span>
+                </div>
+              </div>
             </div>
           </div>
         )}
 
-        {/* VIEW 2: MY THOUGHTS TAB */}
+        {/* VIEW 2: LOAN CALCULATOR TAB */}
+        {viewMode === 'LOAN_CALCULATOR' && (
+          <div className="animate-fadeIn">
+            <LoanCalculator onGoToThoughts={handleGoToThoughts} />
+          </div>
+        )}
+
+        {/* VIEW 3: MY THOUGHTS TAB */}
         {viewMode === 'MY_THOUGHTS' && (
           <div className="animate-fadeIn">
             <MyThoughts />
           </div>
         )}
 
-        {/* VIEW 3: HISTORY TAB */}
+        {/* VIEW 4: HISTORY TAB */}
         {viewMode === 'HISTORY' && (
           <div className="animate-fadeIn">
             <RealEstateHistory onStartDiagnostic={handleStartDiagnostic} />
           </div>
         )}
 
-        {/* VIEW 4: FUTURE & 3RD NEW TOWNS TAB */}
+        {/* VIEW 5: FUTURE & 3RD NEW TOWNS TAB */}
         {viewMode === 'FUTURE' && (
           <div className="animate-fadeIn">
             <RealEstateFuture onStartDiagnostic={handleStartDiagnostic} />
           </div>
         )}
 
-        {/* VIEW 5: NAVER LAND REAL ESTATE NEWS TAB */}
+        {/* VIEW 6: NAVER LAND REAL ESTATE NEWS TAB */}
         {viewMode === 'NEWS' && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fadeIn">
             <NaverLandNews />
