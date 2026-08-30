@@ -464,6 +464,53 @@ export const MyThoughts: React.FC<MyThoughtsProps> = ({ initialArticleId }) => {
               </div>
             )}
 
+            {/* 🎬 YouTube Video & Channel Masterclass Recommendation Widget */}
+            {currentArticle.youtubeRecommendation && (
+              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-red-50/70 via-slate-50 to-white border border-red-200/90 space-y-3.5 shadow-2xs">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-[#FF0000] text-white flex items-center justify-center font-black shadow-xs shrink-0">
+                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="text-[11px] font-black text-red-600 flex items-center gap-1.5">
+                        <span>🎬 이 칼럼과 함께 보면 200% 도움 되는 추천 유튜브</span>
+                      </div>
+                      <div className="text-sm sm:text-base font-black text-slate-900 flex items-center gap-1.5">
+                        <span>{currentArticle.youtubeRecommendation.channelName}</span>
+                        {currentArticle.youtubeRecommendation.channelSubscribers && (
+                          <span className="text-xs text-slate-500 font-medium">
+                            (구독자 {currentArticle.youtubeRecommendation.channelSubscribers})
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <a
+                    href={currentArticle.youtubeRecommendation.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2.5 rounded-xl bg-[#FF0000] hover:bg-[#CC0000] text-white text-xs font-black transition flex items-center gap-1.5 shadow-xs cursor-pointer shrink-0"
+                  >
+                    <span>YouTube에서 영상 검색 ↗</span>
+                  </a>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm space-y-1.5 shadow-2xs">
+                  <div className="font-black text-slate-900 flex items-center gap-1.5">
+                    <span className="text-red-500 font-bold">▶</span>
+                    <span>추천 영상 주제: {currentArticle.youtubeRecommendation.topicTitle}</span>
+                  </div>
+                  <p className="text-xs text-slate-600 font-medium leading-relaxed pl-4">
+                    {currentArticle.youtubeRecommendation.highlight}
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Footer action bar */}
             <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
               <div className="flex items-center gap-2 text-slate-500 font-bold">

@@ -24,6 +24,14 @@ export interface ThoughtArticle {
     rows: { category: string; col1: string; col2: string; col3?: string }[];
   };
   conclusion?: string;
+  youtubeRecommendation?: {
+    channelName: string;
+    channelSubscribers?: string;
+    topicTitle: string;
+    highlight: string;
+    searchQuery: string;
+    youtubeUrl: string;
+  };
 }
 
 export const THOUGHT_ARTICLES: ThoughtArticle[] = [
